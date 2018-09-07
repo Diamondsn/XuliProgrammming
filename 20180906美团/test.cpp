@@ -7,7 +7,6 @@
 #include <deque>
 using namespace std;
 
-
 int  tol = 0;
 int ch[10 * 10 * 2][2];
 void add(int x){
@@ -18,7 +17,6 @@ void add(int x){
 		k = ch[k][y];
 	}
 }
-
 
 int query(int x) {
 	int cur = 0;
@@ -36,10 +34,6 @@ int query(int x) {
 	}
 	return cur;
 }
-
-
-
-
 
 int _tmain(int argc, _TCHAR* argv[])
 {
