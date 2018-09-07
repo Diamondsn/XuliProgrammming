@@ -1,6 +1,6 @@
 //n个懂算法的，n个懂知识的，每队3个人，必须含有一个懂算法和懂知识的，问最多组多少队
 
-function(n,m)
+function test(n,m)
 {
     if(n==0 || m==0)
       return 0;
