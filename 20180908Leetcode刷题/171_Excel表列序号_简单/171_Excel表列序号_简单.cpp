@@ -30,14 +30,24 @@ using namespace std;
 //Êä³ö : 701
 
 int titleToNumber(string s) {
-
+	int result=0;
+	for (int i = 0; i < s.size(); ++i)
+	{
+		if (s[i] >= 65 && s[i] <= 90)//A-Z
+			result +=(s[i]-64)* pow(26,s.size()-1-i);
+		else if (s[i] >= 97 && s[i] <= 122)
+			result += (s[i] - 97)*pow(26,s.size()-1-i);
+	}
+	return result;
 }
 
 int main() {
 	//test1
-	string s = reverseWords("Let's take LeetCode contest");
-	cout << s << endl;//s'teL ekat edoCteeL tsetnoc
-					  //test end
+	int a = titleToNumber("A");
+	int b= titleToNumber("AB");
+	int c= titleToNumber("ZY");
+	cout << a << endl<< b<<endl << c<< endl;//1,28,701
+	//test end
 
 	system("pause");
 	return 0;
