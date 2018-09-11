@@ -13,12 +13,40 @@ using namespace std;
 //注意：在字符串中，每个单词由单个空格分隔，并且字符串中不会有任何额外的空格。
 
 string reverseWords(string s) {
-	//while()
+	vector<string> vec;
+	string result="";
+	while (s.size() > 0)
+	{
+		int n = s.find_first_of(" ");
+		if (n == -1)
+		{
+			vec.push_back(s);
+			s = "";
+		}
+		else {
+			vec.push_back(s.substr(0, n));
+			s = s.substr(n + 1);
+		}
+	}
+	for (int i = 0; i < vec.size(); ++i)
+	{
+		reverse(vec[i].begin(), vec[i].end());
+		if (i == 0)
+		{
+			result += vec[i];
+		}
+		else
+		{
+			result = result + " " + vec[i];
+		}
+	}
+	return result;
 }
 
 int main() {
 	//test1
-	
+	string s = reverseWords("Let's take LeetCode contest");
+	cout << s << endl;//s'teL ekat edoCteeL tsetnoc
 	//test end
 
 	system("pause");
