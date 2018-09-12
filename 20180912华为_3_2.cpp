@@ -4,6 +4,7 @@
 #include<string>
 using namespace std;
 
+//http://www.cnblogs.com/wmx24/p/9064134.html
 string multiply(string num1, string num2) {
         int l1=num1.size(),l2=num2.size();
         string res(l1+l2,'0');
