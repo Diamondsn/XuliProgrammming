@@ -3,6 +3,7 @@
 #include<string>
 using namespace std;
 
+//大位数字符串表示数字，计算乘积
 string add(string a, string b)
 {
 	if (a.length() == 0)

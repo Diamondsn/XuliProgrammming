@@ -5,6 +5,9 @@
 #include <map>
 #include<iostream>
 using namespace std;
+
+//找出字符串中出现次数只有一次的最后出现的字符，若没有只出现一次的字符，返回-1
+
 void function(string str)
 {
 	char s[256] = { 0 };
