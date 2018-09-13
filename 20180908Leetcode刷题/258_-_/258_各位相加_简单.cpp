@@ -44,6 +44,9 @@ int addDigits_xunhuan(int num) {
 
 //各个位上相加的非递归版本
 //通过枚举发现有规律, 即若数为9的倍数, 则结果为9, 若不是则各位相加的结果为对九取余.
+//假设一个四位数num = ABCD；即num=A*1000+B*100+C*10+D;
+//num=A+B+C+D+(A*999+B*99+C*9)
+//这样左边的数就是各位数的和，而右边的数一直都能被9整除；如果A+B+C+D大于9了，则可以再次套用上面的公式，所以对9取余即可。
 int addDigits_feidigui(int num) {
 	if (num == 0) return 0;
 	int result = num % 9;
