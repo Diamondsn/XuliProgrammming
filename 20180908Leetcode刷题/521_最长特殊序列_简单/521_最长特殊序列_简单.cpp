@@ -3,69 +3,38 @@
 #include<stack>
 using namespace std;
 
-//将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。
+//给定两个字符串，你需要从这两个字符串中找出最长的特殊序列。
+//最长特殊序列定义如下：该序列为某字符串独有的最长子序列（即不能是其他字符串的子序列）。
 //
-//本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。
+//子序列可以通过删去字符串中的某些字符实现，但不能改变剩余字符的相对顺序。
+//空序列为所有字符串的子序列，任何字符串为其自身的子序列。
+//
+//输入为两个字符串，输出最长特殊序列的长度。如果不存在，则返回 - 1。
+//
 //示例 :
-//给定有序数组: [-10, -3, 0, 5, 9],
-//一个可能的答案是：[0, -3, 9, -10, null, 5]，它可以表示下面这个高度平衡二叉搜索树：
-//	0
-//   / \
-// -3   9
-///    /
-//-10  5
+//输入: "aba", "cdc"
+//输出 : 3
+//解析 : 最长特殊序列可为 "aba" (或 "cdc")
+//	
+//说明 :
+//两个字符串长度均小于100。
+//字符串中的字符仅含有 'a'-'z'。
 
-struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
+int findLUSlength(string a, string b) {
+	if (a.compare(b) == 0)
+		return -1;
 
-TreeNode* sortedArrayToBST(vector<int>& nums) {
-	if (nums.size() < 1)
-		return NULL;
+	int result = 0;
+	if (a.size() != b.size())
+		return a.size() > b.size() ? a.size():b.size();
 
-	int m;
-	/*if (nums.size() % 2 == 0)
-	m = nums.size();
-	else*/
-	m = (nums.size()) / 2;
-
-	TreeNode* root = new TreeNode(nums[m]);
-	vector<int> left, right;
-	for (int i = 0; i < m; ++i)
-	{
-		left.push_back(nums[i]);
-	}
-	for (int i = m + 1; i < nums.size(); ++i)
-	{
-		right.push_back(nums[i]);
-	}
-	root->left = sortedArrayToBST(left);
-	root->right = sortedArrayToBST(right);
-
-	return root;
-}
-
-void Qianxubianli(TreeNode* pNode)
-{
-	if (pNode == NULL)
-		return;
-
-	cout << pNode->val << " ,";
-	if (pNode->left)
-		Qianxubianli(pNode->left);
-	if (pNode->right)
-		Qianxubianli(pNode->right);
+	return a.size();
 }
 
 void main() {
 	//test
-	vector<int> nums = { -10,-3,0,5,9 };
-	TreeNode* root = sortedArrayToBST(nums);
-	Qianxubianli(root);
-
+	int result = findLUSlength("aba", "cdc");
+	cout << result << endl;
 	//test end
 	system("pause");
 }
