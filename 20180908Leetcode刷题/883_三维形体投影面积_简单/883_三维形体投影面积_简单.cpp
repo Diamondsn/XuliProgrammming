@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include<vector>
 #include<stack>
 #include<string>
@@ -39,12 +39,79 @@ using namespace std;
 //0 <= grid[i][j] <= 50
 
 int projectionArea(vector<vector<int>>& grid) {
+	int xy =0;
+	int xz = 0;
+	int yz = 0;
+	vector<int> vec;
+	for (int i = 0; i < grid.size(); ++i)
+	{
+		int maxy = 0;
+		for (int j = 0; j < grid[i].size(); ++j)
+		{
+			if (grid[i][j] != 0)
+				xy++;
 
+			if (maxy < grid[i][j])
+				maxy = grid[i][j];
+
+			if (i == 0)
+				vec.push_back(grid[i][j]);
+			else {
+				if (vec[j] < grid[i][j])
+					vec[j] = grid[i][j];
+			}
+		}
+		xz += maxy;
+	}
+	for (int i = 0; i < vec.size(); ++i)
+		yz += vec[i];
+	return xy + xz + yz;
 }
 
 void main(){
 	//test1
-	
+	vector<vector<int>>grid;
+	vector<int>temp = { 1 };
+	grid.push_back(temp);
+	int a = projectionArea(grid);
+
+	//test2
+	grid.clear();
+	temp = { 1,2 };
+	grid.push_back(temp);
+	temp = { 3,4 };
+	grid.push_back(temp);
+	int b = projectionArea(grid);
+
+	//test3
+	grid.clear();
+	temp = { 1,0 };
+	grid.push_back(temp);
+	temp = { 0,2 };
+	grid.push_back(temp);
+	int c = projectionArea(grid);
+
+	//test4
+	grid.clear();
+	temp = { 1,1,1 };
+	grid.push_back(temp);
+	temp = { 1,0,1 };
+	grid.push_back(temp);
+	temp = { 1,1,1 };
+	grid.push_back(temp);
+	int d = projectionArea(grid);
+
+	//test5
+	grid.clear();
+	temp = { 2,2,2 };
+	grid.push_back(temp);
+	temp = { 2,1,2 };
+	grid.push_back(temp);
+	temp = { 2,2,2 };
+	grid.push_back(temp);
+	int e = projectionArea(grid);
+
+	cout << a << endl << b << endl << c << endl << d << endl << e << endl;
 	//test end
 	system("pause");
 }
