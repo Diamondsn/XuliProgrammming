@@ -1,0 +1,23 @@
+#include<iostream>
+#include<vector>
+#include<stack>
+#include<string>
+#include<sstream>
+#include<stdint.h>
+using namespace std;
+
+//字符串转int，float-使用atoi(),atof()
+
+void main(){
+	//test1
+	string str1("00801");
+	int result1=atoi(str1.c_str());
+	cout << "test1:"<<result1 << endl;
+
+	//test2
+	string str2("0.8333");
+	float result2 = atof(str2.c_str());
+	cout << "test2:" << result2 << endl;
+	//test end
+	system("pause");
+}
