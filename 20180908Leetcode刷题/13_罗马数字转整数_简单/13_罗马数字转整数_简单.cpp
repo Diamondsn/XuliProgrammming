@@ -47,7 +47,56 @@ using namespace std;
 //解释 : M = 1000, CM = 900, XC = 90, IV = 4.
 
 int romanToInt(string s) {
+	int result = 0;
+	int i = 0;
+	while (i <s.size())
+	{
+		if (s[i] == 'I' && i+1<s.size() && (s[i + 1] == 'V' || s[i + 1] == 'X'))
+		{
+			if (s[i + 1] == 'V')
+				result += 4;
+			else if (s[i + 1] == 'X')
+				result += 9;
 
+			i += 2;
+			continue;
+		}
+
+		if (s[i] == 'X' && i + 1<s.size() && (s[i + 1] == 'L' || s[i + 1] == 'C'))
+		{
+			if (s[i + 1] == 'L')
+				result += 40;
+			else if (s[i + 1] == 'C')
+				result += 90;
+
+			i += 2;
+			continue;
+		}
+
+		if (s[i] == 'C' && i + 1<s.size() && (s[i + 1] == 'D' || s[i + 1] == 'M'))
+		{
+			if (s[i + 1] == 'D')
+				result += 400;
+			else if (s[i + 1] == 'M')
+				result += 900;
+
+			i += 2;
+			continue;
+		}
+
+		switch (s[i]) {
+		case 'I':result += 1; break;
+		case 'V':result += 5; break;
+		case 'X':result += 10; break;
+		case 'L':result += 50; break;
+		case 'C':result += 100; break;
+		case 'D':result += 500; break;
+		case 'M':result += 1000; break;
+		default:break;
+		}
+		i += 1;
+	}
+	return result;
 }
 
 void main() {
@@ -57,7 +106,7 @@ void main() {
 	int c = romanToInt("IX");
 	int d = romanToInt("LVIII");
 	int e= romanToInt("MCMXCIV");
-	cout << a << endl << b << endl << c << endl << d << endl<<e<<endl;//2 2 1 0
+	cout << a << endl << b << endl << c << endl << d << endl<<e<<endl;//3，4，9，58，1994
 	//test end
 	system("pause");
 }
