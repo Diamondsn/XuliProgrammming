@@ -7,7 +7,7 @@
 using namespace std;
 
 //字符串转int，float-使用atoi(),atof()
-
+//注意：使用 atoi 的话，如果 string s 为空，返回值为0.则无法判断s是0还是空
 void main(){
 	//test1
 	string str1("00801");
