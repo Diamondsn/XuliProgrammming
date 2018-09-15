@@ -18,8 +18,25 @@ using namespace std;
 // -50 <= points[i][j] <= 50.
 //结果误差值在 10^-6 以内都认为是正确答案。
 
+//此题需用到给出三点坐标求出面积的公式
+// 已知三个点为(x1, y1)，(x2, y2)，(x3, y3)
+//面积为A = 1 / 2 * [x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)]
 double largestTriangleArea(vector<vector<int>>& points) {
-
+	double result=0.0;
+	double area;
+	for (int i = 0; i < points.size(); ++i)
+	{
+		for (int j = i + 1; j < points.size(); ++j)
+		{
+			for (int k = 0; k < points.size(); ++k)
+			{
+				area = 0.5*(abs(points[i][0] * (points[j][1] - points[k][1]) + points[j][0] * (points[k][1] - points[i][1]) + points[k][0] * (points[i][1] - points[j][1])));
+				if (result < area)
+					result = area;
+			}
+		}
+	}
+	return result;
 }
 
 int main() {
