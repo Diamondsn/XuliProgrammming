@@ -51,7 +51,30 @@ struct TreeNode {
 };
 
 TreeNode* trimBST(TreeNode* root, int L, int R) {
+	if (root == NULL)
+		return NULL;
 
+	TreeNode* Left = NULL;
+	TreeNode* Right = NULL;
+	if (root->left)
+		Left = trimBST(root->left, L, R);
+	if (root->right)
+		Right = trimBST(root->right, L, R);
+
+	if (root->val >= L && root->val <= R)
+	{
+		root->left = Left;
+		root->right = Right;
+		return root;
+	}
+	else
+	{
+		if (Left && !Right)
+			return Left;
+		else if (Right && !Left)
+			return Right;
+	}
+	return NULL;
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -94,31 +117,32 @@ int main() {
 	t1->left = t1_0;
 	t1->right = t1_2;
 
-	TreeNode* t = trimBST(t1,1,2);
 	//t1遍历
 	cout << "t1前序遍历" << endl;
-	Qianxubianli(t1);//
+	Qianxubianli(t1);//1,0,2
 	cout << endl;
 
 	cout << "t1中序遍历" << endl;
-	Zhongxubianli(t1);//
+	Zhongxubianli(t1);//0,1,2
 	cout << endl;
 
 	cout << "t1后序遍历" << endl;
-	Houxubianli(t1);//
+	Houxubianli(t1);//0,2,1
 	cout << endl;
+
+	TreeNode* t = trimBST(t1, 1, 2);
 
 	//t遍历
 	cout << "t前序遍历" << endl;
-	Qianxubianli(t);//
+	Qianxubianli(t);//1,2
 	cout << endl;
 
 	cout << "t中序遍历" << endl;
-	Zhongxubianli(t);//
+	Zhongxubianli(t);//1,2
 	cout << endl;
 
 	cout << "t后序遍历" << endl;
-	Houxubianli(t);//
+	Houxubianli(t);//2,1
 	cout << endl;
 
 	//test2
@@ -134,31 +158,32 @@ int main() {
 	t2_0->right = t2_2;
 	t2_2->left = t2_1;
 
-	TreeNode* t3 = trimBST(t2, 1, 3);
 	//t2遍历
 	cout << "t2前序遍历" << endl;
-	Qianxubianli(t1);//
+	Qianxubianli(t2);//3,0,2,1,4
 	cout << endl;
 
 	cout << "t2中序遍历" << endl;
-	Zhongxubianli(t1);//
+	Zhongxubianli(t2);//0,1,2,3,4
 	cout << endl;
 
 	cout << "t2后序遍历" << endl;
-	Houxubianli(t1);//
+	Houxubianli(t2);//1,2,0,4,3
 	cout << endl;
 
-	//t遍历
+	TreeNode* t3 = trimBST(t2, 1, 3);
+
+	//t3遍历
 	cout << "t3前序遍历" << endl;
-	Qianxubianli(t);//
+	Qianxubianli(t3);//3,2,1
 	cout << endl;
 
 	cout << "t3中序遍历" << endl;
-	Zhongxubianli(t);//
+	Zhongxubianli(t3);//1,2,3
 	cout << endl;
 
 	cout << "t3后序遍历" << endl;
-	Houxubianli(t);//
+	Houxubianli(t3);//1,2,3
 	cout << endl;
 	//test end
 
