@@ -3,6 +3,7 @@
 #include<stack>
 #include<string>
 #include<stdint.h>
+#include<set>
 using namespace std;
 
 //给定一个偶数长度的数组，其中不同的数字代表着不同种类的糖果，每一个数字代表一个糖果。
@@ -24,13 +25,41 @@ using namespace std;
 //数组的长度为[2, 10, 000]，并且确定为偶数。
 //数组中数字的大小在范围[-100, 000, 100, 000]内。
 
-int distributeCandies(vector<int>& candies) {
+//此方法时间复杂度过大
+//int distributeCandies(vector<int>& candies) {
+//	vector<int> temp;
+//	for (int i = 0; i < candies.size(); ++i)
+//	{
+//		if (find(temp.begin(), temp.end(), candies[i]) == temp.end())
+//			temp.push_back(candies[i]);
+//	}
+//	if (temp.size() >= candies.size() / 2)
+//		return candies.size() / 2;
+//	else
+//		return temp.size();
+//}
 
+//使用set更快
+int distributeCandies(vector<int>& candies) {
+	set<int>temp;
+	for (int i = 0; i < candies.size(); ++i)
+	{
+		temp.insert(candies[i]);
+	}
+	if (temp.size() >= candies.size() / 2)
+		return candies.size() / 2;
+	else
+		return temp.size();
 }
 
 void main() {
 	//test1
-	
+	vector<int>candies = { 1,1,2,2,3,3 };
+	int a = distributeCandies(candies);
+
+	candies = { 1,1,2,3 };
+	int b = distributeCandies(candies);
+	cout << a << endl << b << endl;
 	//test end
 	system("pause");
 }

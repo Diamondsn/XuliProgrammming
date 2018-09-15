@@ -1,20 +1,20 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 using namespace std;
 
-//·­×ªÒ»¿Ã¶þ²æÊ÷¡£
+//ç¿»è½¬ä¸€æ£µäºŒå‰æ ‘ã€‚
 //
-//Ê¾Àý£º
-//ÊäÈë£º
+//ç¤ºä¾‹ï¼š
+//è¾“å…¥ï¼š
 //    4
 //   / \
 //  2   7
 // / \  / \
 //1   3 6   9
-//Êä³ö£º
+//è¾“å‡ºï¼š
 //    4
 //   / \
 //  7   2
@@ -90,29 +90,29 @@ int main() {
 	t1_7->right = t1_9;
 	
 	TreeNode* t2 = invertTree(t1);
-	//t1±éÀú
-	cout << "t1Ç°Ðò±éÀú" << endl;
+	//t1éåŽ†
+	cout << "t1å‰åºéåŽ†" << endl;
 	Qianxubianli(t1);//4,2,1,3,7,6,9
 	cout << endl;
 
-	cout << "t1ÖÐÐò±éÀú" << endl;
+	cout << "t1ä¸­åºéåŽ†" << endl;
 	Zhongxubianli(t1);//1,2,3,4,6,7,9
 	cout << endl;
 
-	cout << "t1ºóÐò±éÀú" << endl;
+	cout << "t1åŽåºéåŽ†" << endl;
 	Houxubianli(t1);//1,3,2,6,9,7,4
 	cout << endl;
 
-	//t2±éÀú
-	cout << "t2Ç°Ðò±éÀú" << endl;
+	//t2éåŽ†
+	cout << "t2å‰åºéåŽ†" << endl;
 	Qianxubianli(t2);//4,7,9,6,2,3,1
 	cout << endl;
 
-	cout << "t2ÖÐÐò±éÀú" << endl;
+	cout << "t2ä¸­åºéåŽ†" << endl;
 	Zhongxubianli(t2);//9,7,6,4,3,2,1
 	cout << endl;
 
-	cout << "t2ºóÐò±éÀú" << endl;
+	cout << "t2åŽåºéåŽ†" << endl;
 	Houxubianli(t2);//9,6,7,3,1,2,4
 	cout << endl;
 	//test end
