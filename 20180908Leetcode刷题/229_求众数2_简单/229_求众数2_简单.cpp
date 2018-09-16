@@ -17,8 +17,75 @@ using namespace std;
 //输入: [1,1,1,3,3,2,2,2]
 //输出: [1,2]
 
-vector<int> majorityElement(vector<int>& nums) {
+//摩尔投票算法
+vector<int> majorityElement(vector<int>& nums) {//结果最多两个数
+	int num1;
+	int num2;
+	int count1 = 0;
+	int count2 = 0;
+	vector<int>result;
+	for (int i = 0; i < nums.size(); ++i)
+	{
+		if (count1 == 0)
+		{
+			num1 = nums[i];
+			count1 = 1;
+		}
+		else if (num1 == nums[i])
+		{
+			count1++;
+		}
+		else if (count2 == 0)
+		{
+			num2 = nums[i];
+			count2=1;
+		}
+		else if (num2 == nums[i])
+		{
+			count2++;
+		}
+		else
+		{
+			count1--;
+			count2--;
+			if (count1 == 0 && count2 > 0)
+			{
+				count1 = count2;
+				num1 = num2;
+				count2 = 0;
+				num2 = 0;
+			}
+		}
+	}
+	if (count1 > 0)
+	{
+		count1 = 0;
+		for (int i = 0; i < nums.size(); ++i)
+		{
+			if (nums[i] == num1)
+			{
+				count1++;
+			}
+		}
+	}
+	if (count2 > 0)
+	{
+		count2 = 0;
+		for (int i = 0; i < nums.size(); ++i)
+		{
+			if (nums[i] == num2)
+			{
+				count2++;
+			}
+		}
+	}
+	
+	if (count1 * 3 > nums.size())
+		result.push_back(num1);
+	if (count2 * 3 > nums.size())
+		result.push_back(num2);
 
+	return result;
 }
 
 void main() {
@@ -30,12 +97,12 @@ void main() {
 	cout << "test1" << endl;
 	for (int i = 0; i < result1.size(); ++i)
 	{
-		cout << result1[i] << endl;
+		cout << result1[i] << endl;//3
 	}
 	cout << "test2" << endl;
 	for (int i = 0; i < result2.size(); ++i)
 	{
-		cout << result2[i] << endl;
+		cout << result2[i] << endl;//1,2
 	}
 	//test end
 	system("pause");
