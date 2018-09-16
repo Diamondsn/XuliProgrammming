@@ -49,20 +49,24 @@ int calPoints(vector<string>& ops) {
 	{
 		if (ops[i].compare("+") == 0)
 		{
-
+			record.push_back(record[record.size() - 1] + record[record.size() - 2]);
+			result += record.back();
 		}
 		else if (ops[i].compare("D") == 0)
 		{
-
+			record.push_back(2 * record.back());
+			result += record.back();
 		}
 		else if (ops[i].compare("C") == 0)
 		{
-
+			result -= record.back();
+			record.pop_back();
 		}
 		else
 		{
 			int m = atoi(ops[i].c_str());
 			record.push_back(m);
+			result += m;
 		}
 	}
 	return result;
