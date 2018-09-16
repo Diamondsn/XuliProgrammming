@@ -1,5 +1,4 @@
-#include "stdafx.h"
-#include<string>
+﻿#include<string>
 #include<vector>
 #include<deque>
 #include<iostream>
@@ -55,7 +54,7 @@ void kuaisupaixu(int arr[], int i, int j)
 int main()
 {
 	int arr[10] = { 72,6,57,88,85,42,83,73,48,60 };
-	kuaisupaixu(arr, 0,9);//此处结果为6，
+	kuaisupaixu(arr, 0,9);//
 	for (int i = 0; i < 10; ++i)
 	{
 		cout << arr[i] << endl;
