@@ -43,6 +43,17 @@ public:
     }
 };
 
+void IsLeaf(vector<vector<int>>& grid, int xMin, int xMax,int yMin,int yMax,bool& isLeaf,bool& val)
+{
+	if (xMax == xMin && yMax == yMin)
+	{
+		isLeaf = true;
+		val = grid[xMax][yMax];
+		return;
+	}
+
+}
+
 Node* construct(vector<vector<int>>& grid) {
         
 }
