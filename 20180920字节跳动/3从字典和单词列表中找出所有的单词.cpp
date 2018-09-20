@@ -123,6 +123,5 @@ void main() {
 		cout << res[i] << endl;
 	}
 
-
 	system("pause");
 }
