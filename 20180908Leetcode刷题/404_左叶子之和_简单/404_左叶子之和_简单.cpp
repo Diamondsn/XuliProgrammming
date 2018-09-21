@@ -1,20 +1,20 @@
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 #include"math.h"
 using namespace std;
 
-//¼ÆËã¸ø¶¨¶þ²æÊ÷µÄËùÓÐ×óÒ¶×ÓÖ®ºÍ¡£
+//è®¡ç®—ç»™å®šäºŒå‰æ ‘çš„æ‰€æœ‰å·¦å¶å­ä¹‹å’Œã€‚
 //
-//Ê¾Àý£º
+//ç¤ºä¾‹ï¼š
 //    3
 //   / \
 //  9  20
 //    /  \
 //   15   7
 //
-//ÔÚÕâ¸ö¶þ²æÊ÷ÖÐ£¬ÓÐÁ½¸ö×óÒ¶×Ó£¬·Ö±ðÊÇ 9 ºÍ 15£¬ËùÒÔ·µ»Ø 24
+//åœ¨è¿™ä¸ªäºŒå‰æ ‘ä¸­ï¼Œæœ‰ä¸¤ä¸ªå·¦å¶å­ï¼Œåˆ†åˆ«æ˜¯ 9 å’Œ 15ï¼Œæ‰€ä»¥è¿”å›ž 24
 
 struct TreeNode {
 	int val;
