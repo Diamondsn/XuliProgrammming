@@ -1,4 +1,4 @@
-#include<string>
+﻿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
@@ -63,16 +63,16 @@ public:
 	}
 
 	void push(int x) {
-		if (x <= min)
+		if (x <= min)//当最小值更替时，将当前最小值压入
 		{
-			min = x;
 			s1.push(min);
+			min = x;
 		}
 		s1.push(x);
 	}
 
 	void pop() {
-		int t = s1.top();
+		int t=s1.top();
 		s1.pop();
 		if (t == min){
 			min = s1.top();
