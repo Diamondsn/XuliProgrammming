@@ -26,7 +26,7 @@ bool isAnagram(string s, string t) {
 	if (s.size() != t.size())
 		return false;
 
-	unordered_map<char, int>hash;
+	unordered_map<char, int>hash;//用于小写字母char的hash可以用长度26的数组实现
 	for (int i = 0; i < s.size(); ++i)
 	{
 		hash[s[i]]++;
