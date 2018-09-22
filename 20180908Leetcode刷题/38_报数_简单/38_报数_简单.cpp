@@ -3,8 +3,9 @@
 #include<iostream>
 #include<algorithm>
 #include"math.h"
+#include<sstream>
 using namespace std;
-
+#pragma warning(disable:4996)
 //报数序列是指一个整照其中的整数的顺序进数序列，按行报数，得到下一个数。其前五项如下：
 //
 //1.     1
@@ -29,7 +30,40 @@ using namespace std;
 //输出: "1211"
 
 string countAndSay(int n) {
+	string str;
+	if (n == 1)
+	{
+		str = "1";
+		return str;
+	}
 
+	int sum = 0;
+	string temp = "1";
+	while (n >= 2)
+	{
+		str = "";
+		char m = temp[0];
+		sum = 1;
+		for (int i = 1; i < temp.size(); ++i)
+		{
+			if (temp[i] == m)
+				sum++;
+			else
+			{
+				stringstream ss;
+				ss << sum;
+				str += ss.str()+m;
+				m = temp[i];
+				sum = 1;
+			}
+		}
+		stringstream ss;
+		ss << sum;
+		str += ss.str() + m;
+		temp = str;
+		n--;
+	}
+	return str;
 }
 
 int main() {
