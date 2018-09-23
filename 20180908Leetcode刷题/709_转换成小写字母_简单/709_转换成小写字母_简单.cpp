@@ -1,22 +1,21 @@
-#include "stdafx.h"
-#include<string>
+ï»¿#include<string>
 #include<iostream>
 #include<algorithm>
 using namespace std;
 
-//ÊµÏÖº¯Êı ToLowerCase()£¬¸Ãº¯Êı½ÓÊÕÒ»¸ö×Ö·û´®²ÎÊı str£¬²¢½«¸Ã×Ö·û´®ÖĞµÄ´óĞ´×ÖÄ¸×ª»»³ÉĞ¡Ğ´×ÖÄ¸£¬Ö®ºó·µ»ØĞÂµÄ×Ö·û´®¡£
+//å®ç°å‡½æ•° ToLowerCase()ï¼Œè¯¥å‡½æ•°æ¥æ”¶ä¸€ä¸ªå­—ç¬¦ä¸²å‚æ•° strï¼Œå¹¶å°†è¯¥å­—ç¬¦ä¸²ä¸­çš„å¤§å†™å­—æ¯è½¬æ¢æˆå°å†™å­—æ¯ï¼Œä¹‹åè¿”å›æ–°çš„å­—ç¬¦ä¸²ã€‚
 //
-//Ê¾Àı 1£º
-//ÊäÈë : "Hello"
-//Êä³ö : "hello"
+//ç¤ºä¾‹ 1ï¼š
+//è¾“å…¥ : "Hello"
+//è¾“å‡º : "hello"
 //	
-//Ê¾Àı 2£º
-//ÊäÈë : "here"
-//Êä³ö : "here"
+//ç¤ºä¾‹ 2ï¼š
+//è¾“å…¥ : "here"
+//è¾“å‡º : "here"
 //
-//Ê¾Àı 3£º
-//ÊäÈë : "LOVELY"
-//Êä³ö : "lovely"
+//ç¤ºä¾‹ 3ï¼š
+//è¾“å…¥ : "LOVELY"
+//è¾“å‡º : "lovely"
 
 string toLowerCase(string str) {
 	for (int i = 0; i < str.length(); ++i)

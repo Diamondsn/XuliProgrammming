@@ -1,16 +1,15 @@
-#include "stdafx.h"
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 using namespace std;
 
-//¸ø¶¨Ò»¸ö×Ö·û´®£¬ÄãĞèÒª·´×ª×Ö·û´®ÖĞÃ¿¸öµ¥´ÊµÄ×Ö·ûË³Ğò£¬Í¬Ê±ÈÔ±£Áô¿Õ¸ñºÍµ¥´ÊµÄ³õÊ¼Ë³Ğò¡£
+//ç»™å®šä¸€ä¸ªå­—ç¬¦ä¸²ï¼Œä½ éœ€è¦åè½¬å­—ç¬¦ä¸²ä¸­æ¯ä¸ªå•è¯çš„å­—ç¬¦é¡ºåºï¼ŒåŒæ—¶ä»ä¿ç•™ç©ºæ ¼å’Œå•è¯çš„åˆå§‹é¡ºåºã€‚
 //
-//Ê¾Àı 1:
-//ÊäÈë: "Let's take LeetCode contest"
-//Êä³ö : "s'teL ekat edoCteeL tsetnoc"
-//×¢Òâ£ºÔÚ×Ö·û´®ÖĞ£¬Ã¿¸öµ¥´ÊÓÉµ¥¸ö¿Õ¸ñ·Ö¸ô£¬²¢ÇÒ×Ö·û´®ÖĞ²»»áÓĞÈÎºÎ¶îÍâµÄ¿Õ¸ñ¡£
+//ç¤ºä¾‹ 1:
+//è¾“å…¥: "Let's take LeetCode contest"
+//è¾“å‡º : "s'teL ekat edoCteeL tsetnoc"
+//æ³¨æ„ï¼šåœ¨å­—ç¬¦ä¸²ä¸­ï¼Œæ¯ä¸ªå•è¯ç”±å•ä¸ªç©ºæ ¼åˆ†éš”ï¼Œå¹¶ä¸”å­—ç¬¦ä¸²ä¸­ä¸ä¼šæœ‰ä»»ä½•é¢å¤–çš„ç©ºæ ¼ã€‚
 
 string reverseWords(string s) {
 	vector<string> vec;

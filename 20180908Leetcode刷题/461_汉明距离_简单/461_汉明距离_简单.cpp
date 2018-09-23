@@ -1,26 +1,25 @@
-#include "stdafx.h"
-#include<string>
+ï»¿#include<string>
 #include<iostream>
 #include<algorithm>
 using namespace std;
 
-//Á½¸öÕûÊýÖ®¼äµÄººÃ÷¾àÀëÖ¸µÄÊÇÕâÁ½¸öÊý×Ö¶ÔÓ¦¶þ½øÖÆÎ»²»Í¬µÄÎ»ÖÃµÄÊýÄ¿¡£
+//ä¸¤ä¸ªæ•´æ•°ä¹‹é—´çš„æ±‰æ˜Žè·ç¦»æŒ‡çš„æ˜¯è¿™ä¸¤ä¸ªæ•°å­—å¯¹åº”äºŒè¿›åˆ¶ä½ä¸åŒçš„ä½ç½®çš„æ•°ç›®ã€‚
 //
-//¸ø³öÁ½¸öÕûÊý x ºÍ y£¬¼ÆËãËüÃÇÖ®¼äµÄººÃ÷¾àÀë¡£
+//ç»™å‡ºä¸¤ä¸ªæ•´æ•° x å’Œ yï¼Œè®¡ç®—å®ƒä»¬ä¹‹é—´çš„æ±‰æ˜Žè·ç¦»ã€‚
 //
-//×¢Òâ£º
+//æ³¨æ„ï¼š
 //0 =< x, y < 2^31.
 //
-//Ê¾Àý:
-//ÊäÈë: x = 1, y = 4
-//Êä³ö : 2
+//ç¤ºä¾‹:
+//è¾“å…¥: x = 1, y = 4
+//è¾“å‡º : 2
 //
-//½âÊÍ :
+//è§£é‡Š :
 //1   (0 0 0 1)
 //4   (0 1 0 0)
-//¡ü   ¡ü
+//â†‘   â†‘
 //
-//ÉÏÃæµÄ¼ýÍ·Ö¸³öÁË¶ÔÓ¦¶þ½øÖÆÎ»²»Í¬µÄÎ»ÖÃ¡£
+//ä¸Šé¢çš„ç®­å¤´æŒ‡å‡ºäº†å¯¹åº”äºŒè¿›åˆ¶ä½ä¸åŒçš„ä½ç½®ã€‚
 
 int hammingDistance(int x, int y) {
 	int z = x^y;

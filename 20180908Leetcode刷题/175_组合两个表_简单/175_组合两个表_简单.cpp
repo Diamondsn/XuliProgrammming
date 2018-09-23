@@ -1,32 +1,31 @@
-#include "stdafx.h"
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 using namespace std;
 
-//±í1: Person
+//è¡¨1: Person
 //+ ------------ - +-------- - +
-//| ÁĞÃû           | ÀàĞÍ      |
+//| åˆ—å           | ç±»å‹      |
 //+------------ -  +-------- - +
 //| PersonId       | int       |
 //| FirstName      | varchar   |
 //| LastName       | varchar   |
 //+------------ -  +-------- - +
-//PersonId ÊÇÉÏ±íÖ÷¼ü
+//PersonId æ˜¯ä¸Šè¡¨ä¸»é”®
 //
-//±í2 : Address
+//è¡¨2 : Address
 //+ ------------ - +-------- - +
-//| ÁĞÃû           | ÀàĞÍ      |
+//| åˆ—å           | ç±»å‹      |
 //+------------ -  +-------- - +
 //| AddressId      | int       |
 //| PersonId       | int       |
 //| City           | varchar   |
 //| State          | varchar   |
 //+------------ -  +-------- - +
-//AddressId ÊÇÉÏ±íÖ÷¼ü
+//AddressId æ˜¯ä¸Šè¡¨ä¸»é”®
 //
-//±àĞ´Ò»¸ö SQL ²éÑ¯£¬Âú×ãÌõ¼ş£ºÎŞÂÛ person ÊÇ·ñÓĞµØÖ·ĞÅÏ¢£¬¶¼ĞèÒª»ùÓÚÉÏÊöÁ½±íÌá¹© person µÄÒÔÏÂĞÅÏ¢£º
+//ç¼–å†™ä¸€ä¸ª SQL æŸ¥è¯¢ï¼Œæ»¡è¶³æ¡ä»¶ï¼šæ— è®º person æ˜¯å¦æœ‰åœ°å€ä¿¡æ¯ï¼Œéƒ½éœ€è¦åŸºäºä¸Šè¿°ä¸¤è¡¨æä¾› person çš„ä»¥ä¸‹ä¿¡æ¯ï¼š
 //
 //FirstName, LastName, City, State
 

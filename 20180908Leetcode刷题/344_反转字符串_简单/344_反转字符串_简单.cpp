@@ -1,25 +1,24 @@
-#include "stdafx.h"
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 using namespace std;
 
-//±àÐ´Ò»¸öº¯Êý£¬Æä×÷ÓÃÊÇ½«ÊäÈëµÄ×Ö·û´®·´×ª¹ýÀ´¡£
+//ç¼–å†™ä¸€ä¸ªå‡½æ•°ï¼Œå…¶ä½œç”¨æ˜¯å°†è¾“å…¥çš„å­—ç¬¦ä¸²åè½¬è¿‡æ¥ã€‚
 //
-//Ê¾Àý 1:
-//ÊäÈë: "hello"
-//Êä³ö : "olleh"
+//ç¤ºä¾‹ 1:
+//è¾“å…¥: "hello"
+//è¾“å‡º : "olleh"
 //
-//Ê¾Àý 2 :
-//ÊäÈë : "A man, a plan, a canal: Panama"
-//Êä³ö : "amanaP :lanac a ,nalp a ,nam A"
+//ç¤ºä¾‹ 2 :
+//è¾“å…¥ : "A man, a plan, a canal: Panama"
+//è¾“å‡º : "amanaP :lanac a ,nalp a ,nam A"
 
 string reverseString(string s) {
-	//1½â
+	//1è§£
 	/*reverse(s.begin(),s.end());
 	return s;*/
-	//2½â
+	//2è§£
 	string newstr = "";
 	for (int i = s.size() - 1; i >= 0; --i)
 	{

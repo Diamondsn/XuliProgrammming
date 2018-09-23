@@ -1,21 +1,20 @@
-#include "stdafx.h"
-#include<string>
+﻿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 using namespace std;
 
-//����һ�������б���ֻ���ؿ���ʹ���ڼ���ͬһ�е���ĸ��ӡ�����ĵ��ʡ���������ͼ��ʾ��
+//给定一个单词列表，只返回可以使用在键盘同一行的字母打印出来的单词。键盘如下图所示。
 //
 //American keyboard
 //
-//ʾ��1 :
-//����: ["Hello", "Alaska", "Dad", "Peace"]
-//��� : ["Alaska", "Dad"]
+//示例1 :
+//输入: ["Hello", "Alaska", "Dad", "Peace"]
+//输出 : ["Alaska", "Dad"]
 //	
-//ע�� :
-//������ظ�ʹ�ü�����ͬһ�ַ���
-//����Լ���������ַ�����ֻ������ĸ��
+//注意 :
+//你可以重复使用键盘上同一字符。
+//你可以假设输入的字符串将只包含字母。
 
 bool correct(int flag, string& str)
 {
