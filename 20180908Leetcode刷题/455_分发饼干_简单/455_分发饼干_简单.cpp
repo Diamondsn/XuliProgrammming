@@ -29,7 +29,26 @@ using namespace std;
 //所以你应该输出2.
 
 int findContentChildren(vector<int>& g, vector<int>& s) {
+	if (s.size() < 1)
+		return 0;
 
+	int sum = 0;
+	sort(g.begin(), g.end());
+	sort(s.begin(), s.end());
+	int j = 0;
+	for (int i = 0; i < g.size(); ++i)
+	{
+		while (j<s.size() && g[i]>s[j++]);
+		if (g[i]<=s[j-1])
+		{
+			sum++;
+		}
+		if(g[i]>s[j-1]|| j==s.size())
+		{
+			break;
+		}
+	}
+	return sum;
 }
 
 int main() {
@@ -43,7 +62,12 @@ int main() {
 	s = { 1,2,3 };
 	int b = findContentChildren(g, s);
 
-	cout << a << endl << b << endl;
+	//test3
+	g = { 1,2,3 };
+	s = { 3 };
+	int c = findContentChildren(g, s);
+
+	cout << a << endl << b <<endl<<c<< endl;
 	//test end
 
 	system("pause");
