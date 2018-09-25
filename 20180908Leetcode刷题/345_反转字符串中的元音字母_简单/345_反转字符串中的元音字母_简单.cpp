@@ -1,21 +1,21 @@
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 using namespace std;
 
-//±àĞ´Ò»¸öº¯Êı£¬ÒÔ×Ö·û´®×÷ÎªÊäÈë£¬·´×ª¸Ã×Ö·û´®ÖĞµÄÔªÒô×ÖÄ¸¡£
+//ç¼–å†™ä¸€ä¸ªå‡½æ•°ï¼Œä»¥å­—ç¬¦ä¸²ä½œä¸ºè¾“å…¥ï¼Œåè½¬è¯¥å­—ç¬¦ä¸²ä¸­çš„å…ƒéŸ³å­—æ¯ã€‚
 //
-//Ê¾Àı 1:
-//ÊäÈë: "hello"
-//Êä³ö: "holle"
+//ç¤ºä¾‹ 1:
+//è¾“å…¥: "hello"
+//è¾“å‡º: "holle"
 //
-//Ê¾Àı 2:
-//ÊäÈë: "leetcode"
-//Êä³ö: "leotcede"
+//ç¤ºä¾‹ 2:
+//è¾“å…¥: "leetcode"
+//è¾“å‡º: "leotcede"
 //
-//ËµÃ÷:
-//ÔªÒô×ÖÄ¸²»°üº¬×ÖÄ¸"y"¡£
+//è¯´æ˜:
+//å…ƒéŸ³å­—æ¯ä¸åŒ…å«å­—æ¯"y"ã€‚
 
 void swap(string& s, int i, int j)
 {
@@ -41,7 +41,7 @@ string reverseVowels(string s) {
 	int i = -1, j = s.size();
 	while (i < j)
 	{
-		while (i<(int)s.size() && !isVowels(s[++i]));//Ç°ÃæµÄÅĞ¶ÏÊÇintÓësize_tÅĞ¶Ï-1>5
+		while (i<(int)s.size() && !isVowels(s[++i]));//å‰é¢çš„åˆ¤æ–­æ˜¯intä¸size_tåˆ¤æ–­-1>5
 		while (j >= 1 && !isVowels(s[--j]));
 		swap(s, i, j);
 	}
