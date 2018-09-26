@@ -37,27 +37,29 @@ struct TreeNode {
 };
 
 int findSecondMinimumValue(TreeNode* root) {
-	int res=-1,max=-1;
 	if (!root)
-		return res;
+		return -1;
+	int min = root->val,res=INT_MAX;
 	deque<TreeNode*>mydeque;
 	mydeque.push_back(root);
-		while (!mydeque.empty())
-		{
-			TreeNode* pNode=mydeque.front();
-			mydeque.pop_front();
+	while (!mydeque.empty())
+	{
+		TreeNode* pNode = mydeque.front();
+		mydeque.pop_front();
 
-			if (pNode->val > max)
-			{
-				res = max;
-				max = pNode->val;
-			}
-			if (pNode->left)
-				mydeque.push_back(pNode->left);
-			if (pNode->right)
-				mydeque.push_back(pNode->right);
+		if (pNode->val > min && pNode->val < res)
+		{
+			res = pNode->val;
 		}
-	return res;
+		if (pNode->left)
+			mydeque.push_back(pNode->left);
+		if (pNode->right)
+			mydeque.push_back(pNode->right);
+	}
+	if (res == INT_MAX)
+		return -1;
+	else
+		return res;
 }
 
 void Qianxubianli(TreeNode* pNode)
