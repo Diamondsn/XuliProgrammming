@@ -41,7 +41,18 @@ using namespace std;
 //操作数目不超过 10000。
 
 int maxCount(int m, int n, vector<vector<int>>& ops) {
-
+	int res = m*n;
+	for (int i = 0; i < ops.size(); ++i)
+	{
+		if (ops[i][0] < m) {
+			m = ops[i][0];
+		}
+		if (ops[i][1] < n)
+		{
+			n = ops[i][1];
+		}
+	}
+	return m*n;
 }
 
 int main() {
