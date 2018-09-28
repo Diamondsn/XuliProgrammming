@@ -22,47 +22,23 @@ struct ListNode {
 	ListNode(int x) : val(x), next(NULL) {}
 };
 
+//此题参考了https://blog.csdn.net/qq_17550379/article/details/80668036
 ListNode* deleteDuplicates(ListNode* head) {
 	if (head == NULL)
 		return NULL;
-	ListNode* newhead = NULL;
-	ListNode* prev = NULL;
-	ListNode* cur = head;
-	ListNode* next = head->next;
+	
+	ListNode* newhead = new ListNode(0);
+	newhead->next = head;
+	ListNode* prev = newhead;
+	ListNode* cur = prev->next;
+	while (cur){
+		while (cur->next && cur->next->val == cur->val)cur = cur->next;
+		if (cur != prev->next)prev->next = cur->next;
+		else prev = cur;
 
-	while (cur)
-	{
-		if (prev == NULL&& next == NULL)
-		{
-			newhead = cur;
-			break;
-		}
-		else if (prev == NULL && next && cur->val != next->val)
-		{
-			newhead = cur;
-			break;
-		}
-		else if (prev && next && prev->val != cur->val && next->val != cur->val)
-		{
-			newhead = cur;
-			break;
-		}
-		else{
-			prev = cur;
-			cur = next;
-			next = cur ? cur->next:NULL;
-		}
+		cur = cur->next;
 	}
-	if (newhead != NULL)
-	{
-		ListNode* temp = newhead;
-		while (temp)
-		{
-
-		}
-	}
-
-	return newhead;
+	return newhead->next;
 }
 
 void LianBiaoBianLi(ListNode* root)
