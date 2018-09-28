@@ -1,4 +1,4 @@
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
@@ -6,15 +6,15 @@
 #include<deque>
 using namespace std;
 
-//¸ø¶¨Ò»¸öÅÅÐòÁ´±í£¬É¾³ýËùÓÐº¬ÓÐÖØ¸´Êý×ÖµÄ½Úµã£¬Ö»±£ÁôÔ­Ê¼Á´±íÖÐ Ã»ÓÐÖØ¸´³öÏÖ µÄÊý×Ö¡£
+//ç»™å®šä¸€ä¸ªæŽ’åºé“¾è¡¨ï¼Œåˆ é™¤æ‰€æœ‰å«æœ‰é‡å¤æ•°å­—çš„èŠ‚ç‚¹ï¼Œåªä¿ç•™åŽŸå§‹é“¾è¡¨ä¸­ æ²¡æœ‰é‡å¤å‡ºçŽ° çš„æ•°å­—ã€‚
 //
-//Ê¾Àý 1:
-//ÊäÈë: 1->2->3->3->4->4->5
-//Êä³ö: 1->2->5
+//ç¤ºä¾‹ 1:
+//è¾“å…¥: 1->2->3->3->4->4->5
+//è¾“å‡º: 1->2->5
 //
-//Ê¾Àý 2:
-//ÊäÈë: 1->1->1->2->3
-//Êä³ö: 2->3
+//ç¤ºä¾‹ 2:
+//è¾“å…¥: 1->1->1->2->3
+//è¾“å‡º: 2->3
 
 struct ListNode {
 	int val;
@@ -26,11 +26,42 @@ ListNode* deleteDuplicates(ListNode* head) {
 	if (head == NULL)
 		return NULL;
 	ListNode* newhead = NULL;
-	bool flag = false;
+	ListNode* prev = NULL;
+	ListNode* cur = head;
+	ListNode* next = head->next;
 
-	while (temp) {
-		
+	while (cur)
+	{
+		if (prev == NULL&& next == NULL)
+		{
+			newhead = cur;
+			break;
+		}
+		else if (prev == NULL && next && cur->val != next->val)
+		{
+			newhead = cur;
+			break;
+		}
+		else if (prev && next && prev->val != cur->val && next->val != cur->val)
+		{
+			newhead = cur;
+			break;
+		}
+		else{
+			prev = cur;
+			cur = next;
+			next = cur ? cur->next:NULL;
+		}
 	}
+	if (newhead != NULL)
+	{
+		ListNode* temp = newhead;
+		while (temp)
+		{
+
+		}
+	}
+
 	return newhead;
 }
 
