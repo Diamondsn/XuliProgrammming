@@ -21,7 +21,7 @@ using namespace std;
 //输出: "-10"
 //注意: 输入范围是 [-1e7, 1e7] 。
 
-string convertToBase7(int num) {
+/*string convertToBase7(int num) {
 	string res;
 	if (num == 0)
 	{
@@ -42,6 +42,15 @@ string convertToBase7(int num) {
 	if (!flag)
 		res = '-' + res;
 	return res;
+}*/
+
+//新颖递归解法
+string convertToBase7(int num)
+{
+	if (num == 0)return "0";
+	if (num < 0)return '-' + convertToBase7(-num);
+	if (num < 7)return to_string(num);
+	else return convertToBase7(num / 7) + to_string(num % 7);
 }
 
 int main() {
