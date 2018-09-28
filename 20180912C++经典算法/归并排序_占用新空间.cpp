@@ -12,9 +12,9 @@ using namespace std;
 /********************************/
 //归并排序时间复杂度
 //
-//最佳 :O(n^2)
-//平均 :O(n^2)
-//最差 :O(n^ 2);
+//最佳 :O(nLogn)
+//平均 :O(nLogn)
+//最差 :O(nLogn);
 /********************************/
 
 vector<int> merge(vector<int>& nums1, vector<int>& nums2)
