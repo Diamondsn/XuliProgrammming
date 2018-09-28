@@ -1,4 +1,4 @@
-#include<string>
+﻿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
@@ -24,21 +24,21 @@ using namespace std;
 
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 	int cur = m + n - 1, i = m-1, j = n-1;
-	while (j >= 0){
-		nums1[cur--] = nums1[i] > nums2[j] ? nums1[i--]:nums2[j--];
+	while (cur >= 0){
+		nums1[cur--] = ((i>=0?nums1[i]:INT_MIN) > (j>=0?nums2[j]:INT_MIN) ? nums1[i--]:nums2[j--]);//当n2超过下限，n1也要能工作
 	}
 }
 
 int main() {
 	//test1
-	/*vector<int>num1 = { 1, 2, 3, 0, 0, 0 };
+	vector<int>num1 = { 1, 2, 3, 0, 0, 0 };
 	vector<int>num2 = { 2, 5, 6 };
 	merge(num1, 3, num2, 3);
 
 	for (int i = 0; i < num1.size(); ++i)
 	{
 		cout << num1[i] << endl;
-	}*/
+	}
 	//test2
 	cout << "test2" << endl;
 	vector<int>n1 = { 0, 0, 3, 0, 0, 0, 0, 0, 0 };
