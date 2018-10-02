@@ -1,39 +1,39 @@
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 #include"math.h"
 using namespace std;
 
-//Éè¼ÆÊµÏÖË«¶Ë¶ÓÁĞ¡£
-//ÄãµÄÊµÏÖĞèÒªÖ§³ÖÒÔÏÂ²Ù×÷£º
+//è®¾è®¡å®ç°åŒç«¯é˜Ÿåˆ—ã€‚
+//ä½ çš„å®ç°éœ€è¦æ”¯æŒä»¥ä¸‹æ“ä½œï¼š
 //
-//MyCircularDeque(k)£º¹¹Ôìº¯Êı, Ë«¶Ë¶ÓÁĞµÄ´óĞ¡Îªk¡£
-//insertFront()£º½«Ò»¸öÔªËØÌí¼Óµ½Ë«¶Ë¶ÓÁĞÍ·²¿¡£ Èç¹û²Ù×÷³É¹¦·µ»Ø true¡£
-//insertLast()£º½«Ò»¸öÔªËØÌí¼Óµ½Ë«¶Ë¶ÓÁĞÎ²²¿¡£Èç¹û²Ù×÷³É¹¦·µ»Ø true¡£
-//deleteFront()£º´ÓË«¶Ë¶ÓÁĞÍ·²¿É¾³ıÒ»¸öÔªËØ¡£ Èç¹û²Ù×÷³É¹¦·µ»Ø true¡£
-//deleteLast()£º´ÓË«¶Ë¶ÓÁĞÎ²²¿É¾³ıÒ»¸öÔªËØ¡£Èç¹û²Ù×÷³É¹¦·µ»Ø true¡£
-//getFront()£º´ÓË«¶Ë¶ÓÁĞÍ·²¿»ñµÃÒ»¸öÔªËØ¡£Èç¹ûË«¶Ë¶ÓÁĞÎª¿Õ£¬·µ»Ø - 1¡£
-//getRear()£º»ñµÃË«¶Ë¶ÓÁĞµÄ×îºóÒ»¸öÔªËØ¡£ Èç¹ûË«¶Ë¶ÓÁĞÎª¿Õ£¬·µ»Ø - 1¡£
-//isEmpty()£º¼ì²éË«¶Ë¶ÓÁĞÊÇ·ñÎª¿Õ¡£
-//isFull()£º¼ì²éË«¶Ë¶ÓÁĞÊÇ·ñÂúÁË¡£
+//MyCircularDeque(k)ï¼šæ„é€ å‡½æ•°, åŒç«¯é˜Ÿåˆ—çš„å¤§å°ä¸ºkã€‚
+//insertFront()ï¼šå°†ä¸€ä¸ªå…ƒç´ æ·»åŠ åˆ°åŒç«¯é˜Ÿåˆ—å¤´éƒ¨ã€‚ å¦‚æœæ“ä½œæˆåŠŸè¿”å› trueã€‚
+//insertLast()ï¼šå°†ä¸€ä¸ªå…ƒç´ æ·»åŠ åˆ°åŒç«¯é˜Ÿåˆ—å°¾éƒ¨ã€‚å¦‚æœæ“ä½œæˆåŠŸè¿”å› trueã€‚
+//deleteFront()ï¼šä»åŒç«¯é˜Ÿåˆ—å¤´éƒ¨åˆ é™¤ä¸€ä¸ªå…ƒç´ ã€‚ å¦‚æœæ“ä½œæˆåŠŸè¿”å› trueã€‚
+//deleteLast()ï¼šä»åŒç«¯é˜Ÿåˆ—å°¾éƒ¨åˆ é™¤ä¸€ä¸ªå…ƒç´ ã€‚å¦‚æœæ“ä½œæˆåŠŸè¿”å› trueã€‚
+//getFront()ï¼šä»åŒç«¯é˜Ÿåˆ—å¤´éƒ¨è·å¾—ä¸€ä¸ªå…ƒç´ ã€‚å¦‚æœåŒç«¯é˜Ÿåˆ—ä¸ºç©ºï¼Œè¿”å› - 1ã€‚
+//getRear()ï¼šè·å¾—åŒç«¯é˜Ÿåˆ—çš„æœ€åä¸€ä¸ªå…ƒç´ ã€‚ å¦‚æœåŒç«¯é˜Ÿåˆ—ä¸ºç©ºï¼Œè¿”å› - 1ã€‚
+//isEmpty()ï¼šæ£€æŸ¥åŒç«¯é˜Ÿåˆ—æ˜¯å¦ä¸ºç©ºã€‚
+//isFull()ï¼šæ£€æŸ¥åŒç«¯é˜Ÿåˆ—æ˜¯å¦æ»¡äº†ã€‚
 //
-//Ê¾Àı£º
-//MyCircularDeque circularDeque = new MycircularDeque(3); // ÉèÖÃÈİÁ¿´óĞ¡Îª3
-//circularDeque.insertLast(1);			// ·µ»Ø true
-//circularDeque.insertLast(2);			// ·µ»Ø true
-//circularDeque.insertFront(3);			// ·µ»Ø true
-//circularDeque.insertFront(4);			// ÒÑ¾­ÂúÁË£¬·µ»Ø false
-//circularDeque.getRear();  				// ·µ»Ø  32
-//circularDeque.isFull();				// ·µ»Ø true
-//circularDeque.deleteLast();			// ·µ»Ø true
-//circularDeque.insertFront(4);			// ·µ»Ø true
-//circularDeque.getFront();				// ·µ»Ø 4
+//ç¤ºä¾‹ï¼š
+//MyCircularDeque circularDeque = new MycircularDeque(3); // è®¾ç½®å®¹é‡å¤§å°ä¸º3
+//circularDeque.insertLast(1);			// è¿”å› true
+//circularDeque.insertLast(2);			// è¿”å› true
+//circularDeque.insertFront(3);			// è¿”å› true
+//circularDeque.insertFront(4);			// å·²ç»æ»¡äº†ï¼Œè¿”å› false
+//circularDeque.getRear();  				// è¿”å›  32
+//circularDeque.isFull();				// è¿”å› true
+//circularDeque.deleteLast();			// è¿”å› true
+//circularDeque.insertFront(4);			// è¿”å› true
+//circularDeque.getFront();				// è¿”å› 4
 //
-//ÌáÊ¾£º
-//ËùÓĞÖµµÄ·¶Î§Îª[1, 1000]
-//²Ù×÷´ÎÊıµÄ·¶Î§Îª[1, 1000]
-//Çë²»ÒªÊ¹ÓÃÄÚÖÃµÄË«¶Ë¶ÓÁĞ¿â¡£
+//æç¤ºï¼š
+//æ‰€æœ‰å€¼çš„èŒƒå›´ä¸º[1, 1000]
+//æ“ä½œæ¬¡æ•°çš„èŒƒå›´ä¸º[1, 1000]
+//è¯·ä¸è¦ä½¿ç”¨å†…ç½®çš„åŒç«¯é˜Ÿåˆ—åº“ã€‚
 
 class MyCircularDeque {
 public:
@@ -125,16 +125,16 @@ public:
 
 int main() {
 	//test1
-	MyCircularDeque circularDeque(3); // ÉèÖÃÈİÁ¿´óĞ¡Îª3
-	bool a = circularDeque.insertLast(1);			// ·µ»Ø true
-	bool b = circularDeque.insertLast(2);			// ·µ»Ø true
-	bool c = circularDeque.insertFront(3);			// ·µ»Ø true
-	bool d = circularDeque.insertFront(4);			// ÒÑ¾­ÂúÁË£¬·µ»Ø false
-	int e = circularDeque.getRear();  				// ·µ»Ø  2
-	bool f = circularDeque.isFull();				// ·µ»Ø true
-	bool g = circularDeque.deleteLast();			// ·µ»Ø true
-	bool h = circularDeque.insertFront(4);			// ·µ»Ø true
-	int i = circularDeque.getFront();				// ·µ»Ø 4
+	MyCircularDeque circularDeque(3); // è®¾ç½®å®¹é‡å¤§å°ä¸º3
+	bool a = circularDeque.insertLast(1);			// è¿”å› true
+	bool b = circularDeque.insertLast(2);			// è¿”å› true
+	bool c = circularDeque.insertFront(3);			// è¿”å› true
+	bool d = circularDeque.insertFront(4);			// å·²ç»æ»¡äº†ï¼Œè¿”å› false
+	int e = circularDeque.getRear();  				// è¿”å›  2
+	bool f = circularDeque.isFull();				// è¿”å› true
+	bool g = circularDeque.deleteLast();			// è¿”å› true
+	bool h = circularDeque.insertFront(4);			// è¿”å› true
+	int i = circularDeque.getFront();				// è¿”å› 4
 	cout << a << endl << b << endl << c << endl << d << endl << e << endl << f << endl << g << endl << h << endl << i << endl;
 	//test end
 	system("pause");
