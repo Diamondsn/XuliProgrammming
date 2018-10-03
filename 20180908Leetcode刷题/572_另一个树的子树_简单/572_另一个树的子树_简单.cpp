@@ -1,27 +1,42 @@
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 #include"math.h"
 using namespace std;
 
-//¸ø¶¨Ò»¸öËùÓÐ½ÚµãÎª·Ç¸ºÖµµÄ¶þ²æËÑË÷Ê÷£¬ÇóÊ÷ÖÐÈÎÒâÁ½½ÚµãµÄ²îµÄ¾ø¶ÔÖµµÄ×îÐ¡Öµ¡£
+//ç»™å®šä¸¤ä¸ªéžç©ºäºŒå‰æ ‘ s å’Œ tï¼Œæ£€éªŒ s ä¸­æ˜¯å¦åŒ…å«å’Œ t å…·æœ‰ç›¸åŒç»“æž„å’ŒèŠ‚ç‚¹å€¼çš„å­æ ‘ã€‚s çš„ä¸€ä¸ªå­æ ‘åŒ…æ‹¬ s çš„ä¸€ä¸ªèŠ‚ç‚¹å’Œè¿™ä¸ªèŠ‚ç‚¹çš„æ‰€æœ‰å­å­™ã€‚s ä¹Ÿå¯ä»¥çœ‹åšå®ƒè‡ªèº«çš„ä¸€æ£µå­æ ‘ã€‚
 //
-//Ê¾Àý :
-//ÊäÈë:
-//
-//   1
-//    \
+//ç¤ºä¾‹ 1:
+//ç»™å®šçš„æ ‘ s:
 //     3
+//    / \
+//   4   5
+//  / \
+// 1   2
+//ç»™å®šçš„æ ‘ tï¼š
+//
+//   4 
+//  / \
+// 1   2
+//è¿”å›ž trueï¼Œå› ä¸º t ä¸Ž s çš„ä¸€ä¸ªå­æ ‘æ‹¥æœ‰ç›¸åŒçš„ç»“æž„å’ŒèŠ‚ç‚¹å€¼ã€‚
+//
+//ç¤ºä¾‹ 2:
+//ç»™å®šçš„æ ‘ sï¼š
+//
+//     3
+//    / \
+//   4   5
+//  / \
+// 1   2
 //    /
-//   2
+//   0
+//ç»™å®šçš„æ ‘ tï¼š
 //
-//Êä³ö:
-//1
-//
-//½âÊÍ:
-//×îÐ¡¾ø¶Ô²îÎª1£¬ÆäÖÐ 2 ºÍ 1 µÄ²îµÄ¾ø¶ÔÖµÎª 1£¨»òÕß 2 ºÍ 3£©¡£
-//×¢Òâ: Ê÷ÖÐÖÁÉÙÓÐ2¸ö½Úµã¡£
+//   4
+//  / \
+// 1   2
+//è¿”å›ž falseã€‚
 
 struct TreeNode {
 	int val;
@@ -30,88 +45,20 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-int max(TreeNode* root)
-{
-	if (root == NULL)
-		return INT_MIN;
-
-	int m = root->val;
-	int left = INT_MIN;
-	int right = INT_MIN;
-	if (root->left)
-		left = max(root->left);
-	if (root->right)
-		right = max(root->right);
-
-	if (left > m)
-		m = left;
-	if (right > m)
-		m = right;
-
-	return m;
+bool isSame(TreeNode* s, TreeNode* t) {
+	if (!s && !t)return true;
+	if (!s || !t)return false;
+	if (s->val != t->val)return false;
+	if (!isSame(s->left, t->left) || !isSame(s->right, t->right))return false;
+	return true;
 }
 
-int min(TreeNode* root)
-{
-	if (root == NULL)
-		return INT_MAX;
-
-	int m = root->val;
-	int left = INT_MAX;
-	int right = INT_MAX;
-	if (root->left)
-		left = min(root->left);
-	if (root->right)
-		right = min(root->right);
-
-	if (left < m)
-		m = left;
-	if (right < m)
-		m = right;
-
-	return m;
-}
-
-//×¢Òâ:´ËÌâ²ÉÓÃµÄÊÇ¶þ²æËÑË÷Ê÷
-int getMinimumDifference(TreeNode* root) {
-	//Ê×ÏÈÈ¡µÃ×ó×ÓÊ÷µÄ×î´óÖµºÍÓÒ×ÓÊ÷µÄ×îÐ¡Öµ
-	if (root == NULL)
-		return -1;
-
-	if (!root->left && !root->right)
-		return INT_MAX;
-
-	int leftmax = INT_MIN;
-	int rightmin = INT_MIN;
-	int leftresult = INT_MAX;
-	int rightresult = INT_MAX;
-	if (root->left)
-	{
-		leftmax = max(root->left);
-		leftresult = getMinimumDifference(root->left);
-	}
-
-	if (root->right)
-	{
-		rightmin = min(root->right);
-		rightresult = getMinimumDifference(root->right);
-	}
-	int left = INT_MAX;
-	int right = INT_MAX;
-	if (leftmax >= 0)
-		left = abs(leftmax - root->val);
-	if (rightmin >= 0)
-		right = abs(rightmin - root->val);
-
-	int min = left;
-	if (right < min)
-		min = right;//×ÔÉíµÄ½á¹û
-	if (leftresult < min)
-		min = leftresult;
-	if (rightresult < min)
-		min = rightresult;
-
-	return min;
+bool isSubtree(TreeNode* s, TreeNode* t) {
+	if (!s && !t)return true;
+	if (s == NULL)return false;
+	if (s && s->val == t->val && isSame(s, t))return true;
+	if (isSubtree(s->left, t) || isSubtree(s->right, t))return true;
+	return false;
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -146,14 +93,29 @@ void Houxubianli(TreeNode* pNode)
 
 int main() {
 	//test1
-	TreeNode* n = new TreeNode(1);
-	TreeNode* n_3 = new TreeNode(3);
+	TreeNode* n = new TreeNode(3);
+	TreeNode* n_4 = new TreeNode(4);
+	TreeNode* n_5 = new TreeNode(5);
+	TreeNode* n_1 = new TreeNode(1);
 	TreeNode* n_2 = new TreeNode(2);
-	n->right = n_3;
-	n_3->left = n_2;
+	n->left = n_4;
+	n->right = n_5;
+	n_4->left = n_1;
+	n_4->right = n_2;
 
-	int a = getMinimumDifference(n);
-	cout << a << endl;
+	TreeNode* t = new TreeNode(4);
+	TreeNode* t_1 = new TreeNode(1);
+	TreeNode* t_2 = new TreeNode(2);
+	t->left = t_1;
+	t->right = t_2;
+
+	bool a = isSubtree(n, t);
+
+	//test2
+	TreeNode* n_0 = new TreeNode(0);
+	n_2->left = n_0;
+	bool b = isSubtree(n, t);
+	cout << a << endl << b << endl;
 	//test end
 
 	system("pause");
