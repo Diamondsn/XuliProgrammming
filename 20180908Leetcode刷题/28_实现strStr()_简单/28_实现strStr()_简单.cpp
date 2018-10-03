@@ -1,58 +1,48 @@
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 #include"math.h"
 using namespace std;
 
-//ÊµÏÖ strStr() º¯Êı¡£
+//å®ç° strStr() å‡½æ•°ã€‚
 //
-//¸ø¶¨Ò»¸ö haystack ×Ö·û´®ºÍÒ»¸ö needle ×Ö·û´®£¬
-//ÔÚ haystack ×Ö·û´®ÖĞÕÒ³ö needle ×Ö·û´®³öÏÖµÄµÚÒ»¸öÎ»ÖÃ (´Ó0¿ªÊ¼)¡£
-//Èç¹û²»´æÔÚ£¬Ôò·µ»Ø  -1¡£
+//ç»™å®šä¸€ä¸ª haystack å­—ç¬¦ä¸²å’Œä¸€ä¸ª needle å­—ç¬¦ä¸²ï¼Œ
+//åœ¨ haystack å­—ç¬¦ä¸²ä¸­æ‰¾å‡º needle å­—ç¬¦ä¸²å‡ºç°çš„ç¬¬ä¸€ä¸ªä½ç½® (ä»0å¼€å§‹)ã€‚
+//å¦‚æœä¸å­˜åœ¨ï¼Œåˆ™è¿”å›  -1ã€‚
 //
-//Ê¾Àı 1:
-//ÊäÈë: haystack = "hello", needle = "ll"
-//Êä³ö: 2
+//ç¤ºä¾‹ 1:
+//è¾“å…¥: haystack = "hello", needle = "ll"
+//è¾“å‡º: 2
 //
-//Ê¾Àı 2:
-//ÊäÈë: haystack = "aaaaa", needle = "bba"
-//Êä³ö: -1
+//ç¤ºä¾‹ 2:
+//è¾“å…¥: haystack = "aaaaa", needle = "bba"
+//è¾“å‡º: -1
 //
-//ËµÃ÷:
-//µ± needle ÊÇ¿Õ×Ö·û´®Ê±£¬ÎÒÃÇÓ¦µ±·µ»ØÊ²Ã´ÖµÄØ£¿ÕâÊÇÒ»¸öÔÚÃæÊÔÖĞºÜºÃµÄÎÊÌâ¡£
+//è¯´æ˜:
+//å½“ needle æ˜¯ç©ºå­—ç¬¦ä¸²æ—¶ï¼Œæˆ‘ä»¬åº”å½“è¿”å›ä»€ä¹ˆå€¼å‘¢ï¼Ÿè¿™æ˜¯ä¸€ä¸ªåœ¨é¢è¯•ä¸­å¾ˆå¥½çš„é—®é¢˜ã€‚
 //
-//¶ÔÓÚ±¾Ìâ¶øÑÔ£¬µ± needle ÊÇ¿Õ×Ö·û´®Ê±ÎÒÃÇÓ¦µ±·µ»Ø 0 ¡£
-//ÕâÓëCÓïÑÔµÄ strstr() ÒÔ¼° JavaµÄ indexOf() ¶¨ÒåÏà·û¡£
+//å¯¹äºæœ¬é¢˜è€Œè¨€ï¼Œå½“ needle æ˜¯ç©ºå­—ç¬¦ä¸²æ—¶æˆ‘ä»¬åº”å½“è¿”å› 0 ã€‚
+//è¿™ä¸Cè¯­è¨€çš„ strstr() ä»¥åŠ Javaçš„ indexOf() å®šä¹‰ç›¸ç¬¦ã€‚
 
 int strStr(string haystack, string needle) {
-
+	if (needle.size() < 1)return 0;
+	if (needle.size() > haystack.size())return -1;
+	for (int i = 0; i <= haystack.size() - needle.size(); ++i) {
+		for (int j = 0; j < needle.size(); ++j) {
+			if (haystack[i + j] != needle[j])break;
+			if (j == needle.size() - 1 && haystack[i + j] == needle[j])return i;
+		}
+	}
+	return -1;
 }
 
 int main() {
 	//test1
-	TreeNode* n = new TreeNode(3);
-	TreeNode* n_4 = new TreeNode(4);
-	TreeNode* n_5 = new TreeNode(5);
-	TreeNode* n_1 = new TreeNode(1);
-	TreeNode* n_2 = new TreeNode(2);
-	n->left = n_4;
-	n->right = n_5;
-	n_4->left = n_1;
-	n_4->right = n_2;
-
-	TreeNode* t = new TreeNode(4);
-	TreeNode* t_1 = new TreeNode(1);
-	TreeNode* t_2 = new TreeNode(2);
-	t->left = t_1;
-	t->right = t_2;
-
-	bool a = isSubtree(n, t);
+	int a = strStr("hello", "ll");
 
 	//test2
-	TreeNode* n_0 = new TreeNode(0);
-	n_2->left = n_0;
-	bool b = isSubtree(n, t);
+	int b = strStr("aaaaa", "bba");
 	cout << a << endl << b << endl;
 	//test end
 
