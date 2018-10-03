@@ -5,90 +5,28 @@
 #include"math.h"
 using namespace std;
 
-//给定两个非空二叉树 s 和 t，检验 s 中是否包含和 t 具有相同结构和节点值的子树。s 的一个子树包括 s 的一个节点和这个节点的所有子孙。s 也可以看做它自身的一棵子树。
+//实现 strStr() 函数。
+//
+//给定一个 haystack 字符串和一个 needle 字符串，
+//在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。
+//如果不存在，则返回  -1。
 //
 //示例 1:
-//给定的树 s:
-//     3
-//    / \
-//   4   5
-//  / \
-// 1   2
-//给定的树 t：
-//
-//   4 
-//  / \
-// 1   2
-//返回 true，因为 t 与 s 的一个子树拥有相同的结构和节点值。
+//输入: haystack = "hello", needle = "ll"
+//输出: 2
 //
 //示例 2:
-//给定的树 s：
+//输入: haystack = "aaaaa", needle = "bba"
+//输出: -1
 //
-//     3
-//    / \
-//   4   5
-//  / \
-// 1   2
-//    /
-//   0
-//给定的树 t：
+//说明:
+//当 needle 是空字符串时，我们应当返回什么值呢？这是一个在面试中很好的问题。
 //
-//   4
-//  / \
-// 1   2
-//返回 false。
+//对于本题而言，当 needle 是空字符串时我们应当返回 0 。
+//这与C语言的 strstr() 以及 Java的 indexOf() 定义相符。
 
-struct TreeNode {
-	int val;
-	TreeNode *left;
-	TreeNode *right;
-	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
+int strStr(string haystack, string needle) {
 
-bool isSame(TreeNode* s, TreeNode* t) {
-	if (!s && !t)return true;
-	if (!s || !t)return false;
-	if (s->val != t->val)return false;
-	if (!isSame(s->left, t->left) || !isSame(s->right, t->right))return false;
-	return true;
-}
-
-bool isSubtree(TreeNode* s, TreeNode* t) {
-	if (!s && !t)return true;
-	if (s == NULL)return false;
-	if (s && s->val == t->val && isSame(s, t))return true;
-	if (isSubtree(s->left, t) || isSubtree(s->right, t))return true;
-	return false;
-}
-
-void Qianxubianli(TreeNode* pNode)
-{
-	if (pNode == NULL)
-		return;
-
-	cout << pNode->val << " ,";
-	Qianxubianli(pNode->left);
-	Qianxubianli(pNode->right);
-}
-
-void Zhongxubianli(TreeNode* pNode)
-{
-	if (pNode == NULL)
-		return;
-
-	Zhongxubianli(pNode->left);
-	cout << pNode->val << " ,";
-	Zhongxubianli(pNode->right);
-}
-
-void Houxubianli(TreeNode* pNode)
-{
-	if (pNode == NULL)
-		return;
-
-	Houxubianli(pNode->left);
-	Houxubianli(pNode->right);
-	cout << pNode->val << " ,";
 }
 
 int main() {
