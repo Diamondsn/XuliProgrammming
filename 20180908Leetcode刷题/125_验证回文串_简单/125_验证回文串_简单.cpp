@@ -16,6 +16,7 @@ using namespace std;
 //示例 2:
 //输入: "race a car"
 //输出: false
+
 bool isSmae(char a, char b) {
 	if (a == b)return true;
 	if (((a >= 97 && a <= 122) || (a >= 65 && a <= 90))&& ((b >= 97 && b <= 122) || (b >= 65 && b <= 90)) &&abs((int)a - (int)b) == 32)return true;
