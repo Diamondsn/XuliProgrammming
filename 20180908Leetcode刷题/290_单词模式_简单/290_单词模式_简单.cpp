@@ -4,6 +4,7 @@
 #include<algorithm>
 #include"math.h"
 #include<unordered_map>
+#include<set>
 using namespace std;
 
 /*给定一种 pattern(模式) 和一个字符串 str ，判断 str 是否遵循相同的模式。
@@ -31,7 +32,7 @@ using namespace std;
 你可以假设 pattern 只包含小写字母， str 包含了由单个空格分隔的小写字母。   */ 
 
 bool wordPattern(string pattern, string str) {
-	if (pattern.size() < 1)return true;
+	if (pattern.size() < 1)return false;
 	unordered_map<char, string>hash;
 	vector<string>vec;
 	while(str.size()>0){
@@ -46,8 +47,8 @@ bool wordPattern(string pattern, string str) {
 			str = "";
 		}
 	}
-	if (pattern.size() != vec.size())
-		return false;
+	if (pattern.size() != vec.size())return false;
+	set<string>setvec(vec.begin(),vec.end());
 	for (int i = 0; i < pattern.size(); ++i) {
 		if (hash.find(pattern[i])==hash.end()) {
 			hash.insert(pair<char, string>(pattern[i], vec[i]));
@@ -57,6 +58,7 @@ bool wordPattern(string pattern, string str) {
 				return false;
 		}
 	}
+	if (hash.size() != setvec.size())return false;//需要一一对应关系
 	return true;
 }
 
