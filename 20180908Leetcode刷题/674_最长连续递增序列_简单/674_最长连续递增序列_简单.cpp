@@ -5,38 +5,44 @@
 #include"math.h"
 using namespace std;
 
-//矩形以列表 [x1, y1, x2, y2] 的形式表示，其中 (x1, y1) 为左下角的坐标，(x2, y2) 是右上角的坐标。
+//给定一个未经排序的整数数组，找到最长且连续的的递增序列。
 //
-//如果相交的面积为正，则称两矩形重叠。需要明确的是，只在角或边接触的两个矩形不构成重叠。
+//示例 1:
+//输入: [1,3,5,4,7]
+//输出: 3
+//解释: 最长连续递增序列是 [1,3,5], 长度为3。
+//尽管 [1,3,5,7] 也是升序的子序列, 但它不是连续的，因为5和7在原数组里被4隔开。 
 //
-//给出两个矩形，判断它们是否重叠并返回结果。
+//示例 2:
+//输入: [2,2,2,2,2]
+//输出: 1
+//解释: 最长连续递增序列是 [2], 长度为1。
 //
-//示例 1：
-//输入：rec1 = [0,0,2,2], rec2 = [1,1,3,3]
-//输出：true
-//
-//示例 2：
-//输入：rec1 = [0,0,1,1], rec2 = [1,0,2,1]
-//输出：false
-//
-//说明：
-//两个矩形 rec1 和 rec2 都以含有四个整数的列表的形式给出。
-//矩形中的所有坐标都处于 -10^9 和 10^9 之间。
+//注意：数组长度不会超过10000。
 
-//排除肯定不重叠的情况就是相交的情况
-bool isRectangleOverlap(vector<int>& rec1, vector<int>& rec2) {
-	if (rec2[0] >= rec1[2] || rec2[2] <= rec1[0] || rec2[1] >= rec1[3] || rec2[3] <= rec1[1])return false;
-	return true;
+int findLengthOfLCIS(vector<int>& nums) {
+	if (nums.size() < 1)return 0;
+	int max = 1,cur=nums[0],length=1;
+	for (int i = 1; i < nums.size(); ++i) {
+		if (nums[i] > cur)
+			length++;
+		else
+			length = 1;
+		cur = nums[i];
+		if (length > max)
+			max = length;
+	}
+	return max;
 }
 
 int main() {
 	//test1
-	vector<int>rec1 = { 0,0,2,2 }, rec2 = { 1,1,3,3 };
-	bool a = isRectangleOverlap(rec1, rec2);
+	vector<int>nums = { 1,3,5,4,7 };
+	int a = findLengthOfLCIS(nums);
 
 	//test2
-	rec1 = { 0,0,1,1 }; rec2 = { 1,0,2,1 };
-	bool b = isRectangleOverlap(rec1, rec2);
+	nums = { 2,2,2,2,2 };
+	int b = findLengthOfLCIS(nums);
 	cout << a << endl << b << endl;
 	//test end
 
