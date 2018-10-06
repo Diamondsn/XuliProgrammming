@@ -49,13 +49,22 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+//注意:此题应该给定的是二叉搜索树，而不是普通的树;
 TreeNode* increasingBST(TreeNode* root) {
 	if (root == NULL)return NULL;
-	TreeNode* left = increasingBST(root->left);
-	if (left != NULL)
+	TreeNode* min = increasingBST(root->left);
+	TreeNode* left=min;
+	if (left != NULL) {
+		while (left->right != NULL)
+			left = left->right;
 		left->right = root;
+	}
+	root->left = NULL;
 	root->right = increasingBST(root->right);
-
+	if (min == NULL)
+		return root;
+	else
+		return min;
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -109,7 +118,8 @@ void main() {
 	t_8->left = t_7;
 	t_8->right = t_9;
 
-	Qianxubianli(t);
+	TreeNode* res = increasingBST(t);
+	Qianxubianli(res);
 	//test end
 	system("pause");
 }
