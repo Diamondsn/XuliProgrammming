@@ -2,6 +2,7 @@
 #include<vector>
 #include<stack>
 #include<string>
+#include<map>
 using namespace std;
 
 //给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。
@@ -19,7 +20,16 @@ using namespace std;
 //输出: false
 
 bool containsNearbyDuplicate(vector<int>& nums, int k) {
-
+	map<int, int>hash;
+	for (int i = 0; i < nums.size(); ++i) {
+		if (hash.find(nums[i]) == hash.end())
+			hash.insert(pair<int, int>(nums[i], i));
+		else if (i - hash[nums[i]] <= k)
+			return true;
+		else
+			hash[nums[i]] = i;
+	}
+	return false;
 }
 
 void main() {
