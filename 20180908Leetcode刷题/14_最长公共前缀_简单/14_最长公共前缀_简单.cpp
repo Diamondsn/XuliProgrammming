@@ -24,7 +24,25 @@ using namespace std;
 //所有输入只包含小写字母 a-z 。
 
 string longestCommonPrefix(vector<string>& strs) {
-
+	if (strs.size() == 0)return "";
+	string res, temp;
+	int shorestindex=0;
+	for (int i = 1; i < strs.size(); ++i)
+	{
+		if (strs[i].size() < strs[shorestindex].size())
+			shorestindex = i;
+	}
+	for (int i = 1; i <= strs[shorestindex].size(); ++i)
+	{
+		temp = strs[shorestindex].substr(0, i);
+		for (int j = 0; j < strs.size(); ++j) {
+			if (j == shorestindex)continue;
+			if (strs[j].find(temp) != 0)
+				return res;
+		}
+		res = temp;
+	}
+	return res;
 }
 
 void main() {
