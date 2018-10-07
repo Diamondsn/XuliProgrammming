@@ -1,37 +1,37 @@
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 #include"math.h"
 using namespace std;
 
-//¸ø¶¨Ò»¸ö¶þ²æÊ÷£¬ÕÒµ½×î³¤µÄÂ·¾¶£¬Õâ¸öÂ·¾¶ÖÐµÄÃ¿¸ö½Úµã¾ßÓÐÏàÍ¬Öµ¡£ ÕâÌõÂ·¾¶¿ÉÒÔ¾­¹ýÒ²¿ÉÒÔ²»¾­¹ý¸ù½Úµã¡£
+//ç»™å®šä¸€ä¸ªäºŒå‰æ ‘ï¼Œæ‰¾åˆ°æœ€é•¿çš„è·¯å¾„ï¼Œè¿™ä¸ªè·¯å¾„ä¸­çš„æ¯ä¸ªèŠ‚ç‚¹å…·æœ‰ç›¸åŒå€¼ã€‚ è¿™æ¡è·¯å¾„å¯ä»¥ç»è¿‡ä¹Ÿå¯ä»¥ä¸ç»è¿‡æ ¹èŠ‚ç‚¹ã€‚
 //
-//×¢Òâ£ºÁ½¸ö½ÚµãÖ®¼äµÄÂ·¾¶³¤¶ÈÓÉËüÃÇÖ®¼äµÄ±ßÊý±íÊ¾¡£
+//æ³¨æ„ï¼šä¸¤ä¸ªèŠ‚ç‚¹ä¹‹é—´çš„è·¯å¾„é•¿åº¦ç”±å®ƒä»¬ä¹‹é—´çš„è¾¹æ•°è¡¨ç¤ºã€‚
 //
-//Ê¾Àý 1:
-//ÊäÈë:
+//ç¤ºä¾‹ 1:
+//è¾“å…¥:
 //
 //              5
 //             / \
 //            4   5
 //           / \   \
 //          1   1   5
-//Êä³ö:
+//è¾“å‡º:
 //2
 //
-//Ê¾Àý 2:
-//ÊäÈë:
+//ç¤ºä¾‹ 2:
+//è¾“å…¥:
 //
 //              1
 //             / \
 //            4   5
 //           / \   \
 //          4   4   5
-//Êä³ö:
+//è¾“å‡º:
 //2
 //
-//×¢Òâ: ¸ø¶¨µÄ¶þ²æÊ÷²»³¬¹ý10000¸ö½áµã¡£ Ê÷µÄ¸ß¶È²»³¬¹ý1000¡£
+//æ³¨æ„: ç»™å®šçš„äºŒå‰æ ‘ä¸è¶…è¿‡10000ä¸ªç»“ç‚¹ã€‚ æ ‘çš„é«˜åº¦ä¸è¶…è¿‡1000ã€‚
 
 struct TreeNode {
 	int val;
@@ -40,14 +40,28 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+//åˆå§‹è¯¯åŒºå‚è€ƒhttps://www.jianshu.com/p/8209e9434d1e
+//å‡ºçŽ°å€’é€€ç€è¿žçš„æƒ…å†µ
+int samevaluepath(TreeNode* root,bool flag)
+{//æ³¨æ„è¿™ä¸ªæ ‡è®°æ˜¯ä¸ºäº†è¿žé€šæ ¹èŠ‚ç‚¹çš„æƒ…å†µä¸‹è½½å­èŠ‚ç‚¹çš„è¿­ä»£çš„è¿‡ç¨‹ä¸­ä¸èƒ½å‡ºçŽ°è¿žé€šå­æ ¹èŠ‚ç‚¹çš„æƒ…å†µï¼Œå‚è€ƒé“¾æŽ¥æŒ‡å‡ºçš„è¯¯åŒº6
+	if (root == NULL)return 0;
+	int left = 0, right = 0,mid=0;
+	if (root->left && root->left->val == root->val)
+		left = samevaluepath(root->left,false)+1;//åœ¨æ±‚å­èŠ‚ç‚¹æ—¶ä¸å…è®¸è¿žé€šå­æ ¹èŠ‚ç‚¹
+	if (root->right && root->right->val == root->val)
+		right = samevaluepath(root->right, false)+1;
+	if (flag&&root->left && root->right&& root->left->val == root->val&& root->right->val == root->val)
+		mid = left + right;
+	return max(max(left,right),mid);
+}
+
 int longestUnivaluePath(TreeNode* root) {
 	if (root == NULL)return 0;
+	int samevalue = samevaluepath(root,true);
 	int left = 0, right = 0;
-	if (root->left && root->left->val == root->val)
-		left = longestUnivaluePath(root->left);
-	if (root->right && root->right->val == root->val)
-		right = longestUnivaluePath(root -> right);
-
+	left = longestUnivaluePath(root->left);
+	right = longestUnivaluePath(root -> right);
+	return max(max(samevalue, left), right);
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -112,7 +126,7 @@ int main() {
 	n_5_1->right = n_5_2;
 
 	int b = longestUnivaluePath(n);
-	cout << a << endl;
+	cout << a << endl<<b<<endl;
 	//test end
 
 	system("pause");
