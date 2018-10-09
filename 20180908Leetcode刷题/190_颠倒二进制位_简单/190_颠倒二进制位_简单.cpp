@@ -3,6 +3,7 @@
 #include<iostream>
 #include<algorithm>
 #include<math.h>
+#include<stdint.h>
 using namespace std;
 
 //颠倒给定的 32 位无符号整数的二进制位。
@@ -17,7 +18,15 @@ using namespace std;
 //如果多次调用这个函数，你将如何优化你的算法？
 
 uint32_t reverseBits(uint32_t n) {
-
+	uint32_t res = 0;
+	int cishu = 0;//保留移动的次数
+	while (n > 0){
+		res = (res<<1)|(n & 1);
+		n >>= 1;
+		cishu++;
+	}
+	res <<= (32 - cishu);
+	return res;
 }
 
 int main() {
