@@ -23,7 +23,19 @@ using namespace std;
 //给定的数组是无序的。
 
 vector<int> findErrorNums(vector<int>& nums) {
-
+	int sum = 0;
+	vector<int>res;
+	map<int, int>hash;
+	for (int i = 0; i < nums.size(); ++i)
+	{
+		if (res.size()==0 && hash.find(nums[i]) == hash.end())
+			hash.insert(pair<int, int>(nums[i], 1));
+		else if (res.size()==0)
+			res.push_back(nums[i]);
+		sum += nums[i];
+	}
+	res.push_back(res[0] + (1 + nums.size())*nums.size() / 2-sum);
+	return res;
 }
 
 void VectorBianLi(vector<int>& vec){
