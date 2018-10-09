@@ -32,8 +32,52 @@ using namespace std;
 //不存在没有连字符或者带有连字符的单词。
 //单词里只包含字母，不会出现省略号或者其他标点符号。
 
-string mostCommonWord(string paragraph, vector<string>& banned) {
+int findBiaoDian(string s){
+	for (int i = 0; i < s.size(); ++i){
+		if (!((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')))
+			return i;
+	}
+	return -1;
+}
 
+string mostCommonWord(string paragraph, vector<string>& banned) {
+	transform(paragraph.begin(), paragraph.end(), paragraph.begin(),::tolower);
+	map<string, int>hash;
+	while (paragraph.size() > 0)
+	{
+		string a;
+		int suoyin = findBiaoDian(paragraph);
+		if (suoyin == -1)
+		{
+			a = paragraph;
+			paragraph = "";
+		}
+		else
+		{
+			a = paragraph.substr(0, suoyin);
+			paragraph = paragraph.substr(suoyin+1);
+		}
+		if (a.size() > 0){
+			if (hash.find(a) == hash.begin())
+				hash.insert(pair<string, int>(a, 1));
+			else
+				hash[a]++;
+		}
+	}
+	for (int i = 0; i < banned.size(); ++i){
+		if (hash.find(banned[i]) != hash.end())
+			hash[banned[i]] = 0;
+	}
+	int max = 0;
+	map<string, int>::iterator it;
+	for (auto iter = hash.begin(); iter != hash.end(); ++iter){
+		if (iter->second > max)
+		{
+			it = iter;
+			max = iter->second;
+		}
+	}
+	return it->first;
 }
 
 int main() {
