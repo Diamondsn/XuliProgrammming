@@ -34,7 +34,10 @@ using namespace std;
 //起始索引等于 1 的子串是 "ba", 它是 "ab" 的字母异位词。
 //起始索引等于 2 的子串是 "ab", 它是 "ab" 的字母异位词。
 
-//思路:map计数法
+//思路:map计数法,
+//此题代码较长原因是当找到了所有字母均为map中的时候会重用之前的map
+//同时，至始至终只用了同一个map
+//用较长的代码换了较少的空间占用和叫短的时间占用
 vector<int> findAnagrams(string s, string p) {
 	vector<int>vec;
 	if (s.size() < p.size())return vec;
@@ -70,7 +73,7 @@ vector<int> findAnagrams(string s, string p) {
 		else{
 			if (hash.find(s[i + p.size() - 1]) == hash.end())
 			{
-				int m = i;
+				int m = i-1;
 				while (m < i + p.size()-1){
 					hash[s[m]]++;
 					m++;
@@ -80,7 +83,7 @@ vector<int> findAnagrams(string s, string p) {
 			}
 			else
 			{
-				hash[s[i]]++;
+				hash[s[i-1]]++;
 				hash[s[i + p.size() - 1]]--;
 			}
 		}
@@ -98,6 +101,7 @@ vector<int> findAnagrams(string s, string p) {
 		if (sucess)vec.push_back(i);
 		i++;
 	}
+	return vec;
 }
 
 void VectorBianLi(vector<int>& vec){
