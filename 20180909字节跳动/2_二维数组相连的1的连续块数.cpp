@@ -1,11 +1,11 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
 using namespace std;
 
-//¶ÔÓÚÒ»¸öÖ»ÓĞ0ºÍ1µÄ¶şÎ¬¾ØÕó, ÉÏÏÂ»òÕß×óÓÒÏàÁÚÔªËØ¶¼Îª1ÔòÎªÒ»¿é(Ğ±×Å²»Ëã), ÇóÒ»¹²ÓĞ¶àÉÙÈ¡ÖµÎª1µÄÁ¬Ğø¿é
+//å¯¹äºä¸€ä¸ªåªæœ‰0å’Œ1çš„äºŒç»´çŸ©é˜µ, ä¸Šä¸‹æˆ–è€…å·¦å³ç›¸é‚»å…ƒç´ éƒ½ä¸º1åˆ™ä¸ºä¸€å—(æ–œç€ä¸ç®—), æ±‚ä¸€å…±æœ‰å¤šå°‘å–å€¼ä¸º1çš„è¿ç»­å—
 
 void block(vector<vector<int>>& rect,int i, int j)
 {
@@ -39,7 +39,7 @@ int main() {
 	int count=0;
 	for (int i = 0; i < rect.size(); i++) {
 		for (int j = 0; j < rect[i].size(); j++) {
-			// µ±ÕÒµ½1Ê±,¿ªÊ¼´¦ÀíÆäËùÔÚµÄ¿é
+			// å½“æ‰¾åˆ°1æ—¶,å¼€å§‹å¤„ç†å…¶æ‰€åœ¨çš„å—
 			if (rect[i][j] == 1) {
 				block(rect,i, j);
 				count++;
