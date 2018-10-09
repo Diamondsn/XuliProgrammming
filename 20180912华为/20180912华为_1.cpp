@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include <map>
 #include <list>
 #include <string>
@@ -6,7 +6,7 @@
 #include<iostream>
 using namespace std;
 
-//ÕÒ³ö×Ö·û´®ÖĞ³öÏÖ´ÎÊıÖ»ÓĞÒ»´ÎµÄ×îºó³öÏÖµÄ×Ö·û£¬ÈôÃ»ÓĞÖ»³öÏÖÒ»´ÎµÄ×Ö·û£¬·µ»Ø-1
+//æ‰¾å‡ºå­—ç¬¦ä¸²ä¸­å‡ºç°æ¬¡æ•°åªæœ‰ä¸€æ¬¡çš„æœ€åå‡ºç°çš„å­—ç¬¦ï¼Œè‹¥æ²¡æœ‰åªå‡ºç°ä¸€æ¬¡çš„å­—ç¬¦ï¼Œè¿”å›-1
 
 void function(string str)
 {

@@ -1,11 +1,11 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include<iostream>
 #include<algorithm>
 #include<string>
 using namespace std;
 
 //http://www.cnblogs.com/wmx24/p/9064134.html
-//´óÎ»Êı×Ö·û´®±íÊ¾Êı×Ö£¬¼ÆËã³Ë»ı
+//å¤§ä½æ•°å­—ç¬¦ä¸²è¡¨ç¤ºæ•°å­—ï¼Œè®¡ç®—ä¹˜ç§¯
 string multiply(string num1, string num2) {
         int l1=num1.size(),l2=num2.size();
         string res(l1+l2,'0');
@@ -32,7 +32,7 @@ int main()
 	std::string strResult = "";
 
 	strResult=multiply("20000000000000000000","30000000000000000000");
-	//½á¹û:600000000000000000000000000000000000000
+	//ç»“æœ:600000000000000000000000000000000000000
 	cout << strResult << endl;
 	system("pause");
 }
