@@ -41,12 +41,14 @@ bool isChar(char c){
 }
 string reverseOnlyLetters(string S) {
 	int i = 0, j = S.size() - 1;
-	while (i <j){
+	do{
 		while (i<S.size() && !isChar(S[i]))i++;
 		while (j>=0 && !isChar(S[j]))--j;
-		Swap(S, i, j);
-		i++; --j;
-	}
+		if (i < j){
+			Swap(S, i, j);
+			i++; --j;
+		}
+	} while (i < j);
 	return S;
 }
 
