@@ -27,12 +27,31 @@ using namespace std;
 class KthLargest {
 public:
 	KthLargest(int k, vector<int> nums) {
-
+		m = k;
+		data = nums;
+		sort(data.begin(), data.end());
+		reverse(data.begin(), data.end());
 	}
 
 	int add(int val) {
-
+		if (data.size() == 0){ data.push_back(val); }
+		else{
+			if (val < (*--data.end()))
+				data.push_back(val);
+			else{
+				for (auto it = data.begin(); it != data.end(); ++it)
+				{
+					if (*it <= val){
+						data.insert(it, val);
+						break;
+					}
+				}
+			}
+		}
+		return data[m-1];
 	}
+	vector<int>data;
+	int m;
 };
 
 /**
@@ -43,19 +62,13 @@ public:
 
 int main() {
 	//test1
-	bool a = buddyStrings("ab", "ba");
-
-	//test2
-	bool b = buddyStrings("ab", "ab");
-
-	//test3
-	bool c = buddyStrings("aa", "aa");
-
-	//test4
-	bool d = buddyStrings("aaaaaaabc", "aaaaaaacb");
-
-	//test5
-	bool e = buddyStrings("", "aa");
+	vector<int>arr = { 4, 5, 8, 2 };
+	KthLargest kthLargest = KthLargest(3, arr);
+	int a=kthLargest.add(3);   // returns 4
+	int b=kthLargest.add(5);   // returns 5
+	int c = kthLargest.add(10);  // returns 5
+	int d = kthLargest.add(9);   // returns 8
+	int e = kthLargest.add(4);   // returns 8
 	cout << a << endl << b << endl << c << endl << d << endl << e << endl;
 	//test end
 
