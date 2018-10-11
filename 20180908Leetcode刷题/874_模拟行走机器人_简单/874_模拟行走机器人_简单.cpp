@@ -39,9 +39,11 @@ using namespace std;
 //-30000 <= obstacle[i][1] <= 30000
 //答案保证小于 2 ^ 31
 
+//此种方法会超出时间限制，属于笨办法
 int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
 	int direction = 1;//默认北方;
 	int x = 0, y = 0;
+	int res = 0;
 	for (int i = 0; i < commands.size(); ++i) {
 		if (commands[i] == -1) {
 			if (direction == 4)
@@ -66,7 +68,10 @@ int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
 							break;
 						}
 					}
-					if (flag)y++;
+					if (flag) { 
+						y++; 
+						if (x*x + y*y > res)res = x*x + y*y;
+					}
 				}
 			}
 			else if (direction == 2) {//东方
@@ -79,7 +84,10 @@ int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
 							break;
 						}
 					}
-					if (flag)x++;
+					if (flag) {
+						x++;
+						if (x*x + y*y > res)res = x*x + y*y;
+					}
 				}
 			}
 			else if (direction == 3) {//南方
@@ -92,7 +100,10 @@ int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
 							break;
 						}
 					}
-					if (flag)y--;
+					if (flag) {
+						y--;
+						if (x*x + y*y > res)res = x*x + y*y;
+					}
 				}
 			}
 			else if (direction == 4) {//西方
@@ -105,12 +116,15 @@ int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
 							break;
 						}
 					}
-					if (flag)x--;
+					if (flag) {
+						x--;
+						if (x*x + y*y > res)res = x*x + y*y;
+					}
 				}
 			}
 		}
 	}
-	return x*x + y*y;
+	return res;
 }
 
 int main() {
