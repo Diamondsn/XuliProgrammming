@@ -31,14 +31,23 @@ using namespace std;
 //得到houses中与m的绝对值之差最小的数，保证m不与houses中的任何一个数相同
 int getNearest(vector<int>& heaters, int m){
 	int left = 0, right = heaters.size() - 1;
-	while (left <= right){
-		int mid = (left + right / 2);
-		if (heaters[mid] > m)
-			right = mid - 1;
-		else
-			left = mid + 1;
+	while (right-left>1){
+		int mid = (left + right) / 2;
+		if (heaters[mid] < m && (mid == heaters.size() - 1 || heaters[mid + 1] > m))
+		{
+			left = mid;
+			right = (mid == heaters.size() - 1 ? mid : mid + 1);
+		}
+		else if (heaters[mid] > m && (mid == 0 || heaters[mid - 1] < m)) {
+			left = (mid == 0 ? mid : mid - 1);
+			right = mid;
+		}
+		else if (heaters[mid] < m)
+			left = mid;
+		else if (heaters[mid] > m)
+			right = mid;
 	}
-	return left;
+	return abs(heaters[left]-m)<abs(heaters[right]-m)? heaters[left]: heaters[right] ;
 }
 
 int findRadius(vector<int>& houses, vector<int>& heaters) {
@@ -50,7 +59,7 @@ int findRadius(vector<int>& houses, vector<int>& heaters) {
 	}
 	sort(heaters.begin(), heaters.end());
 	for (int i = 0; i < houses.size(); ++i){
-		if (hash.find(houses[i]) != hash.end()){
+		if (hash.find(houses[i]) == hash.end()){
 			int temp = getNearest(heaters, houses[i]);
 			if (abs(temp - houses[i]) > hash[temp])hash[temp] = abs(temp - houses[i]);
 		}
@@ -67,11 +76,9 @@ int main() {
 	for (int i = 100; i >=0; --i){
 		hash.insert(pair<int, int>(i, 0));
 	}
-	//test getNearest()函数
+	//test getNearest()函数,该函数返回已排序数组中最接近参数的值
 	vector<int>nums = { 1, 10, 15, 20, 30, 40 };
-	int m = getNearest(nums,0);
-
-	system("pause");
+	int m = getNearest(nums,100);
 
 	//test1
 	vector<int>houses = { 1, 2, 3 }, heaters = {2};
