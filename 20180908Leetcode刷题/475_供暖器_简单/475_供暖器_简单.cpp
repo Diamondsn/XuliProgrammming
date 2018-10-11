@@ -28,11 +28,51 @@ using namespace std;
 //输出: 1
 //解释: 在位置1, 4上有两个供暖器。我们需要将加热半径设为1，这样所有房屋就都能得到供暖。
 
-int findRadius(vector<int>& houses, vector<int>& heaters) {
+//得到houses中与m的绝对值之差最小的数，保证m不与houses中的任何一个数相同
+int getNearest(vector<int>& heaters, int m){
+	int left = 0, right = heaters.size() - 1;
+	while (left <= right){
+		int mid = (left + right / 2);
+		if (heaters[mid] > m)
+			right = mid - 1;
+		else
+			left = mid + 1;
+	}
+	return left;
+}
 
+int findRadius(vector<int>& houses, vector<int>& heaters) {
+	int res = 0;
+	map<int, int>hash;
+	for (int i = 0; i < heaters.size(); ++i){
+		if (hash.find(heaters[i]) == hash.end())
+			hash.insert(pair<int, int>(heaters[i], 0));
+	}
+	sort(heaters.begin(), heaters.end());
+	for (int i = 0; i < houses.size(); ++i){
+		if (hash.find(houses[i]) != hash.end()){
+			int temp = getNearest(heaters, houses[i]);
+			if (abs(temp - houses[i]) > hash[temp])hash[temp] = abs(temp - houses[i]);
+		}
+	}
+	for (auto it = hash.begin(); it != hash.end(); ++it)
+		if (it->second > res)
+			res = it->second;
+	return res;
 }
 
 int main() {
+	//test map order
+	map<int,int>hash;//会根据字典顺序排序，使用调试工具查看insert操作完毕后的hash；
+	for (int i = 100; i >=0; --i){
+		hash.insert(pair<int, int>(i, 0));
+	}
+	//test getNearest()函数
+	vector<int>nums = { 1, 10, 15, 20, 30, 40 };
+	int m = getNearest(nums,0);
+
+	system("pause");
+
 	//test1
 	vector<int>houses = { 1, 2, 3 }, heaters = {2};
 	int a = findRadius(houses, heaters);
