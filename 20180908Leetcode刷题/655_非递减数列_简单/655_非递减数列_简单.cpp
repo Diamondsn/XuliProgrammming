@@ -22,14 +22,21 @@ using namespace std;
 //解释: 你不能在只改变一个元素的情况下将其变为非递减数列。
 //说明:  n 的范围为 [1, 10,000]。
 
-//统计逆序对的数量
+//注意[3，4，2，3]测试用例情况，其一共有3个逆序对，但这些逆序对中由两个因子3，4引起
+//更改一个数可以将一个数的逆序对数量减为0
+//故此题统计引起逆序对的因子的数量
 bool checkPossibility(vector<int>& nums) {
-	int res = 0;
+	set<int>s1, s2;//分别存储逆序对的索引
 	for (int i = 0; i < nums.size()-1; ++i){
-		if (nums[i]>nums[i + 1])
-			res++;
+		for (int j = i + 1; j < nums.size(); ++j){
+			if (nums[i]>nums[j]){
+				s1.insert(i);
+				s2.insert(j);
+			}
+		}
+		if (s1.size()>=2 && s2.size()>=2)return false;//必须最小值>=2才返回false
 	}
-	return res <= 1;
+	return true;
 }
 
 int main() {
@@ -40,7 +47,15 @@ int main() {
 	//test2
 	nums = { 4, 2, 1 };
 	bool b = checkPossibility(nums);//false
-	cout << a << endl << b << endl;
+
+	//test3
+	nums = { 3, 4, 2, 3 };
+	bool c = checkPossibility(nums);//false
+
+	//test4
+	nums = { 2, 3, 3, 2, 4 };//注:此用例表明需分别统计逆序对两边因子的数量，两边因子数量的最小值>=2则false
+	bool d = checkPossibility(nums);//true
+	cout << a << endl << b << endl<<c<<endl<<d<<endl;
 	//test end
 
 	system("pause");
