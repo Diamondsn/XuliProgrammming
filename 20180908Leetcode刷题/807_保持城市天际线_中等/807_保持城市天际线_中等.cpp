@@ -37,13 +37,32 @@ using namespace std;
 //一座建筑物占据一个grid[i][j]：换言之，它们是 1 x 1 x grid[i][j] 的长方体。
 
 int maxIncreaseKeepingSkyline(vector<vector<int>>& grid) {
-	return 0;
+	vector<int>shuzhi, shuipin;
+	for (int i = 0; i < grid.size(); ++i) {
+		int maxx = 0,maxy=0;
+		for (int j = 0; j < grid[i].size(); ++j) {
+			if (grid[i][j] > maxx)
+				maxx = grid[i][j];
+			if (grid[j][i] > maxy)
+				maxy = grid[j][i];
+		}
+		shuipin.push_back(maxx);
+		shuzhi.push_back(maxy);
+	}
+	int res = 0;
+	for (int i = 0; i < grid.size(); ++i) {
+		for (int j = 0; j < grid[i].size(); ++j) {
+			int temp = min(shuipin[i], shuzhi[j]);
+			res += (temp - grid[i][j]);
+		}
+	}
+	return res;
 }
 
 int main() {
 	//test1
 	vector<vector<int>>grid = { { 3, 0, 8, 4 }, { 2, 4, 5, 7 }, { 9, 2, 6, 3 }, { 0, 3, 1, 0 } };
-	int a = maxIncreaseKeepingSkyline(grid);
+	int a = maxIncreaseKeepingSkyline(grid);//35
 	cout << a << endl;
 	//test end
 
