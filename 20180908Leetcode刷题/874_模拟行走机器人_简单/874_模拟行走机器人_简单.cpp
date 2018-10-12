@@ -4,6 +4,7 @@
 #include<algorithm>
 #include<math.h>
 #include<map>
+#include<set>
 using namespace std;
 
 //机器人在一个无限大小的网格上行走，从点 (0, 0) 处开始出发，面向北方。
@@ -39,89 +40,123 @@ using namespace std;
 //-30000 <= obstacle[i][1] <= 30000
 //答案保证小于 2 ^ 31
 
-//此种方法会超出时间限制，属于笨办法
+//此种方法会超出时间限制，属于笨办法,查找过慢
+//int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+//	int direction = 1;//默认北方;
+//	int x = 0, y = 0;
+//	int res = 0;
+//	for (int i = 0; i < commands.size(); ++i) {
+//		if (commands[i] == -1) {
+//			if (direction == 4)
+//				direction = 1;
+//			else
+//				direction += 1;
+//		}
+//		else if (commands[i] == -2) {
+//			if (direction == 1)
+//				direction = 4;
+//			else
+//				direction -= 1;
+//		}else if (commands[i] > 0) {
+//			bool flag = true;
+//			if (direction == 1) {//北方
+//				int maxy = y + commands[i];
+//				while (flag &&y+1 <= maxy) {
+//					for (int m = 0; m < obstacles.size(); ++m) {
+//						if (obstacles[m][0] == x && obstacles[m][1] == y+1)
+//						{
+//							flag = false;
+//							break;
+//						}
+//					}
+//					if (flag) { 
+//						y++; 
+//						if (x*x + y*y > res)res = x*x + y*y;
+//					}
+//				}
+//			}
+//			else if (direction == 2) {//东方
+//				int maxx = x + commands[i];
+//				while (flag &&x + 1 <= maxx) {
+//					for (int m = 0; m < obstacles.size(); ++m) {
+//						if (obstacles[m][0] == x+1 && obstacles[m][1] == y )
+//						{
+//							flag = false;
+//							break;
+//						}
+//					}
+//					if (flag) {
+//						x++;
+//						if (x*x + y*y > res)res = x*x + y*y;
+//					}
+//				}
+//			}
+//			else if (direction == 3) {//南方
+//				int miny = y - commands[i];
+//				while (flag &&y - 1 >= miny) {
+//					for (int m = 0; m < obstacles.size(); ++m) {
+//						if (obstacles[m][0] == x && obstacles[m][1] == y-1)
+//						{
+//							flag = false;
+//							break;
+//						}
+//					}
+//					if (flag) {
+//						y--;
+//						if (x*x + y*y > res)res = x*x + y*y;
+//					}
+//				}
+//			}
+//			else if (direction == 4) {//西方
+//				int minx = x - commands[i];
+//				while (flag &&x - 1 >= minx) {
+//					for (int m = 0; m < obstacles.size(); ++m) {
+//						if (obstacles[m][0] == x-1 && obstacles[m][1] == y )
+//						{
+//							flag = false;
+//							break;
+//						}
+//					}
+//					if (flag) {
+//						x--;
+//						if (x*x + y*y > res)res = x*x + y*y;
+//					}
+//				}
+//			}
+//		}
+//	}
+//	return res;
+//}
+
+//注意:所求是整个过程中最远的欧式距离
 int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
-	int direction = 1;//默认北方;
+	vector<pair<int, int>>dir = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
+	set<pair<int, int>>m_set;//提高查找速度
 	int x = 0, y = 0;
 	int res = 0;
-	for (int i = 0; i < commands.size(); ++i) {
-		if (commands[i] == -1) {
-			if (direction == 4)
-				direction = 1;
-			else
-				direction += 1;
-		}
-		else if (commands[i] == -2) {
-			if (direction == 1)
-				direction = 4;
-			else
-				direction -= 1;
-		}else if (commands[i] > 0) {
-			bool flag = true;
-			if (direction == 1) {//北方
-				int maxy = y + commands[i];
-				while (flag &&y+1 <= maxy) {
-					for (int m = 0; m < obstacles.size(); ++m) {
-						if (obstacles[m][0] == x && obstacles[m][1] == y+1)
-						{
-							flag = false;
-							break;
-						}
-					}
-					if (flag) { 
-						y++; 
-						if (x*x + y*y > res)res = x*x + y*y;
-					}
+	for (int i = 0; i < obstacles.size(); ++i){
+		m_set.insert(pair<int,int>(obstacles[i][0], obstacles[i][1]));
+	}
+	int curdir = 0;
+	for (int i = 0; i < commands.size(); ++i){
+		if (commands[i] == -1)
+			curdir = (curdir + 1) % 4;
+		else if (commands[i] == -2)
+			curdir = (curdir + 3) % 4;
+		else{
+			for (int j = 0; j < commands[i]; ++j){
+				int dx = x + dir[curdir].first;
+				int dy = y + dir[curdir].second;
+				if (m_set.find(pair<int, int>(dx, dy)) == m_set.end())
+				{
+					x = dx;
+					y = dy;
 				}
+				else
+					break;
 			}
-			else if (direction == 2) {//东方
-				int maxx = x + commands[i];
-				while (flag &&x + 1 <= maxx) {
-					for (int m = 0; m < obstacles.size(); ++m) {
-						if (obstacles[m][0] == x+1 && obstacles[m][1] == y )
-						{
-							flag = false;
-							break;
-						}
-					}
-					if (flag) {
-						x++;
-						if (x*x + y*y > res)res = x*x + y*y;
-					}
-				}
-			}
-			else if (direction == 3) {//南方
-				int miny = y - commands[i];
-				while (flag &&y - 1 >= miny) {
-					for (int m = 0; m < obstacles.size(); ++m) {
-						if (obstacles[m][0] == x && obstacles[m][1] == y-1)
-						{
-							flag = false;
-							break;
-						}
-					}
-					if (flag) {
-						y--;
-						if (x*x + y*y > res)res = x*x + y*y;
-					}
-				}
-			}
-			else if (direction == 4) {//西方
-				int minx = x - commands[i];
-				while (flag &&x - 1 >= minx) {
-					for (int m = 0; m < obstacles.size(); ++m) {
-						if (obstacles[m][0] == x-1 && obstacles[m][1] == y )
-						{
-							flag = false;
-							break;
-						}
-					}
-					if (flag) {
-						x--;
-						if (x*x + y*y > res)res = x*x + y*y;
-					}
-				}
-			}
+			if (x*x + y*y>res)
+				res = x*x + y*y;
 		}
 	}
 	return res;
@@ -131,17 +166,17 @@ int main() {
 	//test1
 	vector<int>commands = { 4,-1,3 };
 	vector<vector<int>>obstacles = {};
-	int a = robotSim(commands,obstacles);
+	int a = robotSim(commands,obstacles);//25
 
 	//test2
 	commands = { 4,-1,4,-2,4 };
 	obstacles = { {2,4} };
-	int b = robotSim(commands, obstacles);
+	int b = robotSim(commands, obstacles);//65
 
 	//test3
 	commands = { -2, -1, 4, 7, 8 };
 	obstacles = { {1, 1}, {2, 1}, {4, 4}, {5, -5}, {2, -3}, {-2, -3}, {-1, -3}, {-4, -1}, {-4, 3}, {5, 1} };
-	int c = robotSim(commands, obstacles);
+	int c = robotSim(commands, obstacles);//361
 	cout << a << endl << b << endl<<c<<endl;
 	//test end
 
