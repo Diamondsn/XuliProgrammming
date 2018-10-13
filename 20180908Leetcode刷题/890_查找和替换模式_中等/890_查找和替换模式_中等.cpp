@@ -2,6 +2,8 @@
 #include<vector>
 #include<iostream>
 #include<algorithm>
+#include<map>
+#include<set>
 using namespace std;
 
 //你有一个单词列表 words 和一个模式  pattern，你想知道 words 中的哪些单词与模式匹配。
@@ -23,7 +25,33 @@ using namespace std;
 //1 <= pattern.length = words[i].length <= 20
 
 vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
-
+	map<char, char>hash;
+	bool flag = true;
+	vector<string>res;
+	for (int i = 0; i < words.size(); ++i)
+	{
+		hash.clear();
+		flag = true;
+		for (int j = 0; j < words[i].size(); ++j) {
+			if (hash.find(words[i][j]) == hash.end()) {
+				hash.insert(pair<char, char>(words[i][j], pattern[j]));
+			}
+			else if (hash[words[i][j]] != pattern[j])
+			{
+				flag = false;
+				break;
+			}
+		}
+		if (flag) {
+			set<char>myset;
+			for (auto it = hash.begin(); it != hash.end(); ++it) {
+				myset.insert(it->second);
+			}
+			if (myset.size() == hash.size())
+				res.push_back(words[i]);
+		}
+	}
+	return res;
 }
 
 int main() {
