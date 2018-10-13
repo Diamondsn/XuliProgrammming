@@ -63,10 +63,18 @@ vector<int> inorderTraversal(TreeNode* root) {
 	vector<int>res;
 	if (root == NULL)return res;
 	stack<TreeNode*>mystack;
-	mystack.push(root);
-	while (!mystack.empty()) {
-		TreeNode* cur = mystack.top();
-		
+	TreeNode* cur = root;
+	while (cur || !mystack.empty()) {
+		while (cur) {
+			mystack.push(cur);
+			cur = cur->left;//先将左子节点链全部压入
+		}
+		if (!mystack.empty()) {
+			cur=mystack.top();
+			mystack.pop();
+			res.push_back(cur->val);
+			cur = cur->right;
+		}
 	}
 	return res;
 }
