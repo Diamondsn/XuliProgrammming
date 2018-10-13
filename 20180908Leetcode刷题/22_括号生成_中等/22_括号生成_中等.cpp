@@ -17,7 +17,23 @@ using namespace std;
 //]
 
 vector<string> generateParenthesis(int n) {
-
+	vector<string>res;
+	if (n == 0)
+	{
+		res.push_back("");
+		return res;
+	}
+	for (int i = 0; i <= n - 1; ++i) {
+		vector<string> left = generateParenthesis(i);
+		vector<string>  right = generateParenthesis(n - 1 - i);
+		for (int m = 0; m < left.size(); ++m) {
+			for (int n = 0; n < right.size(); ++n) {
+				string t= "(" + left[m] + ")" + right[n];
+				res.push_back(t);
+			}
+		}
+	}
+	return res;
 }
 
 int main() {
