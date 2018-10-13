@@ -38,8 +38,26 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-TreeNode* pruneTree(TreeNode* root) {
+bool isOnlyContain0(TreeNode* root) {
+	if (root && root->val==1)return false;
+	if (!root)return true;
+	if (isOnlyContain0(root->left) && isOnlyContain0(root->right))
+		return true;
+	return false;
+}
 
+TreeNode* pruneTree(TreeNode* root) {
+	if (isOnlyContain0(root))return NULL;
+	if (isOnlyContain0(root->left))
+		root->left = NULL;
+	else
+		pruneTree(root->left);
+	if (isOnlyContain0(root->right))
+		root->right = NULL;
+	else
+		pruneTree(root->right);
+
+	return root;
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -119,7 +137,7 @@ int main() {
 	tree_1_1->right = tree_1_3;
 	tree_0_1->left = tree_0_2;
 	tree_0_1->right = tree_1_4;
-	tree_1_1->left = tree_0_3;
+	tree_1_2->left = tree_0_3;
 	TreeNode* res3 = pruneTree(tree);
 	Qianxubianli(res3);
 	//test end
