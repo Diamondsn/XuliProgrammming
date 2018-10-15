@@ -46,8 +46,22 @@ using namespace std;
 //  [16, 7,10,11]
 //]
 
-void rotate(vector<vector<int>>& matrix) {
+void Swap(vector<vector<int>>&matrix, int i1, int j1, int i2, int j2){
+	if (i1 == i2 && j1 == j2)
+		return;
+	matrix[i1][j1] ^= matrix[i2][j2];
+	matrix[i2][j2] ^= matrix[i1][j1];
+	matrix[i1][j1] ^= matrix[i2][j2];
+}
 
+void rotate(vector<vector<int>>& matrix) {
+	for (int i = 0; i < matrix.size() / 2; ++i){//表示一圈,针对每一圈进行处理
+		for (int j = i; j < matrix.size() - 1 - i; ++j){//一圈中的第几个数，每一圈需进行三次交换
+			Swap(matrix, i, j, j, matrix.size() - 1 - i);
+			Swap(matrix, i, j, matrix.size() - 1 - i, matrix.size() - 1 - j);
+			Swap(matrix, i, j, matrix.size() - 1 - j, i);
+		}
+	}
 }
 
 int main() {
