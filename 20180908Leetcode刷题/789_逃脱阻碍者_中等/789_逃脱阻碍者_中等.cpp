@@ -44,7 +44,14 @@ using namespace std;
 //阻碍者的数量不会超过 100。
 
 bool escapeGhosts(vector<vector<int>>& ghosts, vector<int>& target) {
-
+	int m = abs(target[0]) + abs(target[1]);
+	//应该用最小值来比，初始尝试用最大值，气哭
+	int min = abs(ghosts[0][0] - target[0]) + abs(ghosts[0][1] - target[1]);
+	for (vector<int>vec : ghosts) {
+		if (abs(vec[0] - target[0]) + abs(vec[1] - target[1]) < min)
+			min = abs(vec[0] - target[0]) + abs(vec[1] - target[1]);
+	}
+	return m < min;
 }
 
 int main() {
