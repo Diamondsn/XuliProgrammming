@@ -38,7 +38,24 @@ struct ListNode {
 };
 
 TreeNode* sortedListToBST(ListNode* head) {
-
+	if (head == NULL)return NULL;
+	ListNode* man = head;
+	ListNode* kuai = head;
+	ListNode* pre = NULL;
+	while (kuai&&kuai->next)
+	{
+		kuai = kuai->next->next;
+		pre = man;
+		man = man->next;
+	}
+	TreeNode* root = new TreeNode(man->val);
+	ListNode* lefthead = man==head?NULL:head;
+	if (man!=head)
+	     pre->next = NULL;
+	ListNode* righthead = man->next;
+	root->left = sortedListToBST(lefthead);
+	root->right = sortedListToBST(righthead);
+	return root;
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -90,7 +107,7 @@ int main() {
 	l0->next = l5;
 	l5->next = l9;
 	TreeNode* res = sortedListToBST(l);
-	Qianxubianli(res);
+	Zhongxubianli(res);
 	//test end
 
 	system("pause");
