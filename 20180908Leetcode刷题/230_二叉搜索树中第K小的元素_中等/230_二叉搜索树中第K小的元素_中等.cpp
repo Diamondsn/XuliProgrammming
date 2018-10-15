@@ -45,8 +45,52 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-int kthSmallest(TreeNode* root, int k) {
+//初始解法:用到了vec遍历以及插入，虽能AC但速度较慢，未应用二叉搜索树相关性质
+//void zhongxubianli(TreeNode* root,vector<int>& vec,int k){
+//	if (root==NULL || vec.size() == k)
+//		return;
+//	zhongxubianli(root->left,vec,k);
+//	if (vec.size() == k)return;
+//	if (vec.size() == 0 || vec[vec.size() - 1]<root->val)
+//		vec.push_back(root->val);
+//	else{
+//		for (auto it = vec.begin(); it != vec.end(); ++it){
+//			if (*it== root->val)
+//				break;
+//			else if (*it > root->val)
+//			{
+//				vec.insert(it, root->val);
+//				break;
+//			}
+//		}
+//	}
+//	if (vec.size() == k)return;
+//	zhongxubianli(root->right,vec,k);
+//	if (vec.size() == k)return;
+//}
+//
+//int kthSmallest(TreeNode* root, int k) {
+//	vector<int>vec;
+//	zhongxubianli(root,vec,k);
+//	return (vec.size()==k?vec[k - 1]:-1);
+//}
 
+//改进解法
+//博客上解法需统计子树数量
+//以下解法来自Leetcode 4ms范例，代码简洁，思路清晰，在中序遍历的情况下同时计数
+
+//思路感想：为何同样计数，程序运行效率会不一样
+//平常计数，需统计根节点左子树数量，若数量大于k，证明应从根节点的左子节点继续递归，这之中会有重复遍历
+//而带有引用值得中序遍历，在查找到符合条件的结果后所有的都会直接返回，不存在任何多余遍历
+int inOrder(TreeNode* root, int &k){//注意:此处的k'是引用，不是原函数的值传递
+	if (!root)return -1;
+	int val = inOrder(root->left, k);
+	if (k == 0)return val;//此行不能省略
+	if (--k == 0)return root->val;//不能用else if，每次到root时均需减一
+	return inOrder(root->right, k);
+}
+int kthSmallest(TreeNode* root, int k){
+	return inOrder(root, k);
 }
 
 void Qianxubianli(TreeNode* pNode)
