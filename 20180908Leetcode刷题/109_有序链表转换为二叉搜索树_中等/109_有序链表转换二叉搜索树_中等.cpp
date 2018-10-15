@@ -23,7 +23,6 @@ using namespace std;
 //   /   /
 // -10  5
 
-
 struct TreeNode {
 	int val;
 	TreeNode *left;
