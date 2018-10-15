@@ -107,7 +107,7 @@ int main() {
 	l0->next = l5;
 	l5->next = l9;
 	TreeNode* res = sortedListToBST(l);
-	Zhongxubianli(res);
+	Zhongxubianli(res);//中序遍历结果应与链表值序列相同
 	//test end
 
 	system("pause");
