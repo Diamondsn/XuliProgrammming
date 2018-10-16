@@ -34,11 +34,12 @@ using namespace std;
 //     给定编码总位数为 n 的格雷编码序列，其长度为 2n。当 n = 0 时，长度为 20 = 1。
 //     因此，当 n = 0 时，其格雷编码序列为 [0]。
 
+//https://www.cnblogs.com/ariel-dreamland/p/9159482.html 讲解极为深刻
 vector<int> grayCode(int n) {
 	vector<int>res;
-	res.push_back(0);
-	if (n == 0)return res;
-
+	for (int i = 0; i < pow(2, n); ++i) {
+		res.push_back((i >> 1) ^ i);
+	}
 	return res;
 }
 
