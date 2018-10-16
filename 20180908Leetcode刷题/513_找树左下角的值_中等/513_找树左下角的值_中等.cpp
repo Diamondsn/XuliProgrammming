@@ -85,21 +85,21 @@ struct TreeNode {
 /**************************************/
 //以下方法极为巧妙，利用树的广度优先遍历或者称为层序遍历，使用队列先压右子节点，后压左子节点
 //每层的最左边节点最后压入，返回最后一个压入的节点即为解
-//int findBottomLeftValue(TreeNode* root){
-//	queue<TreeNode*>myqueue;
-//	myqueue.push(root);
-//	int res;
-//	while (!myqueue.empty()){
-//		TreeNode* node = myqueue.front();
-//		myqueue.pop();
-//		res = node->val;
-//		if (node->right)
-//			myqueue.push(node->right);
-//		if (node->left)
-//			myqueue.push(node->left);
-//	}
-//	return res;
-//}
+int findBottomLeftValue(TreeNode* root){
+	queue<TreeNode*>myqueue;
+	myqueue.push(root);
+	int res;
+	while (!myqueue.empty()){
+		TreeNode* node = myqueue.front();
+		myqueue.pop();
+		res = node->val;
+		if (node->right)
+			myqueue.push(node->right);
+		if (node->left)
+			myqueue.push(node->left);
+	}
+	return res;
+}
 
 void Qianxubianli(TreeNode* pNode)
 {
