@@ -32,30 +32,41 @@ public:
 	bool hasNext() const;
 };
 
-
+//此题思路:用一个num缓存next应返回的值和一个bool型变量表示是否存在缓存
 class PeekingIterator : public Iterator {
 public:
 	PeekingIterator(const vector<int>& nums) : Iterator(nums) {
 		// Initialize any member here.
 		// **DO NOT** save a copy of nums and manipulate it directly.
 		// You should only use the Iterator interface methods.
-
+		flag = false;
 	}
 
 	// Returns the next element in the iteration without advancing the iterator.
 	int peek() {
-
+		if (!flag){
+			num = Iterator::next();
+			flag = true;
+		}
+		return num;
 	}
 
 	// hasNext() and next() should behave the same as in the Iterator interface.
 	// Override them if needed.
 	int next() {
-
+		if (!flag)return Iterator::next();
+		flag = false;
+		return num;
 	}
 
 	bool hasNext() const {
-
+		if (flag)return true;
+		if (Iterator::hasNext())return true;
+		return false;
 	}
+private:
+	int num;
+	int flag;
 };
 
 int main() {
