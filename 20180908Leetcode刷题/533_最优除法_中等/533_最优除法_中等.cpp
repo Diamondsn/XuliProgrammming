@@ -1,4 +1,4 @@
-#include<iostream>
+﻿#include<iostream>
 #include<string>
 #include<vector>
 using namespace std;
@@ -29,8 +29,24 @@ using namespace std;
 //这题triky
 //初步思路:维护两个二维数组，分别存储从横坐标到纵坐标范围内的数经过
 //除法加括号以后运算出的最小值和最大值，再动态规划，而且只能算出值很难知道路径
+//x1/x2/…/xn,无论在之间加多少个括号,x1总是作为被除数,x2总是作为除数,因此结果最大的做法是将x3到xn的所有除法转换为乘法,即x1/(x2/…/xn)=x1/x2*x3*…*xn.
 string optimalDivision(vector<int>& nums) {
-
+	string res;
+	if (nums.size() == 1)
+	{
+		res = to_string(nums[0]);
+	}
+	else if (nums.size() == 2) {
+		res = to_string(nums[0]) + "/" + to_string(nums[1]);
+	}
+	else {
+		string temp=to_string(nums[1]);
+		for (int i = 2; i < nums.size(); ++i) {
+			temp += "/" + to_string(nums[i]);
+		}
+		res = to_string(nums[0]) + "/(" + temp + ")";
+	}
+	return res;
 }
 
 void main(){
