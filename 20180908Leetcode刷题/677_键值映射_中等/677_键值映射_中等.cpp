@@ -2,6 +2,7 @@
 #include<string>
 #include<vector>
 #include<algorithm>
+#include<map>
 using namespace std;
 
 //实现一个 MapSum 类里的两个方法，insert 和 sum。
@@ -19,16 +20,37 @@ class MapSum {
 public:
 	/** Initialize your data structure here. */
 	MapSum() {
-
+		hash.clear();
+		sumhash.clear();
 	}
 
 	void insert(string key, int val) {
-
+		if (hash.find(key) == hash.end()) {
+			hash.insert(pair<string, int>(key, val));
+			for (int i = 1; i <= key.size(); ++i) {
+				string prefix = key.substr(0, i);
+				if (sumhash.find(prefix) == sumhash.end()) {
+					sumhash.insert(pair<string, int>(prefix, val));
+				}
+				else {
+					sumhash[prefix] += val;
+				}
+			}
+		}
+		else {
+			int chazhi = val - hash[key];
+			for (int i = 1; i <= key.size(); ++i) {
+				string prefix = key.substr(0, i);
+				sumhash[prefix] += chazhi;
+			}
+		}
 	}
 
 	int sum(string prefix) {
-
+		return sumhash[prefix];
 	}
+	map<string, int>hash;
+	map<string, int>sumhash;
 };
 
 /**
