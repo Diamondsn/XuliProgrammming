@@ -16,6 +16,16 @@ using namespace std;
 //输入: insert("app", 2), 输出: Null
 //输入: sum("ap"), 输出: 5
 
+//此题标准更快解法是新建字典树，以下为字典树节点数据结构;
+//class TrieNode {
+//public:
+//	int val;
+//	vector<TrieNode*> clds;
+//	TrieNode() :val(0), clds(26, NULL) {
+//
+//	}
+//};
+
 class MapSum {
 public:
 	/** Initialize your data structure here. */
