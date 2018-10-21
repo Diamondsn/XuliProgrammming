@@ -1,5 +1,4 @@
-#include "stdafx.h"
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<deque>
 #include<iostream>
@@ -7,9 +6,9 @@
 #include"math.h"
 using namespace std;
 
-//ÌâÄ¿ÃèÊö
-//ÊäÈëÒ»¸öÕûÊýÊý×é£¬ÅÐ¶Ï¸ÃÊý×éÊÇ²»ÊÇÄ³¶þ²æËÑË÷Ê÷µÄºóÐò±éÀúµÄ½á¹û¡£
-//Èç¹ûÊÇÔòÊä³öYes, ·ñÔòÊä³öNo¡£¼ÙÉèÊäÈëµÄÊý×éµÄÈÎÒâÁ½¸öÊý×Ö¶¼»¥²»ÏàÍ¬¡£
+//é¢˜ç›®æè¿°
+//è¾“å…¥ä¸€ä¸ªæ•´æ•°æ•°ç»„ï¼Œåˆ¤æ–­è¯¥æ•°ç»„æ˜¯ä¸æ˜¯æŸäºŒå‰æœç´¢æ ‘çš„åŽåºéåŽ†çš„ç»“æžœã€‚
+//å¦‚æžœæ˜¯åˆ™è¾“å‡ºYes, å¦åˆ™è¾“å‡ºNoã€‚å‡è®¾è¾“å…¥çš„æ•°ç»„çš„ä»»æ„ä¸¤ä¸ªæ•°å­—éƒ½äº’ä¸ç›¸åŒã€‚
 
 bool VerifySquenceOfBST(vector<int> sequence) {
 	if (sequence.size() <= 0)
@@ -18,7 +17,7 @@ bool VerifySquenceOfBST(vector<int> sequence) {
 	vector<int> left;
 	vector<int> right;
 	int root = sequence[sequence.size() - 1];
-	int flag = -1;//±êÖ¾ÓÒ×ÓÊ÷µÄµÚÒ»¸ö½Úµã
+	int flag = -1;//æ ‡å¿—å³å­æ ‘çš„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹
 	for (size_t i = 0; i < sequence.size() - 1; ++i)
 	{
 		if (flag==-1 && sequence[i] < root)
