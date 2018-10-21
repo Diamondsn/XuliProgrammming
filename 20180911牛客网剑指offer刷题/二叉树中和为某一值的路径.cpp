@@ -1,5 +1,4 @@
-#include "stdafx.h"
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<deque>
 #include<iostream>
@@ -7,17 +6,17 @@
 #include"math.h"
 using namespace std;
 
-//ÌâÄ¿ÃèÊö
-//ÊäÈëÒ»¿Å¶ş²æÊ÷µÄ¸ú½ÚµãºÍÒ»¸öÕûÊı£¬´òÓ¡³ö¶ş²æÊ÷ÖĞ½áµãÖµµÄºÍÎªÊäÈëÕûÊıµÄËùÓĞÂ·¾¶¡£
-//Â·¾¶¶¨ÒåÎª´ÓÊ÷µÄ¸ù½áµã¿ªÊ¼ÍùÏÂÒ»Ö±µ½Ò¶½áµãËù¾­¹ıµÄ½áµãĞÎ³ÉÒ»ÌõÂ·¾¶¡£
-//(×¢Òâ: ÔÚ·µ»ØÖµµÄlistÖĞ£¬Êı×é³¤¶È´óµÄÊı×é¿¿Ç°)
+//é¢˜ç›®æè¿°
+//è¾“å…¥ä¸€é¢—äºŒå‰æ ‘çš„è·ŸèŠ‚ç‚¹å’Œä¸€ä¸ªæ•´æ•°ï¼Œæ‰“å°å‡ºäºŒå‰æ ‘ä¸­ç»“ç‚¹å€¼çš„å’Œä¸ºè¾“å…¥æ•´æ•°çš„æ‰€æœ‰è·¯å¾„ã€‚
+//è·¯å¾„å®šä¹‰ä¸ºä»æ ‘çš„æ ¹ç»“ç‚¹å¼€å§‹å¾€ä¸‹ä¸€ç›´åˆ°å¶ç»“ç‚¹æ‰€ç»è¿‡çš„ç»“ç‚¹å½¢æˆä¸€æ¡è·¯å¾„ã€‚
+//(æ³¨æ„: åœ¨è¿”å›å€¼çš„listä¸­ï¼Œæ•°ç»„é•¿åº¦å¤§çš„æ•°ç»„é å‰)
 //
 //  3
 // / \
 //9  20
 //   / \
 //  15   7
-//´òÓ¡3,9,20,15,7
+//æ‰“å°3,9,20,15,7
 
 struct TreeNode {
 	int val;
@@ -26,12 +25,12 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-//¿ìËÙÅÅĞò
+//å¿«é€Ÿæ’åº
 void kuaipai(vector<vector<int> >& vec)
 {
 
 }
-//¹é²¢ÅÅĞò
+//å½’å¹¶æ’åº
 void guibing(vector<vector<int> >& vec1, vector<vector<int> >& vec2, vector<vector<int> >& result)
 {
 	kuaipai(vec1);
@@ -139,7 +138,7 @@ int main() {
 	vector < vector<int> > result= FindPath(t,12);
 	for (size_t i = 0; i < result.size(); ++i)
 	{
-		cout << "µÚ" << i << "ÌõÂ·¾¶Îª" << endl;
+		cout << "ç¬¬" << i << "æ¡è·¯å¾„ä¸º" << endl;
 		for (size_t j = 0; j < result[i].size(); ++j)
 		{
 			cout << result[i][j] << "-";
