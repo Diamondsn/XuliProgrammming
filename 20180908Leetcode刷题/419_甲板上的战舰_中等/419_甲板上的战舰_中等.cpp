@@ -28,8 +28,16 @@ using namespace std;
 //进阶:
 //你可以用一次扫描算法，只使用O(1)额外空间，并且不修改甲板的值来解决这个问题吗？
 
+//思路:找一艘战舰的左上角的'X'，即为一艘战舰，其他'X'不计数
 int countBattleships(vector<vector<char>>& board) {
-
+	int count = 0, height = board.size(),width=board[0].size();
+	for (int i = 0; i < height; ++i){
+		for (int j = 0; j < width; ++j){
+			if (board[i][j] == '.' || (i - 1 >= 0 && board[i - 1][j] == 'X') || (j - 1 >= 0 && board[i][j - 1] == 'X'))continue;
+			count++;
+		}
+	}
+	return count;
 }
 
 int main() {
