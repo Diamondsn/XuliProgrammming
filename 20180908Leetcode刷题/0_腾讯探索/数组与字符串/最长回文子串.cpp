@@ -70,8 +70,31 @@ using namespace std;
 //}
 
 //3Manacher法
+//讲的比较好理解https://www.cnblogs.com/grandyang/p/4475985.html
 string longestPalindrome(string s){
-
+	//预处理
+	string t = "$#";
+	for (int i = 0; i < s.size(); ++i){
+		t += s[i];
+		t += "#";
+	}
+	//存储t中的回文串半径
+	vector<int>p(t.size(), 0);
+	int mx = 0, id = 0, resLen = 0,resCenter = 0;
+	for (int i = 1; i < t.size(); ++i){//i从开始
+		p[i] = mx>i ? min(p[2*id-i],mx-i): 1;
+		while (t[i + p[i]] == t[i-p[i]])++p[i];//比对
+		if (mx < i + p[i])
+		{
+			mx = i + p[i];//更新最右
+			id = i;//更新最中心
+		}
+		if (resLen < p[i]){//更新结果
+			resLen = p[i];
+			resCenter = i;
+		}
+	}
+	return s.substr((resCenter - resLen) / 2, resLen - 1);//长度时t中的半径-1
 }
 
 int main() {
