@@ -37,7 +37,18 @@ using namespace std;
 //}
 
 int removeDuplicates(vector<int>& nums) {
-
+	if (nums.size() == 0)return 0;
+	int kongwei = 1;
+	int cur=nums[0];
+	for (int i = 1; i < nums.size(); ++i){
+		if (nums[i] == cur)
+			continue;
+		else{
+			cur = nums[i];
+			nums[kongwei++] = cur;
+		}
+	}
+	return kongwei;
 }
 
 int main() {
