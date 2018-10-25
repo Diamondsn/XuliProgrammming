@@ -12,44 +12,33 @@ using namespace std;
 //例如，给定数组 nums = [-1，2，1，-4], 和 target = 1.
 //与 target 最接近的三个数的和为 2. (-1 + 2 + 1 = 2).
 
+//采用三数和的思路，固定第一个值，用双指针轮询后面两个数
 int threeSumClosest(vector<int>& nums, int target) {
 	if (nums.size() < 3)return 0;
 	sort(nums.begin(), nums.end());
-	if (target <= nums[0])
-		return nums[0] + nums[1] + nums[2];
-	else if (target >= nums[nums.size() - 1])
-		return nums[nums.size() - 1] + nums[nums.size() - 2] + nums[nums.size() - 3];
-	else
-	{
-		int l = 0, r = nums.size() - 1,mid;
-		while (r>=l){
-			mid = (r + l) / 2;
-			if (nums[mid] > target && nums[mid - 1] <= target)
-				break;
-			else if (nums[mid] <= target)
-				l = mid+1;
-			else if (nums[mid] >= target)
-				r = mid-1;
-		}
-		mid = (r + l) / 2;
-		l = mid - 3 >= 0 ? mid - 3 : 0;
-		r = mid + 3 < nums.size() ? mid + 3 : nums.size() - 1;
-		int chaju = abs(nums[l] + nums[l + 1] + nums[l + 2] - target);
-		int max = nums[l] + nums[l + 1] + nums[l + 2];
-		for (int i = l+1; i+2 <= r; ++i){
-			if (abs(nums[i] + nums[i + 1] + nums[i + 2] - target) < chaju)
-			{
-				chaju = abs(nums[i] + nums[i + 1] + nums[i + 2] - target);
-				max = nums[i] + nums[i + 1] + nums[i + 2];
+	int chaju = abs(nums[0] + nums[1] + nums[2] - target),ressum=nums[0]+nums[1]+nums[2],sum;
+	for (int i = 0; i < nums.size() - 2; ++i){
+		int left = i + 1, right = nums.size() - 1;
+		while (left < right){
+			int tempsum = nums[i] + nums[left] + nums[right];
+			int tempchaju = abs(tempsum - target);
+			if (tempchaju < chaju){
+				chaju = tempchaju;
+				ressum = tempsum;
 			}
+			if (tempsum < target)
+				left++;
+			else if (tempsum > target)
+				right--;
+			else return tempsum;
 		}
-		return max;
 	}
+	return ressum;
 }
 
 int main() {
 	//test1
-	vector<int>nums = { 0,2,1,-3 };
+	vector<int>nums = { -1,2,1,-4 };
 	int target = 1;
 	int a = threeSumClosest(nums, target);
 	cout << a << endl;
