@@ -29,7 +29,34 @@ using namespace std;
 //输出: [1,2,3,4,8,12,11,10,9,5,6,7]
 
 vector<int> spiralOrder(vector<vector<int>>& matrix) {
-
+	vector<pair<int, int>>direction = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
+	vector<int>res;
+	if (matrix.size() == 0)return res;
+	int count = 0, curx = 0, cury = 0,minx=0,miny=0,maxx=matrix.size()-1,maxy=matrix[0].size()-1,curdir=0;
+	while (count < matrix.size()*matrix[0].size()){
+		res.push_back(matrix[curx][cury]);
+		if (curdir == 0 && cury == maxy)
+		{
+			curdir = (curdir + 1) % 4;
+			minx++;
+		}
+		else if (curdir == 1 && curx == maxx){
+			curdir = (curdir + 1) % 4;
+			maxy--;
+		}
+		else if (curdir == 2 && cury == miny){
+			curdir = (curdir + 1) % 4;
+			maxx--;
+		}
+		else if (curdir == 3 && curx == minx){
+			curdir = (curdir + 1) % 4;
+			miny++;
+		}
+		curx += direction[curdir].first;
+		cury += direction[curdir].second;
+		count++;
+	}
+	return res;
 }
 
 int main() {
