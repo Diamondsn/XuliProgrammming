@@ -24,8 +24,30 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
-ListNode* reverseList(ListNode* head) {
+//递归解法
+//ListNode* reverseList(ListNode* head) {
+//	if (!head || !head->next)return head;
+//	ListNode* newhead = reverseList(head->next);
+//	ListNode* temp = newhead;
+//	while (temp->next){
+//		temp = temp->next;
+//	}
+//	temp->next = head;
+//	head->next = NULL;
+//	return newhead;
+//}
 
+//迭代解法,可使用栈辅助，也可使用双指针
+ListNode* reverseList(ListNode* head){
+	if (!head)return head;
+	ListNode*pre = NULL, *cur = head, *next;
+	while (cur){
+		next = cur->next;
+		cur->next = pre;
+		pre = cur;
+		cur = next;
+	}
+	return pre;
 }
 
 void LianBiaoBianli(ListNode* head){
