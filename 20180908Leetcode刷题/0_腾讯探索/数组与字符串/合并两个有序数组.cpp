@@ -20,13 +20,25 @@ using namespace std;
 //nums2 = [2,5,6],       n = 3
 //输出: [1,2,2,3,5,6]
 
+//思路:从后往前归并
 void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-
+	int cur = m + n - 1;
+	while (n>0){
+		if ((m>0&&nums1[m - 1] <= nums2[n - 1])||(m<=0)){
+			nums1[cur] = nums2[n - 1];
+			n--;
+		}
+		else{
+			nums1[cur] = nums1[m - 1];
+			m--;
+		}
+		cur--;
+	}
 }
 
 int main() {
 	//test1
-	vector<int>nums1 = { 1, 2, 3, 0, 0, 0 }, nums2 = { 2, 5, 6 };
+	vector<int>nums1 = { 3,4,5, 0, 0, 0 }, nums2 = { 2, 5, 6 };
 	merge(nums1, 3, nums2,3);
 	for (int t : nums1)
 		cout << t << endl;
