@@ -20,8 +20,10 @@ struct ListNode {
 	ListNode(int x) : val(x), next(NULL) {}
 };
 
+//使用快慢指针法(即快指针每次走两步，满指针每次走一步，最终相遇即有环)，
+//但使用了额外空间
 bool hasCycle(ListNode *head) {
-
+	
 }
 
 void LianBiaoBianli(ListNode* head){
