@@ -1,4 +1,4 @@
-ï»¿#include<string>
+#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
@@ -8,10 +8,12 @@
 #include<set>
 using namespace std;
 
-//ç»™å®šä¸€ä¸ªé“¾è¡¨ï¼Œåˆ¤æ–­é“¾è¡¨ä¸­æ˜¯å¦æœ‰çŽ¯ã€‚
+//¸ø¶¨Ò»¸öÁ´±í£¬·µ»ØÁ´±í¿ªÊ¼Èë»·µÄµÚÒ»¸ö½Úµã¡£ Èç¹ûÁ´±íÎÞ»·£¬Ôò·µ»Ø null¡£
 //
-//è¿›é˜¶ï¼š
-//ä½ èƒ½å¦ä¸ä½¿ç”¨é¢å¤–ç©ºé—´è§£å†³æ­¤é¢˜ï¼Ÿ
+//ËµÃ÷£º²»ÔÊÐíÐÞ¸Ä¸ø¶¨µÄÁ´±í¡£
+//
+//½ø½×£º
+//ÄãÊÇ·ñ¿ÉÒÔ²»ÓÃ¶îÍâ¿Õ¼ä½â¾ö´ËÌâ£¿
 
 //Definition for singly-linked list.
 struct ListNode {
@@ -20,15 +22,15 @@ struct ListNode {
 	ListNode(int x) : val(x), next(NULL) {}
 };
 
-//ä½¿ç”¨å¿«æ…¢æŒ‡é’ˆæ³•(å³å¿«æŒ‡é’ˆæ¯æ¬¡èµ°ä¸¤æ­¥ï¼Œæ»¡æŒ‡é’ˆæ¯æ¬¡èµ°ä¸€æ­¥ï¼Œæœ€ç»ˆç›¸é‡å³æœ‰çŽ¯)ï¼Œ
-bool hasCycle(ListNode *head) {
+ListNode *detectCycle(ListNode *head) {
 	ListNode* kuai = head, *man = head;
-	while (kuai && kuai->next){
+	while(kuai&&kuai->next)
+	{
 		kuai = kuai->next->next;
 		man = man->next;
-		if (kuai == man)return true;
+		if (kuai)
 	}
-	return false;
+	return NULL;
 }
 
 void LianBiaoBianli(ListNode* head){
@@ -50,8 +52,8 @@ int main() {
 	l3->next = l4;
 	l4->next = l5;
 	l5->next = l5;
-	bool a=hasCycle(NULL);
-	cout << a << endl;
+	ListNode* res = detectCycle(l1);
+	cout << res->val << endl;
 	//test end
 
 	system("pause");
