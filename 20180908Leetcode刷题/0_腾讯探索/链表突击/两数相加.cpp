@@ -26,7 +26,26 @@ struct ListNode {
 };
 
 ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-
+	ListNode* newhead = new ListNode((l1->val + l2->val) % 10),*pre=newhead,*cur;
+	int jinwei = (l1->val + l2->val) / 10;
+	l1 = l1->next;
+	l2 = l2->next;
+	while (l1||l2){
+		cur = new ListNode(((l1?l1->val:0) + (l2?l2->val:0) + jinwei) % 10);
+		pre ->next=cur;
+		pre = cur;
+		jinwei = ((l1 ? l1->val : 0) + (l2 ? l2->val : 0) + jinwei)/10;
+		if (l1)
+			l1 = l1->next;
+		if (l2)
+			l2 = l2->next;
+	}
+	if (jinwei)
+	{
+		cur = new ListNode(jinwei);
+		pre->next = cur;
+	}
+	return newhead;
 }
 
 void LianBiaoBianli(ListNode* head){
@@ -51,6 +70,12 @@ int main() {
 	n6->next = n4;
 	ListNode* newhead = addTwoNumbers(l2,n5);
 	LianBiaoBianli(newhead);
+
+	//test2
+	cout << "test2" << endl;
+	ListNode* ln5 = new ListNode(5);
+	ListNode* newhead2 = addTwoNumbers(ln5, ln5);
+	LianBiaoBianli(newhead2);
 	//test end
 
 	system("pause");
