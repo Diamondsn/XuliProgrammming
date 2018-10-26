@@ -23,17 +23,53 @@ using namespace std;
 //https://blog.csdn.net/wutingyehe/article/details/51249878
 //https://www.cnblogs.com/ariel-dreamland/p/9149435.html
 vector<vector<int>> generateMatrix(int n) {
-	int count = 1;
+	vector<vector<int>>temp;
+	if (n <= 0)return temp;
+	int count = 1,circle=0,i,j;
 	vector<int>vec(n, 0);
 	vector<vector<int>>res(n, vec);
-	while (count <= n*n){
-
+	while (circle<(n+1)/2){
+		for (i = circle, j = circle; j < n -1- circle; ++j){
+			res[i][j] = count++;
+		}
+		for (i = circle, j = n - 1 - circle; i < n - 1 - circle; ++i){
+			res[i][j] = count++;
+		}
+		for (i = n - 1 - circle, j = n - 1 - circle; j > circle; j--){
+			res[i][j] = count++;
+		}
+		for (i = n - 1 - circle, j = circle; i > circle; i--){
+			res[i][j] = count++;
+		}
+		circle++;
 	}
+	if (n & 1 == 1){
+		res[n / 2][n / 2] = n*n;
+	}
+	return res;
 }
+
+//同理，但是不需区分是不是奇数
+//vector<vector<int>> generateMatrix(int n) {
+//	vector<vector<int>> res(n, vector<int>(n, 0));
+//	int s = 0, e = 1, end = n * n;
+//	while (e <= end) {
+//		for (int i = s; i < n - s; ++i)
+//			res[s][i] = e++;
+//		for (int i = s + 1; i < n - s; ++i)
+//			res[i][n - s - 1] = e++;
+//		for (int i = n - s - 2; i >= s; --i)
+//			res[n - s - 1][i] = e++;
+//		for (int i = n - s - 2; i > s; --i)
+//			res[i][s] = e++;
+//		++s;
+//	}
+//	return res;
+//}
 
 int main() {
 	//test1
-	vector<vector<int>>res = generateMatrix(3);
+	vector<vector<int>>res = generateMatrix(7);
 	for (vector<int>vec : res){
 		for (int t : vec){
 			cout << t << ",";
