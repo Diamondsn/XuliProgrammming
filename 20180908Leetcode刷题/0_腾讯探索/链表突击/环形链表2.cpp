@@ -1,4 +1,4 @@
-#include<string>
+ï»¿#include<string>
 #include<vector>
 #include<iostream>
 #include<algorithm>
@@ -8,12 +8,12 @@
 #include<set>
 using namespace std;
 
-//¸ø¶¨Ò»¸öÁ´±í£¬·µ»ØÁ´±í¿ªÊ¼Èë»·µÄµÚÒ»¸ö½Úµã¡£ Èç¹ûÁ´±íÎÞ»·£¬Ôò·µ»Ø null¡£
+//ç»™å®šä¸€ä¸ªé“¾è¡¨ï¼Œè¿”å›žé“¾è¡¨å¼€å§‹å…¥çŽ¯çš„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹ã€‚ å¦‚æžœé“¾è¡¨æ— çŽ¯ï¼Œåˆ™è¿”å›ž nullã€‚
 //
-//ËµÃ÷£º²»ÔÊÐíÐÞ¸Ä¸ø¶¨µÄÁ´±í¡£
+//è¯´æ˜Žï¼šä¸å…è®¸ä¿®æ”¹ç»™å®šçš„é“¾è¡¨ã€‚
 //
-//½ø½×£º
-//ÄãÊÇ·ñ¿ÉÒÔ²»ÓÃ¶îÍâ¿Õ¼ä½â¾ö´ËÌâ£¿
+//è¿›é˜¶ï¼š
+//ä½ æ˜¯å¦å¯ä»¥ä¸ç”¨é¢å¤–ç©ºé—´è§£å†³æ­¤é¢˜ï¼Ÿ
 
 //Definition for singly-linked list.
 struct ListNode {
