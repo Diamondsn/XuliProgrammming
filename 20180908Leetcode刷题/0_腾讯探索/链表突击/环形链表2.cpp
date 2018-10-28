@@ -28,7 +28,14 @@ ListNode *detectCycle(ListNode *head) {
 	{
 		kuai = kuai->next->next;
 		man = man->next;
-		if (kuai)
+		if (kuai == man) {
+			kuai = head;
+			while (kuai != man) {
+				kuai = kuai->next;
+				man = man->next;
+			}
+			return man;
+		}
 	}
 	return NULL;
 }
@@ -51,7 +58,7 @@ int main() {
 	l2->next = l3;
 	l3->next = l4;
 	l4->next = l5;
-	l5->next = l5;
+	l5->next = l2;
 	ListNode* res = detectCycle(l1);
 	cout << res->val << endl;
 	//test end
