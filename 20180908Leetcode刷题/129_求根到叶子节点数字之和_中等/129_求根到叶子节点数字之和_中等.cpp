@@ -47,8 +47,27 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-int sumNumbers(TreeNode* root) {
+void dfs(int & res, int path, TreeNode* cur){
+	path = path * 10 + cur->val;
+	if (!cur->left&& !cur->right)
+	{
+		res += path;
+	}
+	else{
+		if (cur->left)
+		    dfs(res, path, cur->left);
+		if (cur->right)
+			dfs(res, path, cur->right);
+	}
+}
 
+//用回溯算法来做深度遍历，就不用对已访问过的节点进行标记了
+int sumNumbers(TreeNode* root) {
+	if (!root)return 0;
+	int res=0;
+	int path = 0;
+	dfs(res, path, root);
+	return res;
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -102,7 +121,25 @@ void CengXuBianLi(TreeNode* PNode){
 
 int main() {
 	//test1
-	
+	TreeNode* t = new TreeNode(1);
+	TreeNode* t_2 = new TreeNode(2);
+	TreeNode* t_3 = new TreeNode(3);
+	t->left = t_2;
+	t->right = t_3;
+	int a = sumNumbers(t);
+
+	//test2
+	TreeNode* n = new TreeNode(4);
+	TreeNode* n_9 = new TreeNode(9);
+	TreeNode* n_0 = new TreeNode(0);
+	TreeNode* n_5 = new TreeNode(5);
+	TreeNode* n_1 = new TreeNode(1);
+	n->left = n_9;
+	n->right = n_0;
+	n_9->left = n_5;
+	n_9->right = n_1;
+	int b = sumNumbers(n);
+	cout << a << endl << b << endl;
 	//test end
 
 	system("pause");
