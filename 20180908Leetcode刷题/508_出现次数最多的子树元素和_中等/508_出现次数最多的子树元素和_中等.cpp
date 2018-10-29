@@ -32,6 +32,7 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+//方法类似，时间改进方向，在TreeSum时直接使用map找到出现最大次数一级最大次数的res，当更新max时清空res
 void TreeSum(vector<int>& vec, TreeNode* root){
 	if (!root)return;
 	int left = 0, right = 0;
