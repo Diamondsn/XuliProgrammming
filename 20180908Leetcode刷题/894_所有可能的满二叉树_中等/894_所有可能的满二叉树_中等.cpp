@@ -4,6 +4,7 @@
 #include<algorithm>
 #include"math.h"
 #include<list>
+#include<stack>
 using namespace std;
 
 //满二叉树是一类二叉树，其中每个结点恰好有 0 或 2 个子结点。
@@ -18,7 +19,7 @@ using namespace std;
 //输入：7
 //输出：[[0,0,0,null,null,0,0,null,null,0,0],[0,0,0,null,null,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,null,null,null,null,0,0],[0,0,0,0,0,null,null,0,0]]
 //解释：
-////图链接https://leetcode-cn.com/problems/all-possible-full-binary-trees/description/
+////图链接https://aliyun-lc-upload.oss-cn-hangzhou.aliyuncs.com/aliyun-lc-upload/uploads/2018/08/24/fivetrees.png
 //
 //提示：
 //1 <= N <= 20
@@ -31,7 +32,26 @@ struct TreeNode {
 };
 
 vector<TreeNode*> allPossibleFBT(int N) {
-
+	vector<TreeNode*>res,left,right;
+	if (N & 1 == 0)return res;
+	if (N == 1){
+		TreeNode* r = new TreeNode(0);
+		res.push_back(r);
+		return res;
+	}
+	for (int i = 1; i < N - 1; i += 2){
+		left = allPossibleFBT(i);
+		right = allPossibleFBT(N - 1 - i);
+		for (int i = 0; i < left.size(); ++i){
+			for (int j = 0; j < right.size(); ++j){
+				TreeNode* newroot = new TreeNode(0);
+				newroot->left = left[i];
+				newroot->right = right[j];
+				res.push_back(newroot);
+			}
+		}
+	}
+	return res;
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -64,12 +84,31 @@ void Houxubianli(TreeNode* pNode)
 	cout << pNode->val << " ,";
 }
 
+//兼容LeetCode的层序遍历
+void CengXuBianLi(TreeNode* PNode){
+	list<TreeNode*>mystack;
+	mystack.push_back(PNode);
+	while (!mystack.empty()){
+		TreeNode* node=mystack.front();
+		mystack.pop_front();
+		if (node)
+			cout << node->val << ",";
+		else
+			cout << "null,";
+		if (node)
+		{
+			mystack.push_back(node->right);
+			mystack.push_back(node->left);
+		}
+	}
+}
+
 int main() {
 	//test1
 	vector<TreeNode*>res = allPossibleFBT(7);
 	for (int i = 0; i < res.size(); ++i){
 		cout << "test"<<i << endl;
-		Qianxubianli(res[i]);
+		CengXuBianLi(res[i]);
 		cout << endl;
 	}
 	//test end
