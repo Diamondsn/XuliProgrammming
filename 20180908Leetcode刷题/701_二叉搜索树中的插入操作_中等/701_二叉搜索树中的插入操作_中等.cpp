@@ -50,7 +50,11 @@ struct TreeNode {
 };
 
 TreeNode* insertIntoBST(TreeNode* root, int val) {
-
+	if (!root){
+		TreeNode* newroot = new TreeNode(val);
+		return newroot;
+	}
+	
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -114,7 +118,7 @@ int main() {
 	t_2->left = t_1;
 	t_2->right = t_3;
 	TreeNode* newroot = insertIntoBST(t, 5);
-
+	CengXuBianLi(newroot);
 	//test end
 
 	system("pause");
