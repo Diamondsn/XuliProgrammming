@@ -3,6 +3,7 @@
 #include<iostream>
 #include<algorithm>
 #include"math.h"
+#include<map>
 using namespace std;
 
 //给出二叉树的根，找出出现次数最多的子树元素和。一个结点的子树元素和定义为以该结点为根的二叉树上所有结点的元素之和（包括结点本身）。
@@ -31,8 +32,46 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-vector<int> findFrequentTreeSum(TreeNode* root) {
+void TreeSum(vector<int>& vec, TreeNode* root){
+	if (!root)return;
+	int left = 0, right = 0;
+	if (!root->left && !root->right){
+		vec.push_back(root->val);
+		return;
+	}
+	TreeSum(vec, root->left);
+	if (root->left)
+		left = vec.back();
 
+	TreeSum(vec, root->right);
+	if (root->right)
+		right = vec.back();
+
+	vec.push_back(root->val + left + right);
+}
+
+vector<int> findFrequentTreeSum(TreeNode* root) {
+	vector<int>res;
+	if (!root)return res;
+	TreeSum(res, root);
+	map<int, int>hash;
+	int max = 1;
+	for (int i : res){
+		if (hash.find(i) == hash.end())
+		{
+			hash.insert(pair<int, int>(i, 1));
+		}
+		else{
+			hash[i]++;
+			if (hash[i] > max)max = hash[i];
+		}
+	}
+	res.clear();
+	for (auto it = hash.begin(); it != hash.end(); ++it){
+		if (it->second == max)
+			res.push_back(it->first);
+	}
+	return res;
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -69,7 +108,7 @@ int main() {
 	//test1
 	TreeNode* t = new TreeNode(5);
 	TreeNode* t_2 = new TreeNode(2);
-	TreeNode* t_3 = new TreeNode(3);
+	TreeNode* t_3 = new TreeNode(-3);
 
 	t->left = t_2;
 	t->right = t_3;
