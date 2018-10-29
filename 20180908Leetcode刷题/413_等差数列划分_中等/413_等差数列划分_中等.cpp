@@ -26,12 +26,27 @@ using namespace std;
 //返回: 3, A 中有三个子等差数组: [1, 2, 3], [2, 3, 4] 以及自身 [1, 2, 3, 4]。
 
 int numberOfArithmeticSlices(vector<int>& A) {
-
+	if (A.size() < 3)return 0;
+	int curcha = A[0] - A[1],num=2,res=0;
+	for (int i = 1; i < A.size() - 1; ++i){
+		if (A[i] - A[i + 1] == curcha){
+			num++;
+		}
+		else{
+			if (num>=3)res += (num - 1)*(num - 2) / 2;
+			num = 2;
+			curcha = A[i] - A[i + 1];
+		}
+	}
+	if (num>=3)res += (num - 1)*(num - 2) / 2;
+	return res;
 }
 
 int main() {
 	//test1
-	
+	vector<int>A = { 1, 2, 3, 4 };
+	int a = numberOfArithmeticSlices(A);
+	cout << a << endl;
 	//test end
 
 	system("pause");
