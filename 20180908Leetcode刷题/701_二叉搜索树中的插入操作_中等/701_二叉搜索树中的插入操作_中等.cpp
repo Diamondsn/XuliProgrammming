@@ -4,6 +4,7 @@
 #include<algorithm>
 #include"math.h"
 #include<map>
+#include<list>
 using namespace std;
 
 //给定二叉搜索树（BST）的根节点和要插入树中的值，将值插入二叉搜索树。 
@@ -82,9 +83,38 @@ void Houxubianli(TreeNode* pNode)
 	cout << pNode->val << " ,";
 }
 
+//兼容LeetCode的层序遍历
+void CengXuBianLi(TreeNode* PNode){
+	list<TreeNode*>mylist;
+	mylist.push_back(PNode);
+	while (!mylist.empty()){
+		TreeNode* node = mylist.front();
+		mylist.pop_front();
+		if (node)
+			cout << node->val << ",";
+		else
+			cout << "null,";
+		if (node)
+		{
+			mylist.push_back(node->right);
+			mylist.push_back(node->left);
+		}
+	}
+}
+
 int main() {
 	//test1
-	
+	TreeNode* t = new TreeNode(4);
+	TreeNode* t_2 = new TreeNode(2);
+	TreeNode* t_7 = new TreeNode(7);
+	TreeNode* t_1 = new TreeNode(1);
+	TreeNode* t_3 = new TreeNode(3);
+	t->left = t_2;
+	t->right = t_7;
+	t_2->left = t_1;
+	t_2->right = t_3;
+	TreeNode* newroot = insertIntoBST(t, 5);
+
 	//test end
 
 	system("pause");

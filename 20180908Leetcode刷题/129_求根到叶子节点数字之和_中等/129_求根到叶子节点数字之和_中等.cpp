@@ -102,19 +102,19 @@ void Houxubianli(TreeNode* pNode)
 
 //兼容LeetCode的层序遍历
 void CengXuBianLi(TreeNode* PNode){
-	list<TreeNode*>mystack;
-	mystack.push_back(PNode);
-	while (!mystack.empty()){
-		TreeNode* node = mystack.front();
-		mystack.pop_front();
+	list<TreeNode*>mylist;
+	mylist.push_back(PNode);
+	while (!mylist.empty()){
+		TreeNode* node = mylist.front();
+		mylist.pop_front();
 		if (node)
 			cout << node->val << ",";
 		else
 			cout << "null,";
 		if (node)
 		{
-			mystack.push_back(node->right);
-			mystack.push_back(node->left);
+			mylist.push_back(node->right);
+			mylist.push_back(node->left);
 		}
 	}
 }
