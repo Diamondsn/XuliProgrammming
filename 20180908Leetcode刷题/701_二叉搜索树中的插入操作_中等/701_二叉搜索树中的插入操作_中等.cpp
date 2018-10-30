@@ -54,7 +54,26 @@ TreeNode* insertIntoBST(TreeNode* root, int val) {
 		TreeNode* newroot = new TreeNode(val);
 		return newroot;
 	}
-	
+	else if (root && !root->left && val <= root->val)
+	{
+		root->left = new TreeNode(val);
+		return root;
+	}
+	else if (root && !root->right && val > root->val){
+		root->right = new TreeNode(val);
+		return root;
+	}
+	else{
+		TreeNode* res = NULL;
+		if (root->val < val)
+		{
+		     res = insertIntoBST(root->right, val);
+		}
+		else{
+			res = insertIntoBST(root->left, val);
+		}
+		if (res != root)return root;
+	}
 }
 
 void Qianxubianli(TreeNode* pNode)
