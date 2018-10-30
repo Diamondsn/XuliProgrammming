@@ -19,10 +19,38 @@ using namespace std;
 //输出:
 //[[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
 
-vector<pair<int, int>> reconstructQueue(vector<pair<int, int>>& people) {
+//排序原则:身高降序排列，在身高相同的情况下，k升序排列
+//排序方法返回正值时，a在b的前面，返回负值，a在b的后面
+//参考https://blog.csdn.net/Viewz/article/details/81412232
+//bool paixu(pair<int, int>a, pair<int, int>b){
+//	if (a.first == b.first)return a.second < b.second;
+//	else return a.first > b.first;
+//}
+//
+//vector<pair<int, int>> reconstructQueue(vector<pair<int, int>>& people) {
+//	sort(people.begin(), people.end(), paixu);
+//	vector<pair<int, int>>res(people.size());
+//	for (int i = 0; i < people.size(); ++i){
+//		res.insert(res.begin() + people[i].second, people[i]);
+//	}
+//	res.resize(people.size());
+//	return res;
+//}
 
-
+//排序函数还可以这么写
+//https://blog.csdn.net/w8253497062015/article/details/79946558
+vector<pair<int, int>>reconstructQueue(vector<pair<int, int>>&people){
+	sort(people.begin(), people.end(), [](pair<int, int>a, pair<int, int>b){
+		return a.first > b.first || (a.first == b.first && a.second < b.second);
+	});
+	vector<pair<int, int>>res;
+	for (pair<int,int>p:people){
+		res.insert(res.begin() + p.second, p);
+	}
+	return res;
 }
+
+
 int main() {
 	//test1
 	vector<pair<int, int>>people = { {7,0}, {4,4}, {7,1}, {5,0}, {6,1}, {5,2} };
