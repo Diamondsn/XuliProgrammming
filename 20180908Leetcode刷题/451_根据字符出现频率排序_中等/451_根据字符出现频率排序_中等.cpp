@@ -4,6 +4,9 @@
 #include<algorithm>
 #include"math.h"
 #include<time.h>
+#include<map>
+#include<unordered_map>
+#include<functional>
 using namespace std;
 
 //给定一个字符串，请将字符串里的字符按照出现的频率降序排列。
@@ -35,8 +38,41 @@ using namespace std;
 //此外，"bbaA"也是一个有效的答案，但"Aabb"是不正确的。
 //注意'A'和'a'被认为是两种不同的字符。
 
-string frequencySort(string s) {
+struct mygreater{
+	bool operator()(int a, int b){
+		return a > b;
+	}
+};
 
+string frequencySort(string s) {
+	unordered_map<char, int>hash;
+	unordered_map<int, vector<char>>m;
+	for (char c : s){
+		if (hash.find(c) == hash.end())hash.insert(pair<char, int>(c, 1));
+		else hash[c]++;
+	}
+	for (auto it = hash.begin(); it != hash.end(); ++it)
+	{
+		if (m.find(it->second) == m.end()){
+			vector<char>vec = { it->first };
+			m.insert(make_pair(it->second, vec)); 
+		}
+		else{
+			m[it->second].push_back(it->first);
+		}
+	}
+	string res;
+	for (auto it = m.begin(); it != m.end(); ++it){
+		vector<char>v = it->second;
+		for (char c : v){
+			int cur = it->first;
+			while (cur){
+				res += to_string(c);
+				cur--;
+			}
+		}
+	}
+	return res;
 }
 
 int main() {
