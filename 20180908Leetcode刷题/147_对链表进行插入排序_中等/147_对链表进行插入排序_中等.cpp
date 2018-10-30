@@ -43,7 +43,27 @@ void ListNodeBianli(ListNode* head)
 }
 
 ListNode* insertionSortList(ListNode* head) {
-
+	if (!head || !head->next)return head;
+	ListNode* root = insertionSortList(head->next);
+	if (head->val <= root->val)
+	{
+		head->next = root;
+		return head;
+	}
+	else{
+		ListNode* temp=root,*t=NULL;
+		while (temp){
+			if (temp->val < head->val && ((!temp->next) || (temp->next && temp->next->val >= head->val)))
+			{
+				t = temp->next;
+				temp->next = head;
+				head->next = t;
+				break;
+			}
+			temp = temp->next;
+		}
+		return root;
+	}
 }
 
 int main() {
