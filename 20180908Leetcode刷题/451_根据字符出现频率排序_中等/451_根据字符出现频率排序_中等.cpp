@@ -39,14 +39,14 @@ using namespace std;
 //注意'A'和'a'被认为是两种不同的字符。
 
 struct mygreater{
-	bool operator()(int a, int b){
+	bool operator()(const int& a, const int &b)const{
 		return a > b;
 	}
 };
 
 string frequencySort(string s) {
 	unordered_map<char, int>hash;
-	unordered_map<int, vector<char>>m;
+	map<int, vector<char>,greater<int>>m;
 	for (char c : s){
 		if (hash.find(c) == hash.end())hash.insert(pair<char, int>(c, 1));
 		else hash[c]++;
@@ -65,11 +65,14 @@ string frequencySort(string s) {
 	for (auto it = m.begin(); it != m.end(); ++it){
 		vector<char>v = it->second;
 		for (char c : v){
-			int cur = it->first;
+		//加k个相同的字符可以像以下处理
+			res += string(it->first, c);
+			/*int cur = it->first;
 			while (cur){
-				res += to_string(c);
+				string a(1, c);
+				res += a;
 				cur--;
-			}
+			}*/
 		}
 	}
 	return res;
