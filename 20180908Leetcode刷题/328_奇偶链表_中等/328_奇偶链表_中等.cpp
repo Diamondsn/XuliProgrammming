@@ -42,7 +42,25 @@ void LianBiaoBianLi(ListNode* head){
 }
 
 ListNode* oddEvenList(ListNode* head) {
-
+	if (!head || !head->next)return head;
+	ListNode* ji = new ListNode(0),*jicur=ji;
+	ListNode* ou = new ListNode(0),*oucur=ou;
+	bool a = true;
+	while (head){
+		if (a){
+			jicur->next = head;
+			jicur = head;
+		}
+		else{
+			oucur->next = head;
+			oucur=head;
+		}
+		a = !a;
+		head = head->next;
+	}
+	jicur->next = ou->next;
+	oucur->next = NULL;
+	return ji->next;
 }
 
 int main() {
