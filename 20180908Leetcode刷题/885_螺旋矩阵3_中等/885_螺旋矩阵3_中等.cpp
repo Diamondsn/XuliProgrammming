@@ -33,7 +33,50 @@ using namespace std;
 //0 <= c0 < C
 
 vector<vector<int>> spiralMatrixIII(int R, int C, int r0, int c0) {
-
+	vector<vector<int>>res(R*C, vector<int>(2, 0));
+	int curr = r0, curc = c0,heng=1,num=1;
+	res[0][0] = r0; 
+	res[0][1] = c0;
+	while(1){
+		for (int j = 0; j < heng; j++){
+			curc++;
+			if (curr < 0 || curr >= R || curc < 0 || curc >= C)
+				continue;
+			res[num][0] = curr;
+			res[num][1] = curc;
+			num++;
+		}
+		if (num >= R*C)break;
+		for (int j = 0; j < heng; ++j){
+			curr++;
+			if (curr < 0 || curr >= R || curc < 0 || curc >= C)
+				continue;
+			res[num][0] = curr;
+			res[num][1] = curc;
+			num++;
+		}
+		if (num >= R*C)break;
+		for (int j = 0; j < heng+1; ++j){
+			curc--;
+			if (curr < 0 || curr >= R || curc < 0 || curc >= C)
+				continue;
+			res[num][0] = curr;
+			res[num][1] = curc;
+			num++;
+		}
+		if (num >= R*C)break;
+		for (int j = 0; j < heng + 1; ++j){
+			curr--;
+			if (curr < 0 || curr >= R || curc < 0 || curc >= C)
+				continue;
+			res[num][0] = curr;
+			res[num][1] = curc;
+			num++;
+		}
+		if (num >= R*C)break;
+		heng += 2;
+	}
+	return res;
 }
 
 int main() {
