@@ -23,8 +23,26 @@ using namespace std;
 //你可以假设给定的 k 总是合理的，且 1 ≤ k ≤ 数组中不相同的元素的个数。
 //你的算法的时间复杂度必须优于 O(n log n) , n 是数组的大小。
 
-vector<int> topKFrequent(vector<int>& nums, int k) {
+bool mygreater(pair<int, int>a, pair<int, int>b){
+	return a.second > b.second;
+}
 
+vector<int> topKFrequent(vector<int>& nums, int k) {
+	map<int, int>hash;
+	for (int i : nums){
+		hash[i]++;
+	}
+	//也可建立优先级队列，默认是大根堆
+	vector<pair<int, int>>vec;
+	for (auto it = hash.begin(); it != hash.end(); ++it){
+		vec.push_back(pair<int,int>(it->first, it->second));
+	}
+	sort(vec.begin(), vec.end(), mygreater);
+	vector<int>res;
+	for (int i = 0; i < k;i++){
+		res.push_back(vec[i].first);
+	}
+	return res;
 }
 
 int main() {
@@ -36,6 +54,7 @@ int main() {
 	}
 
 	//test2
+	cout << "test2" << endl;
 	nums = { 1 };
 	vector<int>res2 = topKFrequent(nums, 1);
 	for (int t : res2)
