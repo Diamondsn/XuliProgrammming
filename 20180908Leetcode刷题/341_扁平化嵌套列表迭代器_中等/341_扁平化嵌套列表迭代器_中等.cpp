@@ -2,6 +2,7 @@
 #include<vector>
 #include<iostream>
 #include<algorithm>
+#include<stack>
 using namespace std;
 
 //给定一个嵌套的整型列表。设计一个迭代器，使其能够遍历这个整型列表中的所有整数。
@@ -35,16 +36,47 @@ public:
 class NestedIterator {
 public:
 	NestedIterator(vector<NestedInteger> &nestedList) {
-
+		for (int i = (int)nestedList.size() - 1; i >= 0; --i){
+			mystack.push(nestedList[i]);
+		}
+		//为防止出现[[]]的hasNext()出现true的情况，需进行解压，保证stack的top为数；
+		while (!mystack.empty() && !mystack.top().isInteger()){
+			NestedInteger pNode = mystack.top();
+			mystack.pop();
+			if (pNode.isInteger())
+				break;
+			else{
+				const vector<NestedInteger>&vec = pNode.getList();
+				for (int i = (int)vec.size() - 1; i >= 0; --i){
+					mystack.push(vec[i]);
+				}
+			}
+		}
 	}
 
 	int next() {
-
+		NestedInteger pTempNode = mystack.top();
+		mystack.pop();
+		
+		while (!mystack.empty() && !mystack.top().isInteger()){
+			NestedInteger pNode = mystack.top();
+			mystack.pop();
+			if (pNode.isInteger())
+				break;
+			else{
+				const vector<NestedInteger>&vec = pNode.getList();
+				for (int i = (int)vec.size() - 1; i >= 0; --i){
+					mystack.push(vec[i]);
+				}
+			}
+		}
+		return pTempNode.getInteger();
 	}
 
 	bool hasNext() {
-
+		return !mystack.empty();
 	}
+	stack<NestedInteger>mystack;
 };
 
 /**
@@ -53,9 +85,45 @@ public:
 * while (i.hasNext()) cout << i.next();
 */
 
+//以下为使用迭代器的做法
+//class NestedIterator {
+//public:
+//	stack<vector<NestedInteger>::iterator> begins, ends;
+//	NestedIterator(vector<NestedInteger> &nestedList) {
+//		begins.push(nestedList.begin());
+//		ends.push(nestedList.end());
+//	}
+//
+//	int next() {
+//		return (begins.top()++)->getInteger();
+//	}
+//
+//	bool hasNext() {
+//		while (begins.size())
+//		{
+//			if (begins.top() == ends.top())
+//			{
+//				begins.pop();
+//				ends.pop();
+//				continue;
+//			}
+//			else
+//			{
+//				auto val = begins.top();
+//				if (val->isInteger()) return true;
+//				begins.top()++;
+//				begins.push(val->getList().begin());
+//				ends.push(val->getList().end());
+//			}
+//		}
+//		return false;
+//	}
+//};
+
 int main() {
 	//test1
-	
+	//由于不清楚NestedInteger的内部实现，或者根本没有构造函数，所以不能测试
+
 	//test end
 	system("pause");
 	return 0;
