@@ -1,10 +1,10 @@
-//����������https://blog.csdn.net/Ramay7/article/details/52103051
+﻿//此题解答链接https://blog.csdn.net/Ramay7/article/details/52103051
 
-//��Ŀ����:
-//A����n�����У����Ǽƻ��޽�n-1������Ϊ1�ĵ�·�����������У����й滮�Ѿ�������
-//����ʹ��n�����л�����ͨ���ӳ���i������j���ҽ���һ��Ψһ·��
-//��һ��ʩ���Ӽƻ��а����ε�·���޽�������Ҫ�������ε�·��������ͬ�ĳ���(����·���˵�)��
-//���ǿ��Ի�õ����������ε�·���ȵĳ˻�������Ҫʹ��������󻯣�������ܻ�ö�������
+//题目描述:
+//A国有n个城市，他们计划修建n-1条长度为1的道路连接两个城市，城市规划已经给出，
+//最终使得n个城市互相连通，从城市i到城市j有且仅有一条唯一路径
+//有一家施工队计划承包两段道路的修建工作，要求这两段道路不经过相同的城市(包括路径端点)，
+//他们可以获得的利润是两段道路长度的乘积，现在要使得利润最大化，问最大能获得多少利润
 #include "stdafx.h"
 #include <stdio.h>
 #include <string.h>
@@ -34,8 +34,8 @@ inline void AddEdge(int from, int to)
 	edge[total].next = head[from];
 	head[from] = total++;
 }
-//down[i]:��i��Ҷ�ӽڵ���·��,ddown:�γ�·��
-//best[i]:i�����ڲ������,best���Ծ������ڵ�
+//down[i]:从i到叶子节点的最长路径,ddown:次长路径
+//best[i]:i子树内部的最长链,best可以经过根节点
 void dfs(int u, int p)
 {
 	ll Max = 0, MMax = 0;
@@ -56,8 +56,8 @@ void dfs(int u, int p)
 	}
 	if (cnt == 0) return;
 	down[u] = Max + 1;
-	if (cnt > 1) best[u] = max(best[u], Max + MMax + 2); //ϸ��
-	else best[u] = max(best[u], Max + MMax + 1);  //ϸ��
+	if (cnt > 1) best[u] = max(best[u], Max + MMax + 2); //细节
+	else best[u] = max(best[u], Max + MMax + 1);  //细节
 												  //printf("down[%d] = %lld best[%d] = %lld\n", u, down[u], u, best[u]);
 }
 
@@ -78,8 +78,8 @@ void solve()
 			child.push_back(v);
 		}
 		int size = child.size();
-		// ǰ׺down���ʹδ�,ǰ׺best���
-		// predown��ppredown�������ֵܽڵ㵽���׵�·��
+		// 前缀down最大和次大,前缀best最大
+		// predown和ppredown包括了兄弟节点到父亲的路径
 		prebest[0] = predown[0] = ppredown[0] = 0;
 		for (int i = 1; i < size; ++i) {
 			int v = child[i];
@@ -109,7 +109,7 @@ void solve()
 				ssufdown[i] = down[v] + 1;
 			}
 		}
-		//up[i]����i��i�ĸ��׵�·��
+		//up[i]包含i到i的父亲的路径
 		for (int i = 1; i < size; ++i) {
 			int v = child[i];
 			ll outside = up[u] + max(predown[i - 1], sufdown[i + 1]);
@@ -121,8 +121,8 @@ void solve()
 			//printf("v = %d outside = %lld best[v] = %lld\n", v, outside, best[v]);
 			ans = max(ans, outside * best[v]);
 		}
-		// predown/sufdown �������ֵܽڵ㵽���׽ڵ��·��
-		// up[v]������v������u��·��
+		// predown/sufdown 算上了兄弟节点到父亲节点的路径
+		// up[v]包含了v到父亲u的路径
 		for (int i = 1; i < size; ++i) {
 			int v = child[i];
 			up[v] = 1 + max(up[u], max(predown[i - 1], sufdown[i + 1]));
@@ -149,14 +149,14 @@ int main()
 		dfs(1, -1);
 		solve();//4
 	}
-	//��������
+	//测试用例
 	/*6
 	1 2
 	2 3
     2 4
     5 4
     6 4*/
-	//���Ϊ4
+	//结果为4
 	system("pause");
 	return 0;
 }

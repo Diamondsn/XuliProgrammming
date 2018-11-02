@@ -2,6 +2,7 @@
 #include<vector>
 #include<iostream>
 #include<algorithm>
+#include<queue>
 using namespace std;
 
 //给定一个 n x n 矩阵，其中每行和每列元素均按升序排序，找到矩阵中第k小的元素。
@@ -20,8 +21,9 @@ using namespace std;
 //说明: 
 //你可以假设 k 的值永远是有效的, 1 ≤ k ≤ n2 。
 
+//此题使用二分查找，需注意其中索引的变化策略
 int kthSmallest(vector<vector<int>>& matrix, int k) {
-
+	priority_queue<int, vector<int>, less<int>>q;
 }
 
 int main() {
