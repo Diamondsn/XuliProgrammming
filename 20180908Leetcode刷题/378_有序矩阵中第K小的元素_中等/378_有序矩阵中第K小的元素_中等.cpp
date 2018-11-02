@@ -67,6 +67,7 @@ int search_less_equal(vector<vector<int>>& matrix, int target){
 //统计方法2:利用matrix的潜在排序特性，从左下角开始
 //方法1时间复杂度O(nlogn*logK)(K为matrix最大最小值之差)(每次查找每行时采用二分查找，查找一次O(nlogn))
 //方法2时间复杂度O(nlogK)(查找一次O(n))
+//实测比使用最大值堆要慢
 int kthSmallest(vector<vector<int>>& matrix, int k){
 	int left = matrix[0][0], right = matrix.back().back();
 	while (left < right){
