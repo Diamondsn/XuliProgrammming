@@ -24,8 +24,17 @@ using namespace std;
 //提示:
 //n 和 k 满足条件 1 <= k < n <= 104.
 
+//此题tricky
+//思路:首先把绝对值差距最大的数放进去，指导k为1，后面升序排列
+//具体实现上，设置双指针分别指向末尾
 vector<int> constructArray(int n, int k) {
-
+	vector<int>res;
+	int i = 1, j = n;
+	while (i <= j){
+		if (k > 1)res.push_back(k-- % 2 ? i++ : j--);
+		else res.push_back(i++);
+	}
+	return res;
 }
 
 int main() {
