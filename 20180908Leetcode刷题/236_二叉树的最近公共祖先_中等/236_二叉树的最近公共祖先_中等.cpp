@@ -78,7 +78,13 @@ struct TreeNode {
 //https://www.cnblogs.com/simplepaul/p/7702655.html
 //直接以大问题进行递归
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-
+	//如果根节点为空，或者根节点直接是某个目标节点，直接返回根节点
+	if (!root || root == p || root == q)return root;
+	TreeNode* left = lowestCommonAncestor(root->left, p, q);
+	TreeNode* right = lowestCommonAncestor(root->right, p, q);
+	//左右子树均搜索到一个目标,根节点即为解
+	if (left && right)return root;
+	return left == NULL ? right:left ;
 }
 
 void Qianxubianli(TreeNode* pNode)
