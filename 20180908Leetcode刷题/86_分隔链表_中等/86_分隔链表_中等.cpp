@@ -46,7 +46,6 @@ ListNode* partition(ListNode* head, int x) {
 	rightcur->next = NULL;
 	leftcur->next = right->next;
 	return left->next;
-
 }
 
 int main() {
