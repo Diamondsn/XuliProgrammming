@@ -39,67 +39,77 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-vector<TreeNode*> path(TreeNode* root, TreeNode* p)
-{
-	vector<TreeNode*> result;
-	if (root == NULL)
-		return result;
+//以下为初解
+//vector<TreeNode*> path(TreeNode* root, TreeNode* p)
+//{
+//	vector<TreeNode*> result;
+//	if (root == NULL)
+//		return result;
+//
+//	if (root->val == p->val)
+//	{
+//		result.push_back(p);
+//		return result;
+//	}
+//
+//	vector<TreeNode*>left;
+//	vector<TreeNode*>right;
+//	if (root->left)
+//		left = path(root->left, p);
+//	if (root->right)
+//		right = path(root->right, p);
+//
+//	if (left.size() > 0)
+//	{
+//		result.push_back(root);
+//		for (int i = 0; i < left.size(); ++i)
+//		{
+//			result.push_back(left[i]);
+//		}
+//	}
+//	if (right.size()>0)
+//	{
+//		result.clear();
+//		result.push_back(root);
+//		for (int i = 0; i < right.size(); ++i)
+//		{
+//			result.push_back(right[i]);
+//		}
+//	}
+//	return result;
+//}
+//
+//TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//	vector<TreeNode*>p1 = path(root, p);
+//	vector<TreeNode*>p2 = path(root, q);
+//	reverse(p1.begin(), p1.end());
+//	reverse(p2.begin(), p2.end());
+//	bool flag = true;
+//	TreeNode* pNode = NULL;
+//	if (p1.size()>0 && p2.size() > 0)
+//	{
+//		for (int i = 0; flag && i < p1.size(); ++i)
+//		{
+//			for (int j = 0; flag && j < p2.size(); ++j)
+//			{
+//				if (p1[i]->val == p2[j]->val)
+//				{
+//					flag = false;
+//					pNode = p1[i];
+//				}
+//			}
+//		}
+//	}
+//	return pNode;
+//}
 
-	if (root->val == p->val)
-	{
-		result.push_back(p);
-		return result;
-	}
-
-	vector<TreeNode*>left;
-	vector<TreeNode*>right;
-	if (root->left)
-		left = path(root->left, p);
-	if (root->right)
-		right = path(root->right, p);
-
-	if (left.size() > 0)
-	{
-		result.push_back(root);
-		for (int i = 0; i < left.size(); ++i)
-		{
-			result.push_back(left[i]);
-		}
-	}
-	if (right.size()>0)
-	{
-		result.clear();
-		result.push_back(root);
-		for (int i = 0; i < right.size(); ++i)
-		{
-			result.push_back(right[i]);
-		}
-	}
-	return result;
-}
-
+//引申思考:
+//如果是二叉搜索树，可计算与当前根节点的差值是否同号
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-	vector<TreeNode*>p1 = path(root, p);
-	vector<TreeNode*>p2 = path(root, q);
-	reverse(p1.begin(), p1.end());
-	reverse(p2.begin(), p2.end());
-	bool flag = true;
-	TreeNode* pNode = NULL;
-	if (p1.size()>0 && p2.size() > 0)
-	{
-		for (int i = 0; flag && i < p1.size(); ++i)
-		{
-			for (int j = 0; flag && j < p2.size(); ++j)
-			{
-				if (p1[i]->val == p2[j]->val)
-				{
-					flag = false;
-					pNode = p1[i];
-				}
-			}
-		}
+	while ((root->val - p->val)*(root->val - q->val) > 0){
+		root = root->val > p->val ? root->left : root->right;
 	}
-	return pNode;
+	return root;
 }
 
 void Qianxubianli(TreeNode* pNode)

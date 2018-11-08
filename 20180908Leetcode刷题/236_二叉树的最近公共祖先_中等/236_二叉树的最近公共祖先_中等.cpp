@@ -39,6 +39,44 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+//初解用时较长
+//vector<TreeNode*> path(TreeNode* find, TreeNode* cur){
+//	vector<TreeNode*>vec;
+//	if (cur == find){
+//		vec.push_back(cur);
+//		return vec;
+//	}
+//	else if (!cur ||(!cur->left && !cur->right)){
+//		return vec;
+//	}
+//	else{
+//		vector<TreeNode*>left,right;
+//		left = path(find, cur->left);
+//		right = path(find, cur->right);
+//		if (left.size() > 0){
+//			left.insert(left.begin(), cur);
+//			return left;
+//		}
+//		else if(right.size()>0){
+//			right.insert(right.begin(), cur);
+//			return right;
+//		}
+//	}
+//	return vec;
+//}
+//
+//TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//	vector<TreeNode*>path1, path2;
+//	path1=path(p, root);
+//	path2=path(q, root);
+//	for (int i = (int)path1.size() - 1; i >= 0;--i){
+//		if (find(path2.rbegin(),path2.rend(),path1[i])!=path2.rend())return path1[i];
+//	}
+//	return NULL;
+//}
+
+//https://www.cnblogs.com/simplepaul/p/7702655.html
+//直接以大问题进行递归
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
 
 }
