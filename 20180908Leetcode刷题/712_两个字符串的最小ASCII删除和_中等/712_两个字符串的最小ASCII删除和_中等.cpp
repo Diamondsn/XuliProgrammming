@@ -29,13 +29,42 @@ using namespace std;
 //0 < s1.length, s2.length <= 1000。
 //所有字符串中的字符ASCII值在[97, 122]之间。
 
+//https://blog.csdn.net/OneDeveloper/article/details/79945091
+//思路:子问题是短一点的两字符串的解
+//递归规律:当前dp[i][j]当s[1]==s2[j]时，dp[i][j]=dp[i-1][j-1]
+//当不等时，是dp[i-1][j]+s1[i]和dp[i][j-1]+s2[j]的最小的值
+//dp[i][j]表示s1.substr(0, i)和s2.substr(0,j)的解
 int minimumDeleteSum(string s1, string s2) {
-
+	vector<vector<int>>dp(s1.size() + 1, vector<int>(s2.size() + 1, 0));
+	//赋初值
+	for (int i = 1; i <= s1.size(); ++i){
+		dp[i][0] = dp[i - 1][0] + s1[i - 1];
+	}
+	for (int i = 1; i <=s2.size(); ++i){
+		dp[0][i] = dp[0][i - 1] + s2[i - 1];
+	}
+	//迭代计算
+	for (int i = 1; i <= s1.size(); ++i){
+		for (int j = 1; j <=s2.size(); ++j){
+			if (s1[i - 1] == s2[j - 1])dp[i][j] = dp[i - 1][j - 1];
+			else{
+				dp[i][j] = min(dp[i - 1][j] + s1[i - 1], dp[i][j - 1] + s2[j - 1]);
+			}
+		}
+	}
+	return dp.back().back();
 }
 
 int main() {
 	//test1
-	
+	string s1 = "sea", s2 = "eat";
+	int ans1 = minimumDeleteSum(s1, s2);
+
+	//test2
+	s1 = "delete";
+	s2 = "leet";
+	int ans2 = minimumDeleteSum(s1, s2);
+	cout << ans1 << endl << ans2 << endl;
 	//test end
 	system("pause");
 	return 0;
