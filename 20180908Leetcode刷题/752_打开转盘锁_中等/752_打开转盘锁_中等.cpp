@@ -2,6 +2,8 @@
 #include<vector>
 #include<stack>
 #include<string>
+#include<queue>
+#include<unordered_set>
 using namespace std;
 
 //你有一个带有四个圆形拨轮的转盘锁。每个拨轮都有10个数字： '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' 。
@@ -44,8 +46,113 @@ using namespace std;
 //目标数字 target 不会在 deadends 之中。
 //每个 deadends 和 target 中的字符串的数字会在 10,000 个可能的情况 '0000' 到 '9999' 中产生。
 
-int openLock(vector<string>& deadends, string target) {
+//以下是回溯算法，其实是深度优先遍历，要求的是广度优先遍历，使用队列来做，一次访问一层
+//注意:以下搜索方法不可取，无效搜索太多，在10000个方格中做搜索，每个节点有8条分支路径
+//应该在搜索的基础上加入其他引导
+//void dfs(int& res, vector<vector<vector<vector<bool>>>>&vec, string cur, string &target,int num){
+//	if (!vec[stoi(cur.substr(0, 1))][stoi(cur.substr(1, 1))][stoi(cur.substr(2, 1))][stoi(cur.substr(3, 1))])return;
+//	if (cur.compare(target) == 0){
+//		if (num < res)res = num;
+//		return;
+//	}
+//	else if (num >= 40)return;
+//	else{
+//		vec[stoi(cur.substr(0, 1))][stoi(cur.substr(1, 1))][stoi(cur.substr(2, 1))][stoi(cur.substr(3, 1))] = false;
+//		vector<string>path;
+//		for (int i = 0; i < cur.size(); ++i){
+//			string str = cur;
+//			str[i] = ((stoi(str.substr(i, 1)) + 9) % 10) + '0';
+//			path.push_back(str);
+//			str = cur;
+//			str[i] = ((stoi(str.substr(i, 1)) + 11) % 10) + '0';
+//			path.push_back(str);
+//		}
+//		for (string st : path){
+//			dfs(res, vec, st, target, num + 1);
+//		}
+//	}
+//}
+//
+//int openLock(vector<string>& deadends, string target) {
+//	vector<vector<vector<vector<bool>>>>vec(10, vector<vector<vector<bool>>>(10, vector<vector<bool>>(10, vector<bool>(10, true))));
+//	for (int i = 0; i < deadends.size(); ++i){
+//		vec[stoi(deadends[i].substr(0, 1))][stoi(deadends[i].substr(1, 1))][stoi(deadends[i].substr(2, 1))][stoi(deadends[i].substr(3, 1))] = false;
+//	}
+//	int res=INT_MAX,num=0;
+//	string cur = "0000";
+//	dfs(res, vec, cur, target,num);
+//	return res==INT_MAX?-1:res;
+//}
 
+//https://blog.csdn.net/qq_26410101/article/details/82919415
+//https://blog.csdn.net/QingyunAlgo/article/details/80589440
+int openLock(vector<string>& deadends, string target) {
+	queue<string>q;
+	unordered_set<string>dead(deadends.begin(),deadends.end());
+	unordered_set<string>visited;//表示访没访问可以用vector<bool>(10000,false),这更快
+	string init = "0000";
+	if (dead.find(target) != dead.end() || dead.find(init) != dead.end())return-1;
+	q.push(init);
+	int num = 0;
+	while (!q.empty()){
+		for (int m = q.size(); m > 0; --m){
+			string cur = q.front();
+			q.pop();
+			if (target.compare(cur) == 0)return num;
+			string temp = cur;
+			for (int i = 0; i < 4; ++i){
+				temp[i] = (temp[i] - '0' + 1) % 10 + '0';
+				if (visited.find(temp) == visited.end() && dead.find(temp) == dead.end())
+				{
+					visited.insert(temp);
+					q.push(temp);
+				}
+
+				temp[i] = (temp[i] - '0' + 8) % 10 + '0';
+				if (visited.find(temp) == visited.end() && dead.find(temp) == dead.end())
+				{
+					visited.insert(temp);
+					q.push(temp);
+				}
+				temp = cur;
+			}
+		}
+		num++;
+	}
+	return -1;
+
+
+	/*queue<string> q;
+	string start = "0000";
+	unordered_set<string> hash_dead;
+	unordered_set<string> visited;
+	visited.insert(start);
+	for (string itm : deadends) hash_dead.insert(itm);
+	if (hash_dead.find(start) != hash_dead.end()) return -1;
+	int res = 0;
+	q.push(start);
+	while (!q.empty()) {
+		for (int i = q.size(); i > 0; i--) {
+			string top = q.front(); q.pop();
+			if (top.compare(target) == 0) return res;
+			string back = top;
+			for (int j = 0; j < 4; j++) {
+				top[j] = (top[j] - '0' + 1) % 10 + '0';
+				if (visited.find(top) == visited.end() && hash_dead.find(top) == hash_dead.end()) {
+					visited.insert(top);
+					q.push(top);
+				}
+				top[j] = (top[j] - '0' + 8) % 10 + '0';
+				if (visited.find(top) == visited.end() && hash_dead.find(top) == hash_dead.end()) {
+					visited.insert(top);
+					q.push(top);
+				}
+				top = back;
+			}
+		}
+		res++;
+	}
+	return -1;*/
 }
 
 void main(){
