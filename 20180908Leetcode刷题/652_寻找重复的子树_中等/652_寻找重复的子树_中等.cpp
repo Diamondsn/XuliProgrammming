@@ -65,9 +65,31 @@ void Houxubianli(TreeNode* pNode)
 	cout << pNode->val << " ,";
 }
 
+vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+
+}
+
 void main(){
 	//test1
-	
+	TreeNode* t1 = new TreeNode(1);
+	TreeNode* t2 = new TreeNode(2);
+	TreeNode* t3 = new TreeNode(3);
+	TreeNode* t4 = new TreeNode(4);
+	TreeNode* t2_2 = new TreeNode(2);
+	TreeNode* t4_2 = new TreeNode(4);
+	TreeNode* t4_3 = new TreeNode(4);
+	t1->left = t2;
+	t1->right = t3;
+	t2->left = t4;
+	t3->left = t2_2;
+	t3->right = t4_2;
+	t2_2->left = t4_3;
+
+	vector<TreeNode*>vec = findDuplicateSubtrees(t1);
+	for (TreeNode* n : vec){
+		Qianxubianli(n);
+		cout << endl;
+	}
 	//test end
 	system("pause");
 }
