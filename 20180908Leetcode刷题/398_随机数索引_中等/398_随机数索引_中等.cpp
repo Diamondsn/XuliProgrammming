@@ -4,6 +4,7 @@
 #include<string>
 #include<queue>
 #include<unordered_set>
+#include"time.h"
 using namespace std;
 
 //给定一个可能含有重复元素的整数数组，要求随机输出给定的数字的索引。 您可以假设给定的数字一定存在于数组中。
@@ -22,15 +23,27 @@ using namespace std;
 //// pick(1) 应该返回 0。因为只有nums[0]等于1。
 //solution.pick(1);
 
+//蓄水池抽样
 class Solution {
 public:
 	Solution(vector<int> nums) {
-
+		m_nums = nums;
+		srand(time(NULL));
 	}
 
 	int pick(int target) {
-
+		int res, m=1;
+		for (int i=0; i < m_nums.size(); ++i){
+			if (m_nums[i] == target){
+				if (rand() % m == 0){//m是和target相同的数字个数
+					res = i;
+				}
+				m++;
+			}
+		}
+		return res;
 	}
+	vector<int>m_nums;
 };
 
 /**
@@ -41,7 +54,11 @@ public:
 
 void main(){
 	//test1
-
+	vector<int>nums = { 1, 2, 3, 3, 3 };
+	Solution sol(nums);
+	int a=sol.pick(3);
+	int b = sol.pick(1);
+	cout << a << endl << b << endl;
 	//test end
 	system("pause");
 }
