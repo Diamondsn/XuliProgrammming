@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include<vector>
 #include<stack>
 #include<string>
@@ -7,93 +7,43 @@
 #include"time.h"
 using namespace std;
 
-//ÔÚ±¾ÎÊÌâÖĞ, Ê÷Ö¸µÄÊÇÒ»¸öÁ¬Í¨ÇÒÎŞ»·µÄÎŞÏòÍ¼¡£
+//ç»™å®šä¸€ä¸ªæ•´æ•° n, è¿”å›ä» 1 åˆ° n çš„å­—å…¸é¡ºåºã€‚
 //
-//ÊäÈëÒ»¸öÍ¼£¬¸ÃÍ¼ÓÉÒ»¸öÓĞ×ÅN¸ö½Úµã (½ÚµãÖµ²»ÖØ¸´1, 2, ..., N) µÄÊ÷¼°Ò»Ìõ¸½¼ÓµÄ±ß¹¹³É¡£¸½¼ÓµÄ±ßµÄÁ½¸ö¶¥µã°üº¬ÔÚ1µ½NÖĞ¼ä£¬ÕâÌõ¸½¼ÓµÄ±ß²»ÊôÓÚÊ÷ÖĞÒÑ´æÔÚµÄ±ß¡£
+//ä¾‹å¦‚ï¼Œ
 //
-//½á¹ûÍ¼ÊÇÒ»¸öÒÔ±ß×é³ÉµÄ¶şÎ¬Êı×é¡£Ã¿Ò»¸ö±ßµÄÔªËØÊÇÒ»¶Ô[u, v] £¬Âú×ã u < v£¬±íÊ¾Á¬½Ó¶¥µãu ºÍvµÄÎŞÏòÍ¼µÄ±ß¡£
+//ç»™å®š n = 1 3ï¼Œè¿”å›[1, 10, 11, 12, 13, 2, 3, 4, 5, 6, 7, 8, 9] ã€‚
 //
-//·µ»ØÒ»Ìõ¿ÉÒÔÉ¾È¥µÄ±ß£¬Ê¹µÃ½á¹ûÍ¼ÊÇÒ»¸öÓĞ×ÅN¸ö½ÚµãµÄÊ÷¡£Èç¹ûÓĞ¶à¸ö´ğ°¸£¬Ôò·µ»Ø¶şÎ¬Êı×éÖĞ×îºó³öÏÖµÄ±ß¡£´ğ°¸±ß [u, v] Ó¦Âú×ãÏàÍ¬µÄ¸ñÊ½ u < v¡£
-//
-//Ê¾Àı 1£º
-//ÊäÈë: [[1,2], [1,3], [2,3]]
-//Êä³ö: [2,3]
-//½âÊÍ: ¸ø¶¨µÄÎŞÏòÍ¼Îª:
-//  1
-// / \
-//2 - 3
-//
-//Ê¾Àı 2£º
-//ÊäÈë: [[1,2], [2,3], [3,4], [1,4], [1,5]]
-//Êä³ö: [1,4]
-//½âÊÍ: ¸ø¶¨µÄÎŞÏòÍ¼Îª:
-//5 - 1 - 2
-//    |   |
-//    4 - 3
-//
-//×¢Òâ:
-//ÊäÈëµÄ¶şÎ¬Êı×é´óĞ¡ÔÚ 3 µ½ 1000¡£
-//¶şÎ¬Êı×éÖĞµÄÕûÊıÔÚ1µ½NÖ®¼ä£¬ÆäÖĞNÊÇÊäÈëÊı×éµÄ´óĞ¡¡£
+//è¯·å°½å¯èƒ½çš„ä¼˜åŒ–ç®—æ³•çš„æ—¶é—´å¤æ‚åº¦å’Œç©ºé—´å¤æ‚åº¦ã€‚ è¾“å…¥çš„æ•°æ® n å°äºç­‰äº 5, 000, 000ã€‚
 
-//´ËÌâÊ¹ÓÃ²¢²é¼¯£¬Ò²¾ÍÊÇ¼¯ºÏµÄ²éÕÒÓëºÏ²¢£¬¹¹½¨ÁÚ½Ó±í±íÊ¾ÁªÍ¨¹ØÏµ
-//ÒÔÏÂ²ÉÓÃ·½·¨½Ï¶à
-//https://www.cnblogs.com/grandyang/p/7628977.html
-//ÒÔÏÂËä²ÉÓÃ²¢²é¼¯£¬µ«Êı×é´óĞ¡Ã÷ÏÔËõĞ¡
-//https://blog.csdn.net/gl486546/article/details/79780126
-
-
-//·¨1:²ÉÓÃ½ÏĞ¡µÄ¿Õ¼ä
-//int find(int num, vector<int>&biao){
-//	return num == biao[num] ? num : biao[num] = find(biao[num],biao);
-//}
-//
-//vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-//	vector<int>biao(edges.size() + 1);
-//	for (int i =1; i < biao.size(); ++i){
-//		biao[i] = i;
-//	}
-//	for (vector<int>edge : edges){
-//		int res1 = find(edge[0], biao);
-//		int res2 = find(edge[1], biao);
-//		if (res1 == res2)return edge;
-//		biao[res1] = res2;
-//	}
-//	return{};
-//}
-
-//²ÉÓÃ²¢²é¼¯µÄÁí½â
-int find(int num, vector<int>& biao){
-	while (biao[num] != -1){
-		num = biao[num];
+//https://blog.csdn.net/jackzhang_123/article/details/78727180
+//ä½©æœï¼Œæä¸ºç®€æ´ï¼Œç»´æŠ¤çš„è¿­ä»£å˜é‡ä¹Ÿå°‘
+vector<int> lexicalOrder(int n) {
+	vector<int> res(n, 0);
+	int cur = 1;
+	for (int i = 0; i < n; i++)
+	{
+		res[i] = cur;
+		if (cur * 10 <= n)
+			cur *= 10;
+		else
+		{
+			if (cur >= n)
+				cur /= 10;
+			cur += 1;
+			while (cur % 10 == 0)
+				cur /= 10;
+		}
 	}
-	return num;
-}
-
-vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-	vector<int>biao(edges.size() + 1, -1);
-	for (vector<int> edge : edges){
-		int res1 = find(edge[0], biao);
-		int res2 = find(edge[1], biao);
-		if (res1 == res2)return edge;
-		biao[res1] = res2;
-	}
-	return{};
+	return res;
 }
 
 void main(){
 	//test1
-	vector<vector<int>>edges = { { 1, 2 }, { 1, 3 }, { 2, 3 } };
-	vector<int>res1 = findRedundantConnection(edges);
-	cout << "test1" << endl;
-	for (int m : res1)
-		cout << m << endl;
-
-	//test2
-	cout << "test2" << endl;
-	edges = { { 1, 2 }, { 2, 3 }, { 3, 4 }, { 1, 4 }, { 1, 5 } };
-	res1 = findRedundantConnection(edges);
-	for (int m : res1)
-		cout << m << endl;
+	vector<int>res = lexicalOrder(100);
+	cout << "resä¸ªæ•°ä¸º" << res.size() << endl;
+	for (int i : res){
+		cout << i << endl;
+	}
 	//test end
 	system("pause");
 }
