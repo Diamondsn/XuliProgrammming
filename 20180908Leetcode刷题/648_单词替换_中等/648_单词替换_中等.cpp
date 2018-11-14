@@ -36,7 +36,10 @@ string replaceWords(vector<string>& dict, string sentence) {
 
 void main(){
 	//test1
-	
+	vector<string>dict = { "cat", "bat", "rat" };
+	string sentence = "the cattle was rattled by the battery";
+	string res = replaceWords(dict, sentence);
+	cout << res << endl;
 	//test end
 	system("pause");
 }
