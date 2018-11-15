@@ -30,15 +30,86 @@ using namespace std;
 //1 <= 词根长度 <= 100
 //1 <= 句中词语长度 <= 1000
 
-string replaceWords(vector<string>& dict, string sentence) {
-
-}
+//构建的字典树不能区分正常前缀和最短前缀
+//struct dicnode{
+//	dicnode(){ vec.resize(26, NULL); };
+//	vector<dicnode*>vec;
+//};
+//
+//string replaceWords(vector<string>& dict, string sentence) {
+//	//分隔字符串
+//	int pos;
+//	vector<string>senvec;
+//	while ((pos = sentence.find_first_of(" ")) != sentence.npos){
+//		if (pos > 0){
+//			senvec.push_back(sentence.substr(0, pos));
+//		}
+//		sentence = sentence.substr(pos + 1);
+//	}
+//	if (sentence.size() > 0){
+//		senvec.push_back(sentence);
+//	}
+//	//构建字典树
+//	dicnode* head = new dicnode(),*cur=head;
+//	for (string s : dict){
+//		cur = head;
+//		for (char c : s){
+//			if (cur->vec[c - 'a'] == NULL){
+//				cur->vec[c - 'a'] = new dicnode();
+//				cur = cur->vec[c - 'a'];
+//			}
+//			else{
+//				cur = cur->vec[c - 'a'];
+//				break;//只保留最短的前缀
+//			}
+//		}
+//		for (int i = 0; i < cur->vec.size();++i)
+//			cur->vec[i] = NULL;
+//	}
+//	//替换
+//	cur = head;
+//	for (int i = 0; i < senvec.size(); ++i){
+//		if (head->vec[senvec[i][0]-'a'] == NULL)
+//			continue;
+//		cur = head->vec[senvec[i][0] - 'a'];
+//		//cur = head->vec[senvec[i][0]-'a'];
+//		string tihuan;
+//		//string tihuan = string(1,senvec[i][0]);
+//		int j = 0;
+//		for (; j+1 < senvec[i].size(); ++j){
+//			if (cur == NULL){
+//				
+//				break;
+//			}
+//			else{
+//				tihuan += string(1, senvec[i][j]);
+//				cur = cur->vec[senvec[i][j+1] - 'a'];
+//			}
+//		}
+//		
+//		senvec[i] = tihuan;
+//	}
+//	//合成
+//	string res;
+//	if (senvec.size()>=1)
+//	res += senvec[0];
+//	for (int i = 1; i < senvec.size(); ++i){
+//		res += " " + senvec[i];
+//	}
+//	return res;
+//}
 
 void main(){
 	//test1
-	vector<string>dict = { "cat", "bat", "rat" };
+	vector<string>dict = {"cat","c", "bat", "rat" };
 	string sentence = "the cattle was rattled by the battery";
 	string res = replaceWords(dict, sentence);
+	cout << res << endl;
+
+	//test2
+	dict = { "a", "aa", "aaa", "aaaa" };
+	sentence = "a aa a aaaa aaa aaa aaa aaaaaa bbb baba ababa";
+	res = replaceWords(dict, sentence);
 	cout << res << endl;
 	//test end
 	system("pause");
