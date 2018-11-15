@@ -43,16 +43,32 @@ using namespace std;
 //}
 
 int removeDuplicates(vector<int>& nums) {
-	int kongwei=0,num=0,curnum,sum=0;
-	for (int cur = 0; cur < nums.size(); ++cur){
-		sum++;
+	if (nums.size() <= 0)return 0;
+	int kongwei=0,curnum=nums[0],num=1;
+	for (int cur = 1; cur < nums.size(); ++cur){
+		if (nums[cur] == curnum){
+			num++;
+		}
+		else{
+			curnum = nums[cur];
+			num = 1;
+		}
+		if (num > 2){
+			if (kongwei == 0)
+				kongwei = cur;
+		}
+		if (kongwei != 0 && num<=2)
+		{
+			nums[kongwei++] = nums[cur];
+		}
 	}
-	return sum;
+	return kongwei==0?nums.size():kongwei;
 }
 
 void main() {
 	//test1
-	vector<int>nums = { 1, 1, 1, 2, 2, 3 };
+	//vector<int>nums = { 1, 1, 1, 2, 2, 3 };
+	vector<int>nums = { 1, 2, 2 };
 	int a = removeDuplicates(nums);
 	for (int i = 0; i < a; ++i){
 		cout << nums[i] << ",";
