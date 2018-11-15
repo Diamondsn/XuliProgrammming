@@ -3,6 +3,8 @@
 #include<stack>
 #include<string>
 #include<stdint.h>
+#include<map>
+#include<algorithm>
 using namespace std;
 
 //给定一个整数数组 nums ，你可以对它进行一些操作。
@@ -31,12 +33,30 @@ using namespace std;
 //每个整数nums[i]的大小都在[1, 10000]范围内。
 
 int deleteAndEarn(vector<int>& nums) {
-
+	if (nums.size() <= 0)return 0;
+	map<int, int>mymap, dp;
+	for (int m : nums){
+		mymap[m]++;
+	}
+	dp[mymap.begin()->first] = mymap.begin()->first*mymap.begin()->second;
+	auto before = mymap.begin();
+	for (auto it = ++mymap.begin(); it != mymap.end(); ++it){
+		before = it - 1;
+		if (!mymap.count((++it)->first-1))
+		  dp[it->first]=;
+	}
+	return dp.rbegin()->second;
 }
 
 void main() {
 	//test1
-	
+	vector<int>nums = { 3, 4, 2 };
+	int a = deleteAndEarn(nums);
+
+	//test2
+	nums = { 2, 2, 3, 3, 3, 4 };
+	int b = deleteAndEarn(nums);
+	cout << a << endl << b << endl;
 	//test end
 	system("pause");
 }
