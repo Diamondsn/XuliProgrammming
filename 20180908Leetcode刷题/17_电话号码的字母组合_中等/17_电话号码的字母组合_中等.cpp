@@ -19,15 +19,25 @@ using namespace std;
 //说明:
 //尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序。
 
-void dfs(vector<string>& res, vector<vector<string>>vec, string& digits, int cur){
-
+void dfs(vector<string>& res, vector<vector<char>>vec, string& digits, string& temp,int cur){
+	if (cur == digits.size())
+		res.push_back(temp);
+	else{
+		for (int i = 0; i < vec[digits[cur] - '0'].size(); ++i){
+			temp.push_back(vec[digits[cur] - '0'][i]);
+			dfs(res, vec, digits, temp, cur + 1);
+			temp.pop_back();
+		}
+	}
 }
 
 vector<string> letterCombinations(string digits) {
-	vector<vector<string>>vec = { {}, {}, { "a", "b", "c" }, { "d", "e", "f" }, { "g", "h", "i" }, { "j", "k", "l" },
-	{ "m", "n", "o" }, { "p", "q", "r", "s" }, { "t", "u", "v" }, { "w", "x", "y", "z" } };
+	if (digits.size() == 0)return{};
+	vector<vector<char>>vec = { {}, {}, { 'a', 'b', 'c' }, { 'd', 'e', 'f' }, { 'g', 'h', 'i' }, { 'j', 'k', 'l' },
+	{ 'm', 'n', 'o' }, { 'p', 'q', 'r', 's' }, { 't', 'u', 'v' }, { 'w', 'x', 'y', 'z' } };
 	vector<string>res;
-	dfs(res, vec, digits,0);
+	string temp;
+	dfs(res,vec, digits,temp,0);
 	return res;
 }
 
