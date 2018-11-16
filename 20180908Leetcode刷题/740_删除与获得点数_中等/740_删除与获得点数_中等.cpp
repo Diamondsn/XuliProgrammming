@@ -34,16 +34,20 @@ using namespace std;
 
 int deleteAndEarn(vector<int>& nums) {
 	if (nums.size() <= 0)return 0;
-	map<int, int>mymap, dp;
+	map<int, int>mymap,dp;
 	for (int m : nums){
 		mymap[m]++;
 	}
-	dp[mymap.begin()->first] = mymap.begin()->first*mymap.begin()->second;
-	auto before = mymap.begin();
-	for (auto it = ++mymap.begin(); it != mymap.end(); ++it){
-		before = it - 1;
-		if (!mymap.count((++it)->first-1))
-		  dp[it->first]=;
+	dp[mymap.begin()->first] = (mymap.begin()->first)*(mymap.begin()->second);
+	for (auto before = mymap.begin(), cur = ++mymap.begin(); cur != mymap.end(); ++before, ++cur){
+		if (!mymap.count(cur->first - 1))
+			dp[cur->first] = dp[before->first] + (cur->first)*(cur->second);
+		else{
+			auto temp = before;
+			int a = dp[before->first];//不取当前值
+			int b = (cur->first)*(cur->second) + (temp == mymap.begin() ? 0 : dp[(--temp)->first]);//取当前值
+			dp[cur->first] = std::max(a, b);
+		}
 	}
 	return dp.rbegin()->second;
 }
