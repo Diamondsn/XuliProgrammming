@@ -19,13 +19,6 @@ using namespace std;
 //说明:
 //尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序。
 
-//Definition for singly - linked list.
-struct ListNode {
-	int val;
-	ListNode *next;
-	ListNode(int x) : val(x), next(NULL) {}
-};
-
 void dfs(vector<string>& res, vector<vector<string>>vec, string& digits, int cur){
 
 }
