@@ -27,7 +27,32 @@ struct TreeNode {
 };
 
 TreeNode* constructFromPrePost(vector<int>& pre, vector<int>& post) {
-
+	if (pre.size() == 0 && post.size() == 0)return NULL;
+	if (pre.size() == 1 && post.size() == 1){
+		TreeNode* node = new TreeNode(pre.back());
+		return node;
+	}
+	TreeNode* root = new TreeNode(pre.front());
+	int num = 0;
+	while (post[num] != pre[1]){
+		num++;
+	}
+	vector<int>pre1, pre2, post1, post2;
+	for (int i = 1; i < pre.size(); ++i){
+		if (i <= num + 1)
+		{
+			pre1.push_back(pre[i]);
+			post1.push_back(post[i - 1]);
+		}
+		else
+		{
+			pre2.push_back(pre[i]);
+			post2.push_back(post[i - 1]);
+		}
+	}
+	root->left = constructFromPrePost(pre1, post1);
+	root->right = constructFromPrePost(pre2, post2);
+	return root;
 }
 
 void Qianxubianli(TreeNode* pNode)
@@ -62,7 +87,12 @@ void Houxubianli(TreeNode* pNode)
 
 int main() {
 	//test1
-	
+	vector<int>pre={1,2,4,5,3,6,7},post={4,5,2,6,7,3,1};
+	TreeNode* res=constructFromPrePost(pre,post);
+	cout<<"前序遍历结果"<<endl;
+    Qianxubianli(res);
+	cout<<endl<<"后序遍历结果"<<endl;
+	Houxubianli(res);
 	//test end
 
 	system("pause");
