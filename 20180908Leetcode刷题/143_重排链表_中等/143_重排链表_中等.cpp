@@ -35,7 +35,30 @@ void ListNodeBianli(ListNode* head)
 }
 
 void reorderList(ListNode* head) {
-
+	if (!head)return;
+	deque<ListNode*>mydeque;
+	ListNode* temphead = head;
+	while (temphead->next){
+		mydeque.push_back(temphead->next);
+		temphead = temphead->next;
+	}
+	ListNode* cur=head;
+	bool flag = true;
+	while (!mydeque.empty()){
+		ListNode* temp = NULL;
+		if (flag){
+			temp = mydeque.back();
+			mydeque.pop_back();
+		}
+		else{
+			temp = mydeque.front();
+			mydeque.pop_front();
+		}
+		cur->next = temp;
+		cur = cur->next;
+		flag = !flag;
+	}
+	cur->next = NULL;
 }
 
 int main() {
@@ -48,7 +71,7 @@ int main() {
 	l2->next = l3;
 	l3->next = l4;
 	reorderList(l1);
-
+	ListNodeBianli(l1);
 	//test2
 	ListNode* n1 = new ListNode(1);
 	ListNode* n2 = new ListNode(2);
@@ -60,6 +83,7 @@ int main() {
 	n3->next = n4;
 	n4->next = n5;
 	reorderList(n1);
+	ListNodeBianli(n1);
 	//test end
 
 	system("pause");
