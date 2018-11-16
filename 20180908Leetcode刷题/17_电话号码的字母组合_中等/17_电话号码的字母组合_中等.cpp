@@ -26,13 +26,23 @@ struct ListNode {
 	ListNode(int x) : val(x), next(NULL) {}
 };
 
-vector<string> letterCombinations(string digits) {
+void dfs(vector<string>& res, vector<vector<string>>vec, string& digits, int cur){
 
+}
+
+vector<string> letterCombinations(string digits) {
+	vector<vector<string>>vec = { {}, {}, { "a", "b", "c" }, { "d", "e", "f" }, { "g", "h", "i" }, { "j", "k", "l" },
+	{ "m", "n", "o" }, { "p", "q", "r", "s" }, { "t", "u", "v" }, { "w", "x", "y", "z" } };
+	vector<string>res;
+	dfs(res, vec, digits,0);
+	return res;
 }
 
 int main() {
 	//test1
-	
+	vector<string>res = letterCombinations("23");
+	for (string str : res)
+		cout << str << endl;
 	//test end
 
 	system("pause");
