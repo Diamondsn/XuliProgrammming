@@ -34,12 +34,35 @@ using namespace std;
 //2 <= S.length <= 50
 
 int scoreOfParentheses(string S) {
-
+	if (S.size() == 0)return 0;
+	int cur = 1, num = 1;
+	while (num!=0){
+		if (S[cur] == '(')
+			num++;
+		else
+			num--;
+		cur++;
+	}
+	if (cur == S.size()){
+		if (cur == 2)return 1;
+		else return 2 * scoreOfParentheses(S.substr(1, S.size() - 2));
+	}
+	return scoreOfParentheses(S.substr(0, cur)) + scoreOfParentheses(S.substr(cur));
 }
 
 void main() {
 	//test1
-	
+	int a = scoreOfParentheses("()");
+
+	//test2
+	int b = scoreOfParentheses("(())");
+
+	//test3
+	int c = scoreOfParentheses("()()");
+
+	//test4
+	int d = scoreOfParentheses("(()(()))");
+	cout << a << endl << b << endl << c << endl << d << endl;
 	//test end
 	system("pause");
 }
