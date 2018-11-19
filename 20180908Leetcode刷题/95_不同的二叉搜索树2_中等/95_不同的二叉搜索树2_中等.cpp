@@ -71,7 +71,12 @@ vector<TreeNode*> generateTrees(int n) {
 
 int main() {
 	//test1
-	
+	vector<TreeNode*>res = generateTrees(3);
+	for (TreeNode* n : res)
+	{
+		Qianxubianli(n);
+		cout << endl;
+	}
 	//test end
 
 	system("pause");
