@@ -4,6 +4,7 @@
 #include<algorithm>
 #include"math.h"
 #include<deque>
+#include<functional>
 using namespace std;
 
 //给出 n 个数对。 在每一个数对中，第一个数字总是比第二个数字小。
@@ -20,13 +21,30 @@ using namespace std;
 //注意：
 //给出数对的个数在 [1, 1000] 范围内。
 
+bool bijiao(vector<int>& a, vector<int>& b){
+	return a.front() < b.front();
+}
 int findLongestChain(vector<vector<int>>& pairs) {
-
+	sort(pairs.begin(), pairs.end(), bijiao);
+	vector<int>dp(pairs.size());
+	dp[0] = 1;
+	int min = pairs[0][1];
+	for (int i = 1; i < pairs.size(); ++i){
+		if (pairs[i][0] > min){
+			dp[i] = dp[i - 1] + 1;
+		}
+		else{
+			dp[i] = dp[i - 1];
+		}
+	}
+	return dp.back();
 }
 
 int main() {
 	//test1
-	
+	vector<vector<int>>pairs = { { 1, 2 }, { 2, 3 }, { 3, 4 } };
+	int a = findLongestChain(pairs);
+	cout << a << endl;
 	//test end
 
 	system("pause");
