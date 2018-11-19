@@ -65,13 +65,52 @@ void Houxubianli(TreeNode* pNode)
 	cout << pNode->val << ",";
 }
 
-vector<TreeNode*> generateTrees(int n) {
+TreeNode* depthcopy(TreeNode* prev){
+	if (!prev)return NULL;
+	TreeNode* newroot = new TreeNode(prev->val);
+	newroot->left = depthcopy(prev->left);
+	newroot->right = depthcopy(prev->right);
+	return newroot;
+}
 
+vector<TreeNode*> generateTrees(int n) {
+	if (n <= 0)return{};
+	vector<vector<TreeNode*>>dp(n);
+	TreeNode* node = new TreeNode(1);
+	vector<TreeNode*>vec(1,node);
+	dp[0]=vec;
+	for (int i = 1; i < n; ++i){
+		vec.clear();
+		for (TreeNode* t : dp[i - 1]){
+			TreeNode* cur1 = new TreeNode(i + 1);
+			cur1->left = t;
+			vec.push_back(cur1);
+			TreeNode*temp=depthcopy(t);
+			int num = 0;
+			while (temp){
+				temp = temp->right;
+				num++;
+			}
+			for (int j = 0; j < num; ++j){
+				TreeNode* newroot = depthcopy(t),*m=newroot;
+				for (int k = 0; k < j; ++k){
+					m = m->right;
+				}
+				TreeNode* cur2 = new TreeNode(i + 1);
+				TreeNode* mmm = m->right;
+				m->right = cur2;
+				cur2->left = mmm;
+				vec.push_back(newroot);
+			}
+		}
+		dp[i] = vec;
+	}
+	return dp.back();
 }
 
 int main() {
 	//test1
-	vector<TreeNode*>res = generateTrees(3);
+	vector<TreeNode*>res = generateTrees(4);
 	for (TreeNode* n : res)
 	{
 		Qianxubianli(n);
