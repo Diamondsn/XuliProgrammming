@@ -32,14 +32,30 @@ using namespace std;
 //你可以假定提莫攻击时间序列中的数字和提莫攻击的中毒持续时间都是非负整数，并且不超过 10,000,000。
 
 int findPoisonedDuration(vector<int>& timeSeries, int duration) {
-
+	if (timeSeries.size() <= 0)return 0;
+	int res = 0,cur=timeSeries[0];
+	for (int i = 0; i + 1 < timeSeries.size(); ++i){
+		if (cur + duration <= timeSeries[i + 1]){
+			res += duration;
+		}
+		else{
+			res += (timeSeries[i + 1] - cur);
+		}
+		cur = timeSeries[i + 1];
+	}
+	return res + duration;
 }
 
 int main() {
 	//test1
-	
-	//test end
+	vector<int>timeSeries = { 1, 4 };
+	int a = findPoisonedDuration(timeSeries, 2);
 
+	//test2
+	timeSeries = { 1, 2 };
+	int b = findPoisonedDuration(timeSeries, 2);
+	cout << a << endl << b << endl;
+	//test end
 	system("pause");
 	return 0;
 }
