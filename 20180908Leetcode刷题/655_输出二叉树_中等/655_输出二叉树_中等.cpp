@@ -57,6 +57,22 @@ struct TreeNode {
 };
 
 vector<vector<string>> printTree(TreeNode* root) {
+	vector<vector<string>>res,res1,res2;
+	vector<string>vec;
+	if (!root)return res;
+	if (!root->left && !root->right){
+		vec.push_back(to_string(root->val));
+		res.push_back(vec);
+		return res;
+	}
+	res1 = printTree(root->left);
+	res2 = printTree(root->right);
+	int weight1 = res1[0].size(),height1=res1.size();
+	int weight2 = res2[0].size(), height2 = res2.size();
+	res.resize(std::max(height1, height2) + 1, vector<string>(2 * std::max(weight1, weight2) + 1));
+	res[0][res[0].size() / 2] = to_string(root->val);
+
+	return res;
 
 }
 
