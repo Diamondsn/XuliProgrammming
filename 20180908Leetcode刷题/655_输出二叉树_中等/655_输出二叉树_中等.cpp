@@ -67,11 +67,22 @@ vector<vector<string>> printTree(TreeNode* root) {
 	}
 	res1 = printTree(root->left);
 	res2 = printTree(root->right);
-	int weight1 = res1[0].size(),height1=res1.size();
-	int weight2 = res2[0].size(), height2 = res2.size();
+	int weight1 = res1.size()>0?res1[0].size():0,height1=res1.size();
+	int weight2 = res2.size()>0?res2[0].size():0, height2 = res2.size();
 	res.resize(std::max(height1, height2) + 1, vector<string>(2 * std::max(weight1, weight2) + 1));
 	res[0][res[0].size() / 2] = to_string(root->val);
-
+	for (int i = 0; i < res1.size(); ++i){
+		for (int j = 0; j < res1[i].size(); ++j){
+			if (res1[i][j].size() <= 0)continue;
+			res[i + 1][weight1 < weight2 ? (j + (weight2 - weight1)/2) : j] = res1[i][j];
+		}
+	}
+	for (int i = 0; i < res2.size(); ++i){
+		for (int j = 0; j < res2[i].size(); ++j){
+			if (res2[i][j].size() <= 0)continue;
+			res[i + 1][weight2 < weight1 ? (j + res[0].size()/2+(weight1 - weight2)/2+1) : j+res[0].size()/2+1] = res2[i][j];
+		}
+	}
 	return res;
 
 }
@@ -108,7 +119,61 @@ void Houxubianli(TreeNode* pNode)
 
 int main() {
 	//test1
-	
+	TreeNode* t1_1 = new TreeNode(1);
+	TreeNode*t1_2 = new TreeNode(2);
+	t1_1->left = t1_2;
+	vector<vector<string>>res = printTree(t1_1);
+	for (vector<string>vec : res){
+		for (string str : vec){
+			if (str.size() <= 0)
+				cout << " ,";
+			else
+				cout << str << ",";
+		}
+		cout << endl;
+	}
+
+	//test2
+	cout << endl << "test2" << endl;
+	TreeNode* t2_1 = new TreeNode(1);
+	TreeNode* t2_2 = new TreeNode(2);
+	TreeNode*t2_3 = new TreeNode(3);
+	TreeNode* t2_4 = new TreeNode(4);
+	t2_1->right = t2_2;
+	t2_1->left = t2_3;
+	t2_2->right = t2_4;
+	res = printTree(t2_1);
+	for (vector<string>vec : res){
+		for (string str : vec){
+			if (str.size() <= 0)
+				cout << " ,";
+			else
+				cout << str << ",";
+		}
+		cout << endl;
+	}
+
+	//test3
+	cout << endl << "test3" << endl;
+	TreeNode* t3_1 = new TreeNode(1);
+	TreeNode* t3_2 = new TreeNode(2);
+	TreeNode* t3_3 = new TreeNode(3);
+	TreeNode* t3_4 = new TreeNode(4);
+	TreeNode* t3_5 = new TreeNode(5);
+	t3_1->left = t3_2;
+	t3_2->left = t3_3;
+	t3_3->left = t3_4;
+	t3_1->right = t3_5;
+	res = printTree(t3_1);
+	for (vector<string>vec : res){
+		for (string str : vec){
+			if (str.size() <= 0)
+				cout << " ,";
+			else
+				cout << str << ",";
+		}
+		cout << endl;
+	}
 	//test end
 
 	system("pause");
