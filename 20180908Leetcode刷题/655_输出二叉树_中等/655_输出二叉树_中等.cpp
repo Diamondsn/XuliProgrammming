@@ -56,6 +56,7 @@ struct TreeNode {
 	TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+//此方法在有两级以上的不平衡时会出现空格的问题;
 vector<vector<string>> printTree(TreeNode* root) {
 	vector<vector<string>>res,res1,res2;
 	vector<string>vec;
