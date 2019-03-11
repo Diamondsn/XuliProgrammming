@@ -1,0 +1,16 @@
+20190311华为实习电话面试
+1.display和visibility
+2.web标准和W3C标准
+3.import和link的区别
+4.position absolution和fixed
+5.前端代码要求（性能优化，内存泄漏）
+6.js数据类型
+7.函数节流
+8.fastClick和tap区别
+9.get和post
+10.documentFragmet，innerHTML
+11.盒子模型
+12.vue的基础知识 指令
+13.项目
+14.打包发布
+15.前后联调 前端mock
