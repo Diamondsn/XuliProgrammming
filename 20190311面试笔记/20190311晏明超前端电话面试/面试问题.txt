@@ -1,0 +1,24 @@
+CSS
+1.display属性值
+2.box-sizing属性值
+3.行内元素和块状元素区别
+4.弹性盒
+
+HTML
+1.对HTML5的了解
+2.跨域
+3.安全机制
+
+JS
+1.promise了解
+2.set  数组去重
+3.let var const
+4.箭头函数
+
+React
+1.生命周期
+2.有请求放在哪个回调  didmount
+3.通信
+4.redux react-redux
+
+mvc和mvvm
