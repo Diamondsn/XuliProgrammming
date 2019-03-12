@@ -1,0 +1,81 @@
+1.js中连续触发事件的稀释方法(函数节流、函数防抖、标识变量)
+      函数节流
+	  函数节流背后的思想是指某些代码不可以在没有间断的情况下连续重复执行。第一次调用函数，创建一个定时器，在指定的时间间隔之后运行代码。当第二次调用该函数时，它会清除前一次的定时器并设置另一个。如果前一个定时器已经执行过了，这个操作就没有任何意义。然而，如果前一个定时器尚未执行，其实就是将其替换为一个新的定时器。目的是只有在执行函数的请求停止了一段时间之后才执行。
+    var processor = {
+        timeoutId: null,
+        performProcessing:function(){
+        //实际执行的代码
+        console.log('eee');
+        },
+        percess: function(){
+            clearTimeout(this.timeoutId);
+
+            var that = this;
+            this.timeoutId = setTimeout(function(){
+            that.performProcessing();
+             },200)
+        }
+    }
+	
+	函数防抖
+	如果一直触发一个事件，函数节流的方法定义的方法永远不会执行，就像一个水龙头，如果关闭了，永远不会出水；函数防抖的方法像一个关闭水龙头不好用，当关闭水龙头隔一段时间会有滴水一样。就是一个事件如果频繁触发，会隔一段时间执行一次。 
+	
+var debounce　 = function(fn,delay,mustRunDelay){
+    var timer = null;
+    var t_start;
+    return function(){
+        var context = this;
+        var args = arguments;
+        var t_curr = +new Date();
+        clearTimeout(timer);
+        if(!t_start){
+            t_start = t_curr;
+        }
+        if(t_curr - t_start >= mustRunDelay) {
+            fn.apply(context,args);
+            t_start = t_curr
+        } else {
+            timer = setTimeout(function(){
+                fn.apply(context,args);
+            },delay);
+        }
+    } 
+}
+该函数接收三个参数，分别为要执行的函数，隔多长时间清除函数定时器以及多长时间需要执行一次。
+
+在项目中需要使用scroll事件，当scroll滚动到页面底部时，发送请求验证还有没有其他的资源需要加载。如果直接使用scroll事件，当滚动到文档底部发送ajax请求的话，ajax请求会连续触发。为了解决这个问题，设置一个初始值为true的标志变量，只有标识变量为true时才能发送ajax请求。当发送ajax请求时，将标志变量设为false，收到请求的响应并处理完后将标志变量设为true。
+
+
+
+2.移动端click touch tap区别
+1）click与tap比较
+click与tap都会触发点击事件，但是在手机web端，click会有200-300ms的延迟，所以一般用tap代替click作为点击事件。singleTap 和doubleTap分别代表单次点击和双次点击
+2）tap的穿透处理
+使用zepto框架的tap的点击事件，来规避click事件的延迟响应，会出现穿透，即点击会触发非当前层的点击事件。
+问题：在html5点击了q以后，弹出b的弹框
+3）穿透原因
+
+因为tap事件是通过document绑定了touchstart和touchend事件实现，$('.q')上，当touchend事件冒泡到document上以后执行$(this).hide();此时$('.b'),就处在了页面的最前面
+
+现在touchend冒泡到了document上，并且$('.b')在页面的最前面，然后就触发了click事件
+4）使用fastClick解决穿透问题
+
+内部原理：
+为元素绑定touchend事件，并在内部加上e.preventDefault();
+
+$demo.on('touchend',function(e){
+
+//改变了事件名称，tap是body上才被触发，而touchend是原生的事件，在dom本身上就会被捕获触发
+
+$demo.hide();
+
+e.preventDefault();//阻止“默认行为”
+
+});
+
+5）touch事件
+touch是针对触屏手机上的触摸事件。现金大多数触屏手机webkit内核提供了touch事件的监听
+
+包含：touchstart touchmove touchend touchcancel四个事件
+
+touchstart touchmove touchend事件可以类比于mousedown mouseover mouseup的触发
