@@ -1,0 +1,14 @@
+function isInSight(el) {
+  const bound = el.getBoundingClientRect();//得到元素距离视口顶部的距离
+  const clientHeight = window.innerHeight;//得到视口的高度，不包括滚动条
+  //如果只考虑向下滚动加载
+  //const clientWidth=window.innerWeight;
+  return bound.top <= clientHeight + 100;
+}
+
+function loadImg(el) {
+  if (!el.src) {
+    const source = el.dataset.src;
+    el.src = source;
+  }
+}
