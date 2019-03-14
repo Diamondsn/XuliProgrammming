@@ -93,6 +93,32 @@ function quickSort(arr){
     return quickSort(left).concat(numValue,quickSort(right));//递归不断重复比较
 }
 
+//归并排序
+function mergeSort(arr) {
+    if (arr.length <= 1) {
+        return arr;
+    } else {
+        var mid = Math.floor(arr.length / 2);
+        var left = arr.slice(0, mid);
+        var right = arr.slice(mid);
+        return merge(mergeSort(left), mergeSort(right));
+    }
+    function merge(left, right) {
+        var res = [];
+        while (left.length > 0 && right.length > 0) {
+            if (left[0] < right[0]) {
+                res.push(left.shift());
+            } else {
+                res.push(right.shift());
+            }
+        }
+        return res.concat(left, right);
+    }
+}
+
+
+
+
 //阶乘
 function factorial(n) {
     if (n === 1) return 1;
