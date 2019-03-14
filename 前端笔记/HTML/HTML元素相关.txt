@@ -1,0 +1,113 @@
+HTML5有哪些新特性，移除了哪些元素，如何处理HTML5新标签的浏览器兼容问题
+    HTML5现在已经不是SGML的子集，主要是关于图像，位置，存储，多任务等功能的增加；如绘画canvas；用于媒体回放的video和audio元素。本地离线存储localStorage，sessionStorage；语义化更好的内容元素:article,footer,header,nav,section;新增的表单控件:date,calender,email,url,新的技术：webworker，websocker，Geolocation。
+	移除的元素:
+	    纯表现的元素:basefont,big,center,font,
+		对可用性产生负面影响的元素：frame，frameset，noframes；
+		
+	如何支持HTML5的新标签
+	    IE8/7/6可通过document.createElement方法，然后再添加样式属性
+		也可以直接使用成熟的框架，比如html5shim；
+		
+webworker是运行在后台的JavaScript，不会影响页面的性能，
+		它独立于其他脚本，在页面上你可以继续做任何愿意做的事情，点击/选取内容，而此时webworker在后台运行
+		eg.
+			<!DOCTYPE html>
+			<html>
+			<head> 
+			<meta charset="utf-8"> 
+			<title>webworker</title> 
+			</head>
+			<body>
+			 
+			<p>计数： <output id="result"></output></p>     //html5新特性output
+			<button onclick="startWorker()">开始工作</button> 
+			<button onclick="stopWorker()">停止工作</button>
+			 
+			<p><strong>注意：</strong> Internet Explorer 9 及更早 IE 版本浏览器不支持 Web Workers</p>
+			 
+			<script>
+			var w;
+			 
+			function startWorker() {
+				if(typeof(Worker) !== "undefined") {
+					if(typeof(w) == "undefined") {
+						w = new Worker("demo_workers.js");    //webworker存在于外部文件中
+					}
+					w.onmessage = function(event) {
+						document.getElementById("result").innerHTML = event.data;
+					};
+				} else {
+					document.getElementById("result").innerHTML = "抱歉，你的浏览器不支持 Web Workers...";
+				}
+			}
+			 
+			function stopWorker() 
+			{ 
+				w.terminate();
+				w = undefined;
+			}
+			</script>
+			 
+			</body>
+			</html>
+			////////////外部demo_workers.js文件////////////
+			var i=0;
+			(function timedCount()
+			{
+				i=i+1;
+				postMessage(i);
+				setTimeout("timedCount()",500);
+			})();
+
+webSocket
+	WebSocketS是HTML5开始提供的一种在单个TCP连接上进行全双工(同时进行双向传输)通讯的协议，在JavaScript中创建了WebSocket之后，客户端浏览器首先要向服务器发起一个HTTP请求，这个请求和通常的HTTP请求不同，包含了一些附加头信息，其中附加头信息"Upgrade:WebSocket"表明这是一个申请协议升级的HTTP请求，服务器端解析这些附加的头信息然后产生应答信息返回给客户端，客户端和服务器端的WebSocket连接就建立起来了，双方就可以通过这个连接通道自由的传递信息，并且这个连接会持续存在直到客户端或者服务器端的某一方主动的关闭连接。
+	
+	当获取WebSocket连接后，通过send()方法来像服务器发送数据，通过onmessage事件来接受服务器返回的数据。
+	var Socker=new WebSocket(url,[protocol]) //url表示指定连接的URL，第二个可选参数表示可接受的子协议
+	
+	使用自定义协议而非Http协议的好处是，能够在客户端和服务器之间发送非常少量的数据，而不必担心HTTP那样字节级的开销，因此WebSocket非常适合移动应用
+	
+	readState状态码：O 正在建立连接
+					 1 已经建立连接
+					 2 正在关闭连接
+					 3 已经关闭连接
+	要关闭WebSocket连接，可以在任何时候调用close()方法
+	
+		
+HTML5应用程序缓存
+    在用户没有与Internet连接是，可以正常访问站点或应用，在用户与Internet连接时，更新用户上的缓存文件
+	原理：HTML5的离线存储是基于一个新建的，appcache文件的缓存机制，通过这个文件上的解析清单离线存储资源，这些资源会像cookie一样被存储下来，之后当网络再处于离线状态下时，浏览器会通过被离线存储选的数据进行页面展示
+	
+	1 页面头部加入一个mainifest属性
+	2 在cache.mainifest文件编写离线存储资源
+		CACHE MAINIFEST-在此标题下列出的文件将在首次下载后进行缓存
+		NETWORK-在此标题下列出的文件需要与服务器连接，且不会被缓存
+		FALLBACK-在此标题下列出的文件规定当页面无法访问时的回退页面(比如404页面)
+		eg. 
+			CACHE MANIFEST
+			# 2012-02-21 v1.0.0
+			/theme.css
+			/logo.gif
+			/main.js
+
+			NETWORK:
+			login.php
+
+			FALLBACK:
+			/html/ /offline.html
+	3 在离线存储时，操作window.applicationCache实现
+	
+cookie与HTML5web存储(sessionStorage，localStorage)的区别
+	不同点:
+		cookie是网站为了表明用户身份而存储在用户本地终端上的数据（通常经过加密）。cookie数据始终在同源的http请求中携带（即使不需要），记录会在浏览器和服务器中来回传递。
+		
+		sessionStorage和localStorage不会自动把数据发送给服务器，仅在本地保存
+		
+		存储大小: cookies<=4k;
+				  sessionStorage，localStorage: 虽然也有存储大小的限制，但是要比cookies大的多  一般为5M
+				  
+		有效时间：localStroage：存储持久数据，浏览器关闭后不会丢失
+				  sessionStorage: 浏览器窗口关闭后自动删除
+				  cookies: 设置的cookies过期时间之前一直有效
+	
+	相同点: 数据都存储在本地用户终端上，数据都只用于用户请求网站数据上

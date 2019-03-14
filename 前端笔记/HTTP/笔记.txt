@@ -1,0 +1,114 @@
+HTTP是一种不保存状态协议，即自身不对请求和响应之间的通信状态进行保存，这是为了更快地处理大量事物，确保协议的可伸缩性，但比如用户登录到一家购物网站，即使他跳转到该站的其他页面后，也需要能继续保持登录状态，于是引入了cookie技术。
+
+单点登陆全称Singgle-Sign-On(SSO)是指在多系统应用群中登陆一个系统，便可在其他所有系统中得到授权而无须再次登录 
+
+get和post有什么区别
+    /*
+	*(1)Get是用来从服务器上获得数据，而post是用来向服务器上传
+	*(2)Get将表单中数据按variable=value的形式，添加到action所指向的URL后面，并且两者使用"?"连接，而各个变量之间使用"&",Post*是将表单中的数据放在form的数据体中，按照变量和值对应的方式传递到action所指向的URL
+	*(3)Get是不安全的，因为数据被放在请求URL中(服务器和用户都可见)
+	*(4)Get传输的数据量小(主要是受URL长度限制)
+	*(5)Get限制Form表单的数据集的值为ASCII，而Post支持整个ISO1064；
+	*(6)Form表单默认Get
+	*(7)GET产生一个TCP数据包；POST产生两个TCP数据包。
+	*对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；
+	*而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）。
+	*/
+	实际上get post基本没有区别
+		
+cookie技术通过在请求和响应报文中写入cookies信息来控制客户端的状态，它具有如下属性
+	    name：字段为一个cookie的名称
+		value: 字段为一个cookie的值
+		domain: 字段为可以访问此cookie的域名
+		path:字段为可以访问此cooike的页面路径，比如domain是abc.com,path是/test，那么只有在abc.com下的/test路径下的页面可以读取此cooike
+		expires/Max-Age:字段为cookie超时时间，若设置其值为一个时间，那么当到达此时间后，此cookie失效。不设置的话默认值是Session，意思是cookie会和session一起失效，即当浏览器关闭(不是浏览器标签页，而是整个浏览器) 后，此cookie失效。 不过session可以通过特殊的方式做持久化管理（memcache，redis）
+		
+		Size:字段表示cookie大小。
+
+        http:字段表示cookie的httponly属性。若此属性为true，则只有在http请求头中会带有此cookie的信息，而不能通过document.cookie来访问此cookie。
+
+        secure:字段表示设置是否只能通过https来传递此条cookie
+		
+引申:cookies与session的区别
+	cookies机制采用的是在客户端保持状态的方案，而session机制采用的是在服务器端保持状态的方案
+		对于cookies
+			cookie是创建于服务器端
+			cookie保存在浏览器端
+			cookie的生命周期可以通过cookie.setMaxAge(2000);来设置，如果没有设置setMaxAge,cookie的生命周期当浏览器关闭的时候，就消亡了
+			cookie可以被多个同类型的浏览器共享  可以把cookie想象成一张表
+		存在的位置：
+			cookie 存在于客户端，临时文件夹中
+			session：存在于服务器的内存中，一个session域对象为一个用户浏览器服务
+		安全性
+			cookie是以明文的方式存放在客户端的，安全性低，可以通过一个加密算法进行加密后存放
+			session存放于服务器的内存中，所以安全性好
+		网络传输量
+			cookie会传递消息给服务器
+			session本身存放于服务器，不会有传送流量
+		生命周期(以20分钟为例)
+			cookie的生命周期是累计的，从创建时，就开始计时，20分钟后，cookie生命周期结束，
+			session的生命周期是间隔的，从创建时，开始计时如在20分钟，没有访问session，那么session生命周期被销毁。但是，如果在20分钟内（如在第19分钟时）访问过session，那么，将重新计算session的生命周期，关机会造成session生命周期的结束，但是对cookie没有影响。不过session可以通过特殊的方式做持久化管理（memcache，redis）
+			
+状态码告知从服务器端返回的请求结果
+    1xx  信息状态码    接受的请求正在处理
+	2xx  成功状态码    请求正常处理完毕
+	3xx  重定向        需要进行附加操作以完成请求
+	4xx  客户端错误    服务器无法处理请求
+	5xx  服务器错误    服务器起请求出错
+
+引申：301 Moved Permanently
+        永久重定向 该状态码表示请求的资源已被分配了新的URI，应更新书签引用
+	  302 Found
+	    临时性重定向，该状态码表示请求的资源已被分配了新的URI，希望用户本次能使用新的URI访问
+	  303 See Other
+	    请求对应的资源存在着另一个URI，应使用GET方法定向获取请求资源
+		
+	  304 Not Modified
+	    该状态码表示客户端发送附带条件的请求时，服务器端允许请求访问资源，但因发送请求未满足条件的情况后，直接返回304(服务器端资源未改变，可直接使用客户端未过期的缓存)
+		
+引申: HTTP常见的首部
+	Accpect Etag If-None-Match Last-Modified If-Modified-Since Cache Cache-Control Cookie
+
+跨域的几种方式
+	同源策略是一种浏览器安全策略，它要求页面内的URI必须保证协议，域名端口三者均相同才能允许访问
+	为了实现跨域请求，有如下几种方式
+	(1)JOSNP
+	<script>
+		var script=document.createElement('script');
+		script.type='text/javascipt';
+		script.src="http://www....8080"/login?user=admin&callback=onBack"'
+		document.head.appendChild(script);
+		function onBack(res){
+			alert(JSON.stringfly(res));
+		}
+	</script>
+	JSONP是通过创建动态脚本实现的，使用时可以为动态脚本的src属性指定一个跨域的URI，请求的数据在onBack()函数中实现回调，只接受get
+	(2)ES6 CORS(跨域资源共享) 自定义HTTP头部让浏览器与服务器沟通
+		Access-Control-Allow-Origin
+	(3)图像Ping 建立一个图像对象，在此对象的src属性中可以添加一个跨域URI，因为一个网页可以从任何网页加载图像
+	(4)HTML5 possMessage(message,url); 另一个页面通过onmessage事件来接收。
+
+	
+HTTP安全机制与方法 
+	Web攻击技术(CSRF XSS注入，ddos)
+		HTTP协议本身并不存在安全问题，应用HTTP协议的服务器和客户端以及运行在服务器上的web应用才是攻击的目标
+		XSS攻击
+			xss攻击是跨站脚本攻击，例如在表单中提交含有可执行的JavaScript的内容文本，如果服务端没有过滤或转义这些脚本，而这些脚本由通过内容的形式发布到页面上，这个时候如果有其他用户访问这个网页，那么浏览器就会执行这个脚本，从而被攻击，从而获取用户的cookies等信息
+			防御；
+				(1)对于敏感的cookies信息，使用HTTPOnly,使document对象找不到cookies
+				(2)对于用户输入的信息要进行转义 一般会转义（&、<、>、"、'、/）这6个字符
+		CSRF攻击
+			CSRF攻击即跨站域请求伪造，eg.小明在浏览银行A网站的时候并没有关掉银行的网站，这时小明又访问了携带CSRF攻击的B网站，而这时B网站通过对银行的服务器发送转账请求，并且携带小明的在银行网站的cookie信息，在参数上把小明账号上的钱转到B网站所有人的账户上，这时URL得到响应，小明的钱就丢了
+			防御:
+				(1)敏感请求使用验证码。
+				(2)验证HTTPReferer字段。Referer字段记录了HTTP请求的来源地址，从银行A网站发出来的请求会带有A网站的地址，从携带CSRF地址发出的请求会携带B网站的地址，我们只需在每个敏感请求验证Referer值，如果是来自A网站的通过，否则不通过。但是这种方法把安全寄托于浏览器，并不完全安全，在某些浏览器上，还是可以通过篡改 Referer 从而进行CSRF攻击。而且，在某些用户禁用Referer的情况下，服务器会一直拒绝客户的请求。
+				(3)在请求地址中添加token并验证。在用户登录之后，产生token并放入session中，在每次请求时把token从session中拿出来，以参数的形式加入请求，在服务器端建立拦截器验证该token，token则通过，否则拒绝。但是这种方法也是有安全问题的，在某些网站支持用户发表链接的，那么黑客在该网站发布自己的个人网站地址，系统也会为这个地址后加上token，则黑客可以在自己的网站上得到这个token参数，从而发动CSRF攻击。
+				(4)在HTTP头中自定义属性token并验证。把token作为自定义属性放在HTTP的头中，通过封装XMLHttpRequest可以一次性给所有请求加上token 属性。这样子token就不会暴露在浏览器地址中
+		SQL注入
+			SQL注入攻击，攻击者在提交表单时，在表单上面填写相关的sql语句，而系统把这些字段当成普通的变量发送给服务器进行sql查询，则，由攻击者填写的sql会拼接在系统的sql语句上，从而进行数据库的某些操作
+			防御：
+				(1)表单过滤，验证表单提交的合法性，对一些特殊字符进行转义处理
+				(2)数据库权限最小化
+				(3)查询语句使用数据库提供的参数化接口，不要直接拼接SQL
+		DDOS
+			伪装成正常客户大量访问服务器导致服务器瘫痪

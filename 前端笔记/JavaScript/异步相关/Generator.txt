@@ -1,0 +1,35 @@
+Genertor函数的调用方法与普通函数一样，也是在函数名后面加上一对圆括号。不同的是，调用Genertor函数后，该函数并不执行，返回的也不是函数运行结果，而是一个指向内部状态的指针对象。下一步，必须调用遍历器对象的next方法，使得指针移向下一个状态。也就是说，每次调用next方法，内部指针就从函数或上一次停下来的地方开始执行，知道遇到下一个yield表达式或return语句为止。换言之，Genertor函数是分段执行的，yield表达式是暂停执行的标记，而next方法可以恢复执行
+
+var fs=require('fs');
+
+var readFile=function (filename){
+	return new Promise(function(resolve, reject){
+		fs.readFile(filename, function(error, data){
+			if(error) return  reject(error);
+			resolve(data);
+		});
+	});
+};
+
+将
+readFile(./text1.txt).then(function(data){
+	 console.log(data);
+	 return readFile(./text2.txt);
+ })
+ .then(function(data){
+	 console.log(data);
+ })
+替换为
+var gen =function* (){
+	var f1=yield readFile('./text1.txt');
+	var f2=yield readFile('./text2.txt');
+	
+};
+
+var g=gen();
+g.next().value.then(function(data){
+	console.log(data);
+})
+g.next().value.then(function(data){
+	console.log(data);
+})

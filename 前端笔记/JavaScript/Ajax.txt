@@ -1,0 +1,51 @@
+Ajax的用法
+	<script>
+		var xhr=new XMLHttpRequest();
+		xhr.onreadystatechange=function(req,res){
+			if(xhr.readyState==4){
+				if((xhr.status>=200&&xhr.status<300)||xhr.status==304){
+					somthing=xhr.responseText;
+				}else{
+					alert("Request was unsuccessful" + xhr.status);
+				}
+			}
+		
+		xhr.open('get','example.tex',true); //open()的第三个参数表示是否异步发送请求的布尔值
+		xhr.send(null); 
+	</script>
+	考虑到有的浏览器不兼容XMLHTTPRequest()，可以封装一个XHR对象，实现浏览器的兼容问题
+	function createXHR(){
+		if(typeof XMLHttpRequest !="undefined"){
+			return new XMLHttpPRequest;
+		}else if(typeof ActiveXObjcet !="undefined"){
+			if(typeof arguments.callee.activeXString !="string"){
+			var versions=["MSXML2.XMLHttp.6.0","MSXML2.XMLHttp.3.0","MSXML2.XMLHttp"]
+			for(var i=0;i<versions.length;i++){
+					try{	
+						new ActiveXObjcet(versions[i]);
+						arguments.callee.activeXString=versions[i];
+						break;
+					}catch(ex){
+					}
+				}
+			}
+			return new ActiveXObjcet(arguments.callee.activeXString);
+		}else{
+			throw new Error ("No XHR object available.");
+		}
+		
+	}
+	
+XHR对象的readyState属性有下列四个值
+	0 未初始化，尚未调用open()方法
+	1 启动，已经调用open()方法，但尚未调用send()方法
+	2 发送，已经调用send()方法，但尚未接受到响应
+	3 接受，已经接受到部分数据响应
+	4 完成，已经接受到全部数据响应，而且已经可以在客户端使用了
+	
+在接受到响应之前可以调用abort()方法来取消异步请求 即xhr.abort();
+
+在Ajax中可以自定义头部信息，方法是在open()方法之后且在send()方法之前调用setRequestHeader();
+	xhr.open('get','example.txt',true);
+	xhr.setRequestHander('MyHeader','MyValue');
+	xhr.send(null);

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>CSS选择器</title>
+</head>
+
+<body>
+	<div>
+		<ul class="head first" id="main">
+			<li>.</li>
+			<li>..</li>
+			<li>...</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		document.onclick = function (e) {
+			var res = [];
+			var target = e.target;
+			while (target) {
+				if (target.className) {
+					var tep = target.className.split(" ");
+					for (var i = 0; i < tep.length; i++) {
+						res.push("." + tep[i]);
+					}
+				}
+				if (target.id) {
+					res.push("#" + target.id);
+				}
+				else {
+					res.push(target);
+				}
+				target = target.parentNode;
+			}
+			console.log(res.reverse());
+		};
+	</script>
+</body>
+
+</html>

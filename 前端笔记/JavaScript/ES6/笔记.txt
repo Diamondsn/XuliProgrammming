@@ -1,0 +1,84 @@
+ES6遍历器(Iterator)是一种机制，它是一种接口，为各种不同的数据结构提供统一的访问机制，任何数据结构只要部署Iterator接口,就可以完成遍历操作(即依次处理该数据结构的所有成员)
+	遍历过程：	
+		创建一个指针对象，指向当前数据结构的起始位置，也就是说，遍历器对象本质上就是一个指针对象
+		第二次调用指针对象的next方法，可以将指针指向数据结构的第一个成员
+		第二次调用指针对象的next方法，指针就指向数据结构的第二个成员
+		不断调用指针对象的next方法，直到它指向数据结构的结束位置
+	每一次调用next方法，都会返回数据结构当前成员的信息，具体来说，就是返回一个包含value和done两个属性的对象，其中，value属性是当前成员的值，done属性是一个布尔值，表示遍历是否结束
+	
+	原生具备Iterator接口的数据结构如下
+		Array
+		Map
+		Set
+		String
+		TypedArray
+		函数的arguments对象
+		NodeList对象
+		eg.:
+			let arr = ['a', 'b', 'c'];
+			let iter = arr[Symbol.iterator]();
+			iter.next() // { value: 'a', done: false }
+			iter.next() // { value: 'b', done: false }
+			iter.next() // { value: 'c', done: false }
+			iter.next() // { value: undefined, done: true }
+	有些场合会默认调用Iterator接口(即Symbol.iterator方法)
+		1 for...of
+		2 解构赋值
+		3 扩展运算符(...)
+		4 yield*
+			let generator = function* () {
+			  yield 1;
+			  yield* [2,3,4];
+			  yield 5;
+			};
+
+			var iterator = generator();
+
+			iterator.next() // { value: 1, done: false }
+			iterator.next() // { value: 2, done: false }
+			iterator.next() // { value: 3, done: false }
+			iterator.next() // { value: 4, done: false }
+			iterator.next() // { value: 5, done: false }
+			iterator.next() // { value: undefined, done: true }
+		
+		对于普通的对象，for...of结构不能直接使用，会报错，必须部署了Iterator接口之后才能使用。
+		
+		
+		
+ES6中类的所有方法都定义在类的prototype属性上面。另外,类的内部所有定义的方法，都是不可枚举的。实例的属性除非显式定义在其本身(即定义在this对象上)，否则都定义在原型上。类和模块的内部，默认都是严格模式。类不存在变量提升，类相当于实例的原型，所有在类中定义的当方法，都会被实例继承。如果在一个方法前加上static关键字，就表示该方法不会被实例继承，而是直接通过类来调用，着就称为'静态方法'
+
+	class Point {
+
+	  constructor(x, y) {
+		this.x = x;
+		this.y = y;
+	  }
+
+	  toString() {
+		return '(' + this.x + ', ' + this.y + ')';
+	  }
+	  static classMethod(){
+		return 'hello';
+	  }
+
+	}
+	
+	Point.classMethod() //'hello'
+	var point = new Point(2, 3);
+
+	point.toString() // (2, 3)
+	point.classMethod() //TypeError
+
+	point.hasOwnProperty('x') // true
+	point.hasOwnProperty('y') // true
+	point.hasOwnProperty('toString') // false
+	point.__proto__.hasOwnProperty('toString') // true
+	
+ES6Class继承，子类必须在constructor方法中调用super方法，否则会报错。这是因为子类自己的this对象，必须先通过父类的构造函数完成塑造。另一个需要注意的地方是，在子类的构造函数中，只有调用super之后，才可以使用this关键字
+
+ES6的Module中，import语句是Singleton模式
+
+CommonJS模块输出的是一个值的拷贝，ES6模块输出的是值得引用
+CommonJS模块是运行时加载。ES6模块是编译时输出接口
+
+Node要求ES6模块采用.mjs后缀文件名，也就是说，只要脚本文件里面使用import或者export命令，那么必须采用.mjs后缀名。require命令不能加载.mjs文件，会报错，只有import命令才可以加载.mjs文件，反过来，.mjs文件里面也不能使用require命令，必须使用import

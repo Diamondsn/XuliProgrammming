@@ -1,0 +1,149 @@
+CSS样式优先级关系: !important>行内样式>ID>类，伪类，属性>标签名>继承>通配符(*)
+    同权重就近关系: html文档是从上到下加载执行的，最后加载的CSS会覆盖掉前面的CSS;内联>嵌入>外部
+
+static HTML元素的默认值，即没有定位，元素出现在正常的流中。
+sticky:粘行定位,它的行为就像position:relative;而当页面滚动超出目标区域时，它的表现就像position:fixed;
+
+link和@import的区别
+	(1)@import是CSS提供的语法规则，只有导入样式表的作用；link是HTML标签，可以完成除加载CSS以外其他的工作，并且可以通过操作DOM结点的方式增加或者删除link
+	(2)加载页面时，link标签引入的CSS被同时加载，@import引入的CSS将在页面加载完毕后加载
+	(3)@imports是CSS2.1才有的语法
+	
+SCSS比CSS的优势
+    SASS是CSS的一个扩展，增加了规则嵌套，变量，混合选择器，继承等，通过使用命令行的工具或web框架把它转换成标准的格式良好的CSS代码。SCSS即是SASS的新语法（SASS，CSS的简写）标准的格式良好的CSS代码,是CSS3的超集，SCSS之类的预处理器本身是为了生成CSS而设计的，它的优势在于开发效率高，对于一些样式复杂的站点，用SCSS之类的工具生成的代码比手写CSS快，但SASS不是为了取代CSS而生，而是为了服务CSS而生。
+    SCSS->CSS类似于JQuery->JavaScript
+
+CSS Sprite是什么，优点是什么
+	是一种网页图片处理方式，它允许你将一个页面涉及到的所有零星图片都包含到其中，减少对服务器的请求，提高访问速度。
+	
+Web布局的四个阶段
+    1 table表格布局
+    2 float浮动及position布局
+    3 flex 弹性盒布局
+    4 grid 栅格布局
+    GRIDLayout是一种基于二维网格的布局系统，旨在完全改变我们设计基于网格的用户节面方式，弥补网页开发在二维布局能力上的缺陷
+	
+px、em、rem
+	px: 相对长度单位，像素px相对于显示器屏幕的分辨率而言的
+	em：相对长度单位，相对于父级字体大小设置的，一层一层计算
+	rem：css3中新增的相对单位(rootem),rem的大小根据html根元素(html)的字体大小进行计算，当改变根元素的字体大小时，下面设置了rem的字体都将改变
+	
+	
+CSS实现三角形 //把上，左，右三条边隐藏
+	#demo{
+		width:0;
+		height:0;
+		boder-width:20px;
+		boder-style:solid;
+		boder-color:transparent transparent red transparent
+	}
+
+CSS中起高度作用的就是height和line-height，如果一个标签没有定义height属性(包括百分比高度)，那么其最终表现的高度一定是由line-height起作用,CSSheight的百分比计法是根据父级的高度来计算的
+
+CSS中可以设置min-hight高度，设置min-height的元素即使内容的高度很少时也能撑开到min-height设置的高度，当内容的高度大于min-height时就设置为内容的高度。
+CSS hack技术
+    是通过在CSS样式中加入一些特殊的符号，让不同的浏览器识别不同的符号（什么样的浏览器识别什么样的符号是有标准的，可以利用此功能实现浏览器的兼容
+	
+    eg
+    .color{ 
+        width: 300px;
+        _width: 200px;
+    }
+    一般浏览器会先给元素使用width:300px的样式，但紧接着后面还有一个_width:200px,由于下划线_width只有IE6可以识别，所以此样式在IE6中实际设置对象的宽度为200px，后面的把前面的给覆盖了；
+	.bb{
+          background-color:red;/*所有识别*/
+  	      background-color:#00deff\9; /*IE6、7、8识别*/
+  	      +background-color:#a200ff;/*IE6、7识别*/
+  	      _background-color:#1e0bd1;/*IE6识别*/
+    }
+    
+为什么要初始化CSS样式
+    因为浏览器的兼容问题，不同的浏览器对有些标签的默认值是不同的，如果没对CSS初始化，往往会出现浏览器之间的页面显示差异
+    最常见的初始化: 
+    *{
+        padding: 0px;
+        margin: 0px;
+    }
+
+块级元素:独占一行，宽度，高度，内外边距都可控;内联元素:和相邻元素在同一行，宽度，高度都不可变，就是里面文字或图片的大小display:inline-block;:内联块表现为同行显示，并可修改宽高，内外边距等属性，常将<ul>元素加上inline-block样式，这样原本垂直的列表就可以水平显示了
+
+替换元素：浏览器根据元素的标签和属性来决定元素的具体显示内容
+	eg. 浏览器根据<img>标签的src属性的值来读取图片信息并显示
+	eg. 浏览器根据<input>标签的type属性来决定显示输入框的类型
+不可替换元素：内容直接表现给浏览器
+
+为什么img和textarea等行内元素可以设置宽高？
+	替换元素一般都有内在尺寸，所有具有wdith和height，可以设定
+
+
+
+隐藏页面中某个元素的方法:
+	display: none
+	visiblity: hidden
+	width: 0px height: 0px;
+	opcatity: 0;
+	RGBA(,,,0)
+	z-index: -1;
+	position: 元素移出屏幕外
+
+
+CSS链接link visited hover active的相对位置
+hover必须跟在link和visited后面，active必须在hover后面
+
+
+CSS3新特性
+	新增各种CSS选择器
+	圆角(boder-radius)
+	背景(background-img)
+	多列布局(multi-column layout)
+	文字特效(text-shadow)
+	渐变(background: Linear Gradients(bule red))
+	旋转（transform）---translate rotate scale skew matrix
+	自定义字体(@font-size)
+	动画(@keyframes)
+	
+引申:CSS3实现动画
+	@keyframes规则是创建动画，@keyframes规则内指定一个CSS样式和动画将逐步从目前样式更新为新的样式，当在@keyframes创建动画时，要把它绑定到一个选择器，否则动画不会有任何效果。并且至少这两个CSS3的动画属性绑定同一个选择器
+		规定动画的名称
+		规定动画的时长
+		eg <!DOCTYPE html>
+			<html>
+			<head>
+			<meta charset="utf-8"> 
+			<title></title> 
+			<style> 
+			div
+			{
+				width:100px;
+				height:100px;
+				background:red;
+				position:relative;
+				animation:myfirst;
+				animation-duration:2s;
+				animation-iteration-count:infinite;
+				-webkit-animation:myfirst; /* Safari and Chrome */
+				-webkit-animation-duration:2s;
+				-webkit-animation-iteration-count:infinite;
+			}
+
+			@keyframes myfirst
+			{
+				0%   {background:red; left:0px; top:0px;}
+				50%  {background:red; left:0px; top:30px;}
+				100% {background:red; left:0px; top:0px;}
+			}
+				@-webkit-keyframes myfirst /* Safari 与 Chrome */
+			{
+				0%   {background:red; left:0px; top:0px;}
+				50%  {background:red; left:0px; top:30px;}
+				100% {background:red; left:0px; top:0px;}
+			}
+			</style>
+			</head>
+			<body>
+			
+			
+			
+			<div></div>
+			</body>
+			</html>

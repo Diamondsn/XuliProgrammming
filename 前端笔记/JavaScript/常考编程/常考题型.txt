@@ -1,0 +1,97 @@
+一、异步问题
+console.log("a");
+setTimeout(()=>{
+	console.log("b");
+},100);
+setTimeout(()=>{
+	console.log("c")
+},0);
+console.log("d");
+
+
+var promise =new Promise(function(reslove){
+	console.log("111111");
+	reslove("222222");
+});
+promise.then(function(value){
+	console.log(value);
+});
+console.log("333333");
+
+
+
+二、对象问题
+var test=[{
+	name: 'qiang.li',
+	address: 'shanghai'
+},{
+	name: 'echo',
+	address: 'beijing'
+},{
+	name: 'huahua',
+	address: 'qiangjiao'
+}];
+test.forEach(item=>item={name: 'xxx'});
+test.forEach(item=>item.name='jack');
+test.map(item=>item.name='jack');
+
+
+
+三、this指针
+var a={
+	name:'xiaoming',
+	getName: function(){
+		console.log(this.name);
+	}
+}
+function test(fn){
+	fn();
+}
+test(a.getName);     //undefined
+
+var a={
+	name: 'xiaoming',
+	getName: function(){
+		console.log(this.name);
+	}
+}
+function test(fn){
+	fn.getName;
+}
+test(a);      //xiaoming
+
+
+
+四、css优先级
+<style>
+	.b #c{color: blue}
+	.b .d{color: orange}
+	#a .d{color: red}
+	#a span{color：green}
+</style>
+<div id='a',class='b'>
+	<span id='c' class='d'>hello world</span>
+</div>
+
+五、常用技巧
+	使用箭头函数缩减代码，处理输入，可以用.map
+		let line=readline().split(' ');
+		line =line.map(e=>parseInt(e));
+	迭代输出
+		arr.forEach(i=>console.log(i));
+	求最大值
+		max=Math.max.call(...arr);
+		max=Math.max.apply(Math,arr);
+	复制数组
+		arr2=arr.concat();
+		arr2=arr.slice();
+	解构赋值
+		let [a,b,c,d]=[1,2,3,4];
+	交换变量的值
+		[a,b]=[b,a];
+	求数组一半长度
+		harfLen=a.length>>1;
+		harfLen=(a.length/2)|0;
+	判断奇偶
+		evenNum&1==0 //偶数
+		oddNum&0==1 //奇数

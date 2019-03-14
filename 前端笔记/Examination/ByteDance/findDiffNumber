@@ -1,0 +1,19 @@
+#include <iostream>
+#include <set>
+using namespace std;
+int main(){
+	int N,k,count=0;
+	cin>>N>>k;
+	set<int> s;
+	for(int i=0;i<N;i++){
+		int temp;
+		cin>>temp
+		s.insert(temp);     //set容器可以实现排序和去重
+	}
+	for(auto pt=s.begin();pt!=s.end();pt++){
+		if(s.find(*pt+k)!=s.end())
+			count++;
+	}
+	cout<<count;
+	return 0;
+}

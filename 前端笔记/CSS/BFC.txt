@@ -1,0 +1,113 @@
+## BFC（块级格式化上下文）##
+	将BFC看做一个盒子，盒子以及盒子内的内容不收盒外的其他盒子的影响，反之亦然。它用于规定块级盒子的渲染布局的方式。BFC是一种概念：是对前端布局技术的一种理论上的总结，掌握它可以让我们使用CSS+DIV进行布局时知道一些特殊的操作以及避免问题的原来。
+    
+    可以产生BFC环境的情况
+        1 display: inline-block/table-cell/table-caption/flex；
+        2 position：absolute/fixed;
+        3 overflow: hidden/auto/scroll;
+        4 float: left/right;
+    
+    产生BFC可以解决的问题
+        1 边距重叠
+        2 不与float box 重叠
+        3 高度塌陷（浮动元素会导致脱离文档流，从而无法被计算到确切的高度）
+    
+    eg：一、边距重叠
+        就是当两个元素垂直边距相互接触时，它们将合并成一个边距，这个合并后的边距值就是这两个边距中值最大的那个，产生边距重叠的情形无外乎两个方面：垂直排列的两个同级元素、嵌套的父子元素
+    
+        解决的方法两种：
+            1 防止边距接触
+                添加1px高度的间隔元素（这种添加冗余标签的方式会增加页面的内容，最好不要采用）
+                border-top: 1px soild transparent;(子元素添加1px的透明上边框，来解决父子元素边距重叠)
+                padding-top：1px (父元素添加1px间距，来解决父子元素边距重叠)
+            2 利用BFC特性
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        div {
+                            width: 300px;
+                            height: 300px;
+                            background: #eee;
+                            margin: 10px;
+                        }
+                        p {
+                            width: 100px;
+                            height: 100px;
+                            background: #aaa;
+                            margin: 20px;
+                        }
+                        .box1 {
+                            overflow: hidden; /* 通过overflow方式形成BFC环境 */
+                        }
+                        .box2 {
+                            display: table-cell; /* 通过display方式形成BFC环境 */
+                        }
+                        .box3 {
+                            position: absolute; /* 通过position方式形成BFC环境 */
+                        }
+                        .box4 {
+                            float: left;  /* 通过float方式形成BFC环境 */
+                            margin-top: 320px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="box1"><p>overflow</p></div>
+                    <div class="box2"><p>display</p></div>
+                    <div class="box3"><p>position</p></div>
+                    <div class="box4"><p>float</p></div>
+                </body>
+                </html>             
+                            
+        二、不与float box重叠
+        当一个元素浮动，另一个元素不浮动时，浮动元素因为脱离文档轮就会覆盖在不浮动元素上，解决办法就是为不浮动的元素建立BFC环境            
+            <!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<meta charset="UTF-8">
+				<style>
+					.left{
+						float: left;
+						width:200px;
+						height:500px;
+						opacity:0.5;
+						background:#eee;
+					}
+					.right{
+						height:500px;
+						overflow:hidden;    //建立BFC环境
+						background:red;
+					}
+				</style>
+			</head>
+			<body>
+				<div class="left"></div>
+				<div class="right"></div>
+			</body>
+			</html>
+			
+		三 高度塌陷(普通文档流元素无法包含浮动后的元素)
+			<!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<meta charset="UTF-8">
+				<style>
+					.box{
+						display:inline-block;   //建立BFC环境
+						*zoom:1;
+						border:1px solid green;
+					}
+					p{
+						float: left;
+						width:50px;
+						height:50px;
+						background:red;
+					}
+				</style>
+			</head>
+			<body>
+				<div class="box"><p></p></div>
+			</body>
+			</html>

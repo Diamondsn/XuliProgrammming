@@ -1,0 +1,54 @@
+数组的属性和方法
+	属性
+		arr.length //数组的length属性不是只读的，可以通过设置这个属性从数组的末尾移除项或者像数组中添加新项
+	转换方法
+		arr.toLocalString()
+		arr.toString()//调用toString()方法会返回由数组中每个值得字符串形式拼接而成的一个以逗号分隔的字符串
+		                原数组不变，返回的是一个新数组
+		arr.valueOf()
+		arr.join() //可以使用不同的分隔符来构建字符串，
+		             样原数组不变，返回的是一个新的数组
+	栈方法
+		arr.pop()   //原数组改变，返回的是pop出的具体项
+		arr.push()  //原数组改变，返回的是push的项数 eg：var count=arr.push(1,2); //count=2
+		arr.shift()
+		arr.unshift()
+		
+	重排序(原数组改变，返回的是排序后的数组)
+		arr.sort()
+		arr.reverse()
+		
+	操作方法
+		arr.concat() //原数组不变，返回的是一个新数组
+		arr.slice(begin，[end])  //原数组不变，返回的是一个新数组，作用是返回从该参数指定位置到结束位置之间的项-但不包括结束位置的项
+		arr.splice() //原数组改变,第一个参数代表起始位置，第二个参数代表要删除的个数，三四两个参数代表要插入的项的值,返回的是删除的项
+			arr.splice(0,2) 
+			arr.splice(2,0,"red","green")
+			arr.splice(2,1,"red","green") 
+			
+	位置方法
+		arr.indexOf() //找到返回索引，未找到返回-1
+		arr.lastIndexOf()
+		
+	迭代方法(高级方法)
+		arr.map();
+		arr.forEach()
+		arr.filter()
+eg 
+	var Obj=function(arr){
+		return arr.reverse();
+	}([1,2,3,4,5]);
+	
+	var Obj=function(arr){
+		arr.reverse();
+		return arr;
+	}([1,2,3,4,5]);
+
+	var Obj=function(arr){
+		return arr.toString();
+	}([1,2,3,4,5]);
+
+	var Obj=function(arr){
+		arr.toString();
+		return arr
+	}([1,2,3,4,5]);

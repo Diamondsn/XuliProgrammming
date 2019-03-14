@@ -1,0 +1,39 @@
+数字转换成字符串
+	最好用数字+''的方式，虽然看起来比较丑一点，但事实上这个效率是最高的，性能上说：
+		(+'')>String()>toString()>new String()
+		
+浮点型转换成整型
+	很多人喜欢使用parseInt(),其实parseInt()是用于将字符串转换成整数，而不是夫浮点数和整数直接的转化，应该是哟个Math.floor()或者Math.round()
+
+使用DocumentFragment优化多次append
+	一旦需要更新DOM，请考虑使用文档碎片来构建DOM结构，然后再将其添加到现在的文档中
+		for(var i=0;i<1000;i++){
+			var el=document.ceateElement('p');
+			el.innerHTML=i;
+			document.body.appendChild(el);
+		}
+		替换为
+		var frag=document.createDocumentFragment();
+		for(var i=0;i<1000;i++){
+			var el=document.ceateElement('p');
+			el.innerHTML=i;
+			frag.appendChild(el);
+		}
+		document.body.appendChild(frag)
+
+使用一次innerHTML赋值代替构建dom元素
+	对于大的DOM更改，使用innerHTML要比使用标准的DOM方法创建同样的DOM结构要快的多
+		var frag=document.createDocumentFragment();
+			for(var i=0;i<1000;i++){
+				var el=document.ceateElement('p');
+				el.innerHTML=i;
+				frag.appendChhild(el);
+		}
+		document.body.appendChhild(frag)
+		替换为
+		var html={};
+		for(var i=0;i<1000;i++){
+			html.push('<p>'+i+'<p>');
+		}
+		document.body.innerHTML=html.join('');
+		
