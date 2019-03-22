@@ -1,0 +1,44 @@
+<!-- 强烈推荐这个，这个讲的很清楚
+https://blog.csdn.net/wangchengiii/article/details/77926868 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+#main,#left,#right {
+    float:left;
+    height:400px;
+}
+#main{
+    background-color:red;
+    width:100%;
+}
+#left{
+    background-color: green;
+    width:200px;
+    margin-left:-100%;
+}
+#right{
+    background-color: green;
+    width:220px;
+    margin-left:-220px;
+}
+#content {
+    margin:0 220px 0 200px;
+}
+</style>
+<body>
+    <div id="container">
+        <div id="main">
+            <div id="content">main</div>
+        </div>
+        <div id="left">left</div>
+        <div id="right">right</div>
+    </div>
+</body>
+</html>

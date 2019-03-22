@@ -1,0 +1,97 @@
+for in
+一般用于遍历对象的可枚举属性。以及对象从构造函数原型中继承的属性。对于每个不同的属性，语句都会被执行。
+不建议使用for in 遍历数组，因为输出的顺序是不固定的。
+如果迭代的对象的变量值是null或者undefined, for in不执行循环体，建议在使用for in循环之前，先检查该对象的值是不是null或者undefined
+for of
+1.for…of 语句在可迭代对象（包括 Array，Map，Set，String，TypedArray，arguments 对象等等）上创建一个迭代循环，调用自定义迭代钩子，并为每个不同属性的值执行语句
+
+两者的区别
+遍历对象
+
+var s={a:1,b:2,c:3}
+var s1=Object.create(s);
+for(var prop in s1){
+    console.log(prop);//a b c
+    console.log(s1[prop]);//1 2 3
+}
+for(let prop of s1){
+    console.log(prop);//报错如下 Uncaught TypeError: s1 is not iterable 
+}
+ for(let prop of Object.keys(s1)){
+    console.log(prop);// a b c
+     console.log(s1[prop]);//1 2 3
+}   
+
+遍历数组
+
+var a=[1,2,3]
+for(let i in a){
+    console.log(i);     //0 1 2
+    console.log(a[i]); //1 2 3
+ }
+ for(let i of a){
+    console.log(i); //1 2 3
+}
+--------------------- 
+作者：coder_syl 
+来源：CSDN 
+原文：https://blog.csdn.net/shangyanaf/article/details/80415236 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+
+
+
+
+
+
+
+推荐在循环对象属性的时候，使用for...in,在遍历数组的时候的时候使用for...of。
+
+for...in循环出的是key，for...of循环出的是value
+
+注意，for...of是ES6新引入的特性。修复了ES5引入的for...in的不足
+
+for...of不能循环普通的对象，需要通过和Object.keys()搭配使用
+
+假设我们要遍历一个数组的valuelet aArray = ['a',123,{a:'1',b:'2'}]
+
+使用for...in循环：
+
+for(let index in aArray){
+    console.log(`${aArray[index]}`);
+}
+使用for...of循环：
+
+for(var value of aArray){
+    console.log(value);
+}
+咋一看好像好像只是写法不一样而已，那为什么说for...of修复了for...in的缺陷和不足。
+假设我们往数组添加一个属性name:
+aArray.name = 'demo',再分别查看上面写的两个循环：
+
+for(let index in aArray){
+    console.log(`${aArray[index]}`); //Notice!!aArray.name也被循环出来了
+}
+for(var value of aArray){
+    console.log(value);
+}
+所以说，作用于数组的for-in循环除了遍历数组元素以外,还会遍历自定义属性。
+
+for...of循环不会循环对象的key，只会循环出数组的value，因此for...of不能循环遍历普通对象,对普通对象的属性遍历推荐使用for...in
+
+如果实在想用for...of来遍历普通对象的属性的话，可以通过和Object.keys()搭配使用，先获取对象的所有key的数组
+然后遍历：
+
+var student={
+    name:'wujunchuan',
+    age:22,
+    locate:{
+    country:'china',
+    city:'xiamen',
+    school:'XMUT'
+    }
+}
+for(var key of Object.keys(student)){
+    //使用Object.keys()方法获取对象key的数组
+    console.log(key+": "+student[key]);
+}
