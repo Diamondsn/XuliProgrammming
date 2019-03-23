@@ -1,0 +1,10 @@
+1.position
+static 默认。位置设置为 static 的元素，它始终会处于页面流给予的位置（static 元素会忽略任何 top、bottom、left 或 right 声明）。 
+relative 位置被设置为 relative 的元素，可将其移至相对于其正常位置的地方，因此 “left:20” 会将元素移至元素正常位置左边 20 个像素的位置。 
+absolute 位置设置为 absolute 的元素，可定位于相对于包含它的元素的指定坐标。此元素的位置可通过 “left”、”top”、”right” 以及 “bottom” 属性来规定。 
+fixed 位置被设置为 fixed 的元素，可定位于相对于浏览器窗口的指定坐标。此元素的位置可通过 “left”、”top”、”right” 以及”bottom” 属性来规定。不论窗口滚动与否，元素都会留在那个位置。
+
+absolute定位基准
+1 ）当父元素设置了除static定位之外的定位的时候，（也就是说父元素可以是absolute relative )，子元素相对于父元素定位，可是相对于父元素哪里定位呢？这个时候，基准是父元素的内容区（也即是content（width+height）+padding区域，不包括border和margin。 
+2 ）当父元素没有设置定位的时候，子元素相对于body进行定位。 
+3 ）子元素定位的边界是包括子元素的 整体 = margin + border + padding + content ;的margin外边界为基准进行定位。

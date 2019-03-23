@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原生ajax-get请求</title>
+</head>
+<body>
+    <button>按钮</button>
+</body>
+<script>
+    var oBtn=document.getElementsByTagName('button')[0];
+    oBtn.onclick=function(){
+        //创建ajax核心对象
+        var xhr=getXhr();
+        function getXhr(){
+            var xhr=null;
+            if(window.XMLHttpRequest){//其他浏览器
+                xhr=new XMLHttpRequest();
+            }else{
+                xhr=new ActiveXObject('Microsoft.XMLHttp')
+            }
+            return xhr;
+        }
+        //处理ajax的核心对象的执行结果
+        xhr.onreadystatechange=function(){
+            if(xhr.readyState==4){
+                if(xhr.status==200){
+                    console.log(xhr.responseText);
+                }
+            }
+        };
+        //get方式
+        xhr.open('get','get.php?username=小明&job=IT&age=20',true);
+        //发送请求
+        xhr.send();
+
+        //post方式
+         xhr.open('post','post.php',true);
+        //post不设置请求头会让后端不认识你发送的信息
+        xhr.setRequestHeader('content-type','application/x-www-form-urlencoded');
+        //发送请求
+        xhr.send("username=小明&job=IT&age=20");
+    }
+</script>
+</html>
+
+
+实现ajax的异步交互步骤：
+
+1、创建XHR核心对象
+固定写法
+2、与服务器建立连接
+使用XHR对象的open(method,url)
+3、向服务器发送请求
+使用XHR对象的send(请求参数)
+请求参数必须是键值对key=value
+4、接受服务器端的响应数据
+使用XHR对象的onreadystatechange事件，监听服务器端的通信状态
+使用XHR对象的readyState属性，判断服务器端的当前状态(0-4)
+使用XHR对象的status属性，判断服务器的状态码(200)
+使用XHR对象的responseText属性，接受服务器端的响应数据
+
+ajax具有核心对象
+XMLHttpRequest对象
+var xhr=getXhr();
+function getXhr(){
+var xhr=null;
+if(window.XMLHttpRequest){//其他浏览器
+xhr=new XMLHttpRequest();
+}else{
+xhr=new ActiveXObject('Microsoft.XMLHttp')
+}
+return xhr;
+}
+
+ajax核心对象XHR
+属性
+readyState
+status
+方法
+open(method,url) - 与服务器建立链接
+send("key=value") - 向服务器端发送请求
+事件
+onreadystatechange事件
+作用 - 监听
+
+GET与POST的区别
+GET请求
+send()方法不起作用，但是不能省略
+xhr.send(null)
+请求参数 - 添加到URL？key=value
+POST请求
+send()起作用
+在send()方法被调用之前使用xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+固定写法
+
+
+
+
+使用promise和jq封装ajax
+function postJSON(url,data){
+     return new Promise((resolve,reject)=>{
+         $.ajax({
+             type:'post',
+             url:url,
+             data:data,
+             dataType:'json',
+             success:function(result){
+                 resolve(result);
+             },
+             error:function(err){
+                 reject(err);
+             }
+         });
+     });
+}
+
+postJson(url,data)
+.catch(err=>{
+
+})
+.then(result=>{
+    
+};
