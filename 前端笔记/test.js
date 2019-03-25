@@ -13,4 +13,11 @@ function counts(article){
    }
    console.log(maxword+" "+max);
 }
-counts("Age has reached the end of the beginning of a word. May be guilty in his seems to passing a lot of different life became the appearance of the same day;");
+
+
+counts(`Age has reached the end of the beginning of a word. May be guilty,.   
+in,  ,,,,, ,,, ... his seems. to. passing .a lot .of different life became the appearance of the same day;`);
+
+
+`Age has reached the end of the beginning of a word. May 
+be guilty,.      in,  ,,,,, ,,, ... his seems. to. passing .a lot .of different life became the appearance of the same day;`.split(/[,.; ]+/)
