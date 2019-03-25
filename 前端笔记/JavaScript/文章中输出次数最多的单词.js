@@ -35,7 +35,6 @@ console.log(test("ab ab ab bc bc bc, . "));
 
 
 
-
 //使用正则表达式
 function counts(article){
     article = article.trim().toUpperCase();
