@@ -1,2 +1,59 @@
 //https://www.cnblogs.com/dushao/p/6004883.html
 
+冒泡排序（Bubble Sort）
+冒泡排序还有一种优化算法，就是立一个flag，
+当在一趟序列遍历中元素没有发生交换，则证明该序列已经有序。
+什么时候最快（Best Cases）：
+当输入的数据已经是正序时
+
+什么时候最慢（Worst Cases）：
+当输入的数据是反序时
+
+
+//冒泡排序
+function bubbleSort(arr) {
+    var len = arr.length;
+    for (var i = 0; i < len; i++) {
+        for (var j = 0; j < len - 1 - i; j++) {
+            if (arr[j] > arr[j+1]) {        //相邻元素两两对比
+                var temp = arr[j+1];        //元素交换
+                arr[j+1] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    return arr;
+}
+
+
+
+选择排序（Selection Sort）
+在时间复杂度上表现最稳定的排序算法之一，因为无论什么数据进去都是O(n²)的时间复杂度
+
+
+//选择排序
+function selectionSort(arr) {
+    var len = arr.length;
+    var minIndex, temp;
+    for (var i = 0; i < len - 1; i++) {
+        minIndex = i;
+        for (var j = i + 1; j < len; j++) {
+            if (arr[j] < arr[minIndex]) {     //寻找最小的数
+                minIndex = j;                 //将最小数的索引保存
+            }
+        }
+        temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
+    }
+    return arr;
+}
+
+
+
+
+
+
+
+
+插入排序（Insertion Sort）

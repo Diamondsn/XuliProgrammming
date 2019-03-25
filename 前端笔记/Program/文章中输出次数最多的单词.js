@@ -30,4 +30,4 @@ function test(str){
     return{word:res,time:count};
 }
 
-console.log(test("ab ab ab bc bc bc , . "));
+console.log(test("ab ab ab bc bc bc, . "));
