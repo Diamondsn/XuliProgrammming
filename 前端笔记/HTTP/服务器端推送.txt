@@ -1,0 +1,79 @@
+技术实现方案
+1.Ajax轮询
+2.Ajax长轮询
+3.websocket
+4.server-sent-events
+
+
+Ajax轮询
+实践简单，利用XHR，通过setInterval定时发送请求，但会造成数据同步不及时及无效的请求，增加后端处理压力。
+
+setInterval(function() { $.ajax({ url: 'http://api.3g.qq.com', success: function() { //code from here } }); }, 3000);
+
+
+Ajax长轮询
+在Ajax轮询基础上做的一些改进，在没有更新的时候不再返回空响应，而且把连接保持到有更新的时候，客户端向服务器发送Ajax请求，服务器接到请求后hold住连接，直到有新消息才返回响应信息并关闭连接，客户端处理完响应信息后再向服务器发送新的请求，通常把这种实现也叫做comet。
+
+function async() { $.ajax({ url: 'http://api.3g.qq.com', success: function() { async(); //code from here } }); }
+通常的做法是，在服务器的程序中加入一个死循环，在循环中监测数据的变动。当发现新数据时，立即将其输出给浏览器并断开连接，浏览器在收到数据后，再次发起请求以进入下一个周期。
+
+
+
+Server-sent-events(SSE)
+Server-sent-events(SSE)让服务端可以向客户端流式发送文本消息，在实现上，客户端浏览器中增加EventSource对象，使其能通过事件的方式接收到服务器推送的消息，在服务端，使用长连接的事件流协议，即请求响应时增加新数据流数据格式。
+
+非常适应于后端数据更新频繁且对实时性要求较高而又不需要客户端向服务端通信的场景下。
+
+EventSource API
+var source = new EventSource('http://localhost:8080'); source.addEventListener('message', function(e) { console.log(e.data); }, false); source.addEventListener('open', function(e) { // Connection was opened. }, false); source.addEventListener('error', function(e) { if (e.readyState == EventSource.CLOSED) { // Connection was closed. } }, false); source.addEventListener('userlogin', function(e) { console.log(e.data); }, false);
+客户端API使用非常简单，浏览器在支持的情况下会自动处理一切，包括连接管理接收并解析数据到最后触发DOM事件，开发时只需要关注业务逻辑，EventSource接口还能自动重新连接并跟踪最近接收的消息，还可以向服务器发送上一次接收到消息的ID，以便服务器重传丢失的消息并恢复流。
+
+Event Stream协议
+SSE事件流以流式HTTP响应请求，客户端发起普通的HTTP请求，服务器以自定义的text/event-stream内容类型响应，然后通过事件传递数据。
+
+响应头
+
+Content-Type: text/event-stream Cache-Control: no-cache Connection: keep-alive
+响应数据格式
+
+id: 123n retry: 10000n event: userloginn
+data: {"username": "John123"}nn
+客户端通过EventSource接口发起连接，服务器以text/event-stream内容类型响应，可设置中断后重连时间间隔retry，数据通过字符串的方式赋值给data字段，也可以指定消息类型给event字段。在客户端EventSource接口通过检查换行分隔符来解析到来的数据流，从data字段中获取数据，检查可选的ID和类型，最后分配事件告知应用，如果存在某个类型，触发自定义的事件回调，否则就会调用通用的onmessage回调。
+
+为了在连接中断时恢复中断过程中丢失的消息，服务器在响应时可以给每条消息关联任意的ID字符串，浏览器会自动记录最后一次接收到消息ID，并在发送重新连接请求时自动在HTTP请求头中追加Last-Event-ID，这样就可以标识中断过程中丢失的消息并重新发送给客户端。
+
+优点
+
+基于现有http协议，实现简单
+断开后自动重联，并可设置重联超时
+派发任意事件
+跨域并有相应的安全过滤
+缺点
+
+只能单向通信，服务器端向客户端推送事件
+事件流协议只能传输UTF-8数据，不支持二进制流。
+IE下目前所有不支持EventSource
+
+
+
+
+WebSocket
+WebSocket可以实现与客户端与服务器双向，基于消息的文本或二进制数据通信，主要包括两个部分，客户端WebSocket API及WebSocket协议。
+
+浏览器提供的WebSocket API很简单，使用时无需关心连接管理和消息处理等底层细节，只需要发起连接，绑定相应的事件回调即可。
+WebSocket 协议
+WebSocket通信协议包含两个部分，一是开放性HTTP握手连接协商连接参数，二是二进制消息分帧机制（接收消息的文本和二进制数据传输）。它是一个独立完善的协议，也可以在浏览器之外实现。
+
+HTTP升级协商
+
+WebSocket协议提供了很多强大的特性：基于消息的通信、自定义的二进制分帧层、子协议协商、可选的协议扩展，等等。即在交换数据之前，客户端必须与服务器协商适当的参数以建立连接。
+
+利用HTTP完成握手有几个好处。首先，让WebSockets与现有HTTP基础设施兼容：WebSocket服务器可以运行在80和443 端口上，这通常是对客户端唯一开放的端口。其次，让我们可以重用并扩展HTTP的Upgrade流，为其添加自定义的WebSocket首部，以完成协商。
+
+请求头信息
+
+Connection:Upgrade Sec-WebSocket-Key:eDCPPyPQZq7PiwRcx8SPog== Sec-WebSocket-Version:13 Upgrade:websocket
+响应头信息
+
+HTTP/1.1 101 Switching Protocols Connection:Upgrade Sec-WebSocket-Accept:/ZVAP3n6XuqDUoDp416PYUO+ZJc= Upgrade:websocket
+最后，前述握手完成后，如果握手成功，该连接就可以用作双向通信信道交换WebSocket消息。到此，客户端与服务器之间不会再发生HTTP通信，一切由WebSocket 协议接管。
