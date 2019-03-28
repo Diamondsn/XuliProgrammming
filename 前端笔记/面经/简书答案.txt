@@ -119,6 +119,73 @@ requestAnimationFrame采用系统时间间隔，保持最佳绘制效率，不�
 
 
 你画我猜项目的画线实现
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        body{
+            background-color: black;
+        }
+        canvas{
+            background-color: white;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload= function(){
+            var oc= document.getElementById('c1');
+            var ogc=oc.getContext('2d');
+            oc.onmousedown = function(ev){
+                var ev=ev || window.event;
+                ogc.moveTo(ev.clientX-oc.offsetLeft,ev.clientY-oc.offsetTop);
+                document.onmousemove = function(ev){
+                    var ev = ev || window.event;
+                    ogc.lineTo(ev.clientX-oc.offsetLeft,ev.clientY-oc.offsetTop);
+                    ogc.stroke();
+                };
+                document.onmouseup = function(){
+                    document.onmousemove = null;
+                    document.onmouseup = null;
+                };
+
+            }
+        }
+    </script>
+</head>
+<body>
+    <canvas id="c1" width="400" height="400">
+        
+    </canvas>
+    
+</body>
+</html>
+
+
+关于HTML5中Canvas的宽、高设置问题
+Canvas元素默认宽 300px, 高 150px, 设置其宽高可以使用如下方法(不会被拉伸)：
+方法一：
+       <canvas width="500" height="500"></canvas>
+方法二：使用HTML5 Canvas API操作 OK
+       var canvas = document.getElementById('欲操作canvas的id');
+       canvas.width = 500;
+       canvas.width = 500;
+若通过如下方法设置宽高，那么Canvas元素将由原来大小被拉伸到所设置的宽高：
+方法一：使用CSS 会被拉伸
+     #欲操作canvas的id｛
+          width:1000px;
+          height:1000px;
+     ｝
+方法二：使用HTML5 Canvas API操作 会被拉伸
+      var canvas = document.getElementById('欲操作canvas的id');
+      canvas.style.width = "1000px";
+      canvas.style.height = "1000px";
+方法三 ：用jquery的$("#id").width(500);会被拉伸
+其它：canvas的width和height也不能用百分比表示。canvas会将百分值当成数值显示
+
+
+
+
 WebSocket是什么原理，用了什么设计模式？
 Socket实现
 TCP/IP网络分层
