@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-width: 500px;
+        }
+
+        input {
+            height: 50px;
+            width: 400px;
+        }
+
+        button {
+            height: 50px;
+            width: 100px;
+        }
+
+        li {
+            list-style: none;
+            height: 20px;
+            width: 400px;
+        }
+
+        #content {
+            border: 1px solid red;
+            width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text" id="search" />
+    <button id="btn">百度一下</button>
+    <div id="content"></div>
+    <script>
+        var input = document.getElementById("search");
+        var content = document.getElementById("content");
+        var arr = ["aaa", "abc", "acd", "bfc", "efg", "yju", "tgf"];
+        var newarr = [];
+        var count = 0;
+        var licount = 0;
+        input.addEventListener("keydown", function (e) {
+            var lis = document.getElementsByTagName("li");
+            if (count > 0)
+                lis[count - 1].style.backgroundColor = "white";
+            if (e.keyCode === 38) {
+                if (licount != 0 && count == 1) {
+                    count = licount;
+                } else {
+                    count--;
+                }
+            } else if (e.keyCode == 40) {
+                if (licount != 0 && count == licount) {
+                    count = 1;
+                } else {
+                    count++;
+                }
+            } else if (e.keyCode == 13)//Enter
+            {
+                if (count == 0 && input.value.length > 0) {
+                    location.href = "http://www.baidu.com" + "?word=" + input.value;
+                } else {
+                    input.value = lis[count - 1].innerText;
+                }
+            }
+            if (count > 0) {
+
+                lis[count - 1].style.backgroundColor = "green";
+            }
+        })
+        input.addEventListener('keyup', function (e) {
+            if (e.keyCode === 38 || e.keyCode == 40) {
+                return;
+            } else if (e.keyCode === 13) {
+                count = 0;
+                content.innerHTML = "";
+                licount = 0;
+                return;
+            }
+            var suoyin = input.value;
+            newarr.length = 0;
+            if (suoyin.length <= 0) {
+                content.innerHTML = "";
+                licount = 0;
+                count = 0;
+                return;
+            }
+            arr.forEach(function (value) {
+                if (value.indexOf(suoyin) !== -1) {
+                    newarr.push(value);
+                }
+            });
+            var str = "";
+            licount = newarr.length;
+            for (let i = 0; i < newarr.length; ++i) {
+                str += "<li>" + newarr[i] + "</li>";
+            }
+            content.innerHTML = str;
+        });
+
+    </script>
+</body>
+
+</html>
