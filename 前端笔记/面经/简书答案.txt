@@ -1,0 +1,400 @@
+//https://www.jianshu.com/p/836982579a06
+
+----------------------------------------------------------------------------------------
+美团(offer)
+一面(2017.2.16 10:00)
+
+浏览器事件模型
+
+捕获阶段：在事件冒泡的模型中，捕获阶段不会响应任何事件；
+目标阶段：目标阶段就是指事件响应到触发事件的最底层元素上；
+冒泡阶段：冒泡阶段就是事件的触发响应会从最底层目标一层层地
+向外到最外层（根节点），事件代理即是利用事件冒泡的机制把里层
+所需要响应的事件绑定到外层；
+
+事件委托的优点:
+1.减少内存消耗
+2.动态绑定事件
+
+jQuery的delegate事件代理，写出 polyfill
+参阅https://kb.cnblogs.com/page/94469/
+
+iframe加载完后，将高度变为指定的px
+<iframe id="frame_content1" src="new_neiye/new_zhongzujieshao.htm" width="1002" scrolling="no" frameborder="0" allowtransparency="ture" onload="this.height = '100px';"></iframe>
+                    
+                    <script type="text/javascript">
+function reinitIframe(){
+var iframe = document.getElementById("frame_content1");
+try{
+var bHeight = iframe.contentWindow.document.body.scrollHeight;
+var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+var height = Math.max(bHeight, dHeight);
+iframe.height = height;
+}catch (ex){}
+}
+window.setInterval("reinitIframe()", 200);
+</script>
+
+
+实现垂直水平居中
+块级元素
+        1 盒子宽高已知
+            .center{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-left: -selfWdith(50%);
+                margin-top: -selfHeigth(50%);
+            }
+        2 盒子宽高未知
+            .center{
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+            }
+        3 flex布局（在父级元素中设置）
+            .center{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+		4 table-cell
+			.center{
+				display: table-cell;       //table-cell类似于<td>,自带水平居中
+				vertical-align: middle;   //垂直居中	
+			}
+    内联元素
+        text-align: center;  //水平居中
+		line-height："$(box-height)"; //垂直居中
+
+统计单词出现次数(key => value)
+二叉树翻转180度
+闭包的内部实现
+实现bind方法，写出 polyfill(考察apply、原型链)
+
+二面
+
+DOM是什么？有哪些操作
+获取class="a"的所有div元素
+==和===区别
+== 允许类型转换，=== 不允许类型转换
+
+
+typeof null === Object , 以及undefined和null区别
+判断数组的方法，哪个更好？
+Array.isArray(arr) 是 Object.prototype.toString.call(arg) === '[object Array]';的语法糖。instanceof 跨frame时不能共享原型链。
+
+
+删除已有的html节点(考察removeChild)
+var child=document.getElementById("p1");
+child.parentNode.removeChild(child);
+
+
+字符串反转
+const reverseString = str => str.split("").reverse().join("")
+
+
+跨域和AJAX(大概6-7种)
+CORS、JSONP、Fetch、postMessage、Node、Webpack proxyTable、...
+
+
+:before和::before的区别(伪类、伪元素)
+伪类nth-child和nth-of-type区别
+var和function定义方法的区别(调用与声明的顺序)
+
+三面
+
+二维图形形成三维效果
+1. perspective属性，该属性表示视点，该属性调整我们视点的远近。 
+2. rotate(degree)，旋转分别绕x,y,z轴进行degree度旋转。 
+3. transform-style可以设置元素所处的是3d空间还是平面。Flat表示平面。 
+4. translateZ 绕z轴平移，调整平面向自己所面向的方向移动的距离。如果取值为负值，表示平面向背向的方向移动一定距离。
+
+requestAnimationFrame和setTimeout
+requestAnimationFrame采用系统时间间隔，保持最佳绘制效率，不会因为间隔时间过短，造成过度绘制，增加开销；也不会因为间隔时间太长，使用动画卡顿不流畅，让各种网页动画效果能够有一个统一的刷新机制，从而节省系统资源，提高系统性能，改善视觉效果
+
+
+裁剪图片，实现，矩阵变换
+
+
+你画我猜项目的画线实现
+WebSocket是什么原理，用了什么设计模式？
+Socket实现
+TCP/IP网络分层
+IP 伪造
+
+
+-----------------------------------------------------------------------------------
+
+
+腾讯课堂IMWeb(挂总监面，看问题就知道为什么了)
+一面(2017.2.16 19:00)
+
+JS事件模型
+AJAX同源策略及跨域方法
+HTTP状态码
+XSS和CSRF
+Express特点
+nodejs内存泄露
+Vuejs的生命周期?
+gulp和webpack的区别？(模块与流，CommonChunks抽出公共模块)
+
+二面（桌面共享写代码）
+用原生JS实现一个类似百度搜索框的自动完成控件，比如候选结果集arr=['aaa','abc','acc','dda',...]，用户输入'a'，下拉列表会出现以字母 a 开头的项'aaa', 'abc', 'acc'
+
+要求：
+1. 鼠标或键盘可以选中候选结果到输入框
+2. 能做好兼容性有加分
+3. 做题时间45分钟
+4. 用原生 js 实现
+
+这个题如果要做好还挺复杂的，兼容下IE、面向对象的设计、输入延时、请求返回的顺序、字符串保存DOM，避免重复 DOM 插入造成的性能问题。
+写的还可以，面试官还比较满意。
+三面 (大概1个小时)
+
+问了项目，对项目的技术点，细节，做的好的，做的不太好的
+统计给定数组中，各数出现的次数，返回 json 对象
+gulp和webpack的区别？
+5点15分时，时针和分针的夹角
+
+四面 (总监面，3个问题)
+
+最近做的项目(问最近，开始有些懵，)
+浏览器缓存
+60%喜欢足球，70%喜欢篮球，80%喜欢排球，问既喜欢足球，又喜欢篮球，还喜欢排球的有多少？
+
+
+总监全程很高冷，基本不说话，我还以为电话信号不好。回答过程中没有任何反馈，感觉我一直在自言自语。
+
+网易游戏(Offer)
+一面(3月1号 14:30)
+
+jquery链式调用实现原理？(return this)
+vue 双向绑定
+AJAX 原理及跨域
+组件化思想
+问了项目，gulp 、webpack、grunt日常使用
+
+杭州现场面(3月3号 共三面，上午两面、下午一面)
+
+手写字符串去重
+问能不能正常运行，若不能正常运行，需要在a.b函数内做什么改变？
+var a = 1;
+a.b = function(){
+  alert(1);
+}
+a.b();
+
+不能正常运行，a.__proto__.b 或者 Number.prototype.b ，但不建议真实环境下这样使用。
+WebGL 原理
+缓存优化
+XSS 和 CSRF
+threejs的性能测试
+聊了聊项目、城市偏好这样的话题。
+
+蚂蚁金服-体验技术部(Offer)
+
+大牛、网红云集，玉伯、苏千、民工叔、死马、承玉、偏右、阮一峰老师等，Ant Design 、eggjs、dva、g2等开源项目。
+
+一面电话-青桅师兄 (2017.3.5 19:00，当时面完网易还在杭州)
+
+Vue.js的双向绑定怎样实现的？
+Promise对象，嵌套try catch，内层嵌套错误捕获
+数组去重(写了大概3种方法)
+nodejs的初衷是什么，有哪些不一样的特性
+node创建子进程，进程间的通信
+负载均衡
+判断数组
+Class类的继承
+还学过哪些编程语言？
+vue使用了虚拟 DOM? vuex、flex数据管理
+vue1.x 和 vue2 的区别
+
+二面视频面-承玉大神 (2017.3.7 11:00)
+
+JS数据类型有哪些
+ES6中的Promise，怎样实现依次异步回调
+ES6有哪些新的东西？
+CSS3的新特性
+实现居中对齐(大概3种方法)
+ES6模块机制
+node异步非阻塞 I/O 底层实现原理
+JS类的继承
+TCP/IP网络分层
+Apache和Nginx的优缺点
+react diff算法(三层diff)
+XSS 与 CSRF 安全问题，提到了 SSRF 安全
+
+三面HR视频面 (2017.3.7 14:00)
+省略，每个人问题和答案都不一样。但听出阿里大概喜欢这样类型的：从初/高中开始搞编程的、创业经历、实习经历、比赛经历、挂科不多的、热爱技术的
+3月10号周五开始在美团实习
+
+
+
+
+
+美团实习期间
+
+腾讯QQ音乐(Offer，很愧对主管)
+一面 (2017.3.10 19:57)
+
+js基本数据类型，传值和传引用的
+GPU加速原理，哪些用了 GPU 加速(以空间换时间)
+事件模型，怎样理解事件代理的好处
+内存泄露 为什么闭包会造成内存泄露
+WebAR的实现，WebGL
+前端安全有哪些?
+这些项目中，PV 量最大的是哪个
+Web 性能优化
+Ajax跨域
+服务器渲染的好处
+短期目标和长远目标
+对前端未来的理解
+用过哪些调试工具
+Zepto怎样解决移动端的点击穿透事件
+Vue生命周期及状态管理
+
+二面 (2017.3.18 11:10)
+
+给文档中还没添加的 DOM 元素加事件？如果给1000个相同 DOM 加事件，有什么问题
+事件模型
+常使用的调试移动端页面
+AJAX跨域，其中JSONP有哪些安全问题，怎样处理(白名单过滤)
+常见的移动端事件
+做的这些项目，做了哪些优化？
+浏览器缓存
+什么是一个好的产品？
+如何评价一个产品的UI设计与交互
+
+三面 (2017.3.21 19:30)
+
+ES6中的特性
+Ajax过程，怎样实现按需加载
+DNS 解析过程，DNS 劫持
+XSS和CSRF
+实现居中对齐
+threejs原理
+问了问项目
+
+四面-面试委员会 (2017.3.27 15:00)
+
+面试委员会：从去年2016年校招开始设立的一个委员会，如果学校不在腾讯目标院校的学生，在部门面完之后，HR面之前，会增加一个面试，可控性不强，这个能不能过，运气成分比较大。
+
+
+项目中遇到了哪些坑？怎样解决的？
+经常提交什么漏洞?
+react应用到哪个程度，了解diff算法吗？
+redux源码看过吗？
+koa怎样实现中间件原理？
+觉得腾讯云和阿里云有什么区别，优势和劣势？
+...
+
+五面HR (2017.3.27 16:00)
+省略...
+
+腾讯实习内推面试28号结束，面完hr前，状态是hr面试中，面完之后，第二天28号，状态变成 已报备 (不是 已报批 )，需要在后续线路面试中了解更多情况。
+
+六面-北京线路，主管当面聊 (2017.4.17 18:00)
+
+开放题：一个按钮无法响应的错误上报方案(前端方案、后端方案、阿里的是spm埋点方案)
+前端自动化测试，用户热力图的实现原理
+https中公钥和私钥
+美团实习期间遇到哪些问题，怎样解决？
+问了问城市偏好，聊了会天
+
+下午7点面完，出酒店，坐上公交后，手机打开一看，状态由 已报备 变成了 已经完成所有面试流程 ，开心同时又纠结起来，虽然此时阿里hr面完已经1个多月了，心里知道应该能拿到阿里的实习offer，但是没有正式的邮件又不敢轻易下结论。最后陆续收到offer邮件，
+
+实习offer邮件
+
+校招
+
+阿里实习是从 6月底 到 8月底，转正面试是从8月3号开始，一面苏千大大，二面hr，在8月25号周五之前，不知道到底能不能留，心慌，所以面几家，保险。
+
+腾讯AlloyTeam
+一面 (8月4号下午3:46 - 5:07)
+
+HTTP缓存、HTTP 1.0的HTTP 1.1的区别、HTTP2 ServerPush、HTTP状态码
+打包工具，hash的目的
+HTML5的新特性
+React开发起来比Vue有哪些特点？
+CSS3媒体查询
+移动端开发中遇到的问题？
+闭包、内存泄露
+从大漠老师的热点，来看怎样选择Vue、Angular、React?
+XSS和CSRF
+
+二面 (8月8号晚上7:39 - 8:45)
+
+做过哪些项目，FrozenUI怎样重构成React版
+https中公钥和私钥
+缓存策略
+使用过哪些协议，Schema协议的原理
+HTTP2
+使用过哪些MVV*框架，Vue和React之间的区别
+移动端开发中遇到的问题？
+怎样理解前端工程化？
+前端跨域
+
+
+一面的面试官加了我微信，透露hc很紧张，实习转正都不太够用，所以就结束了面试。
+
+网易云音乐 (8月28号 周一 线下)
+
+8月25号周五，向主管请下周一的假，去面试，主管回了一句：其实没必要面了，留问题不大。听到这句，开心得像个孩子。😄，所以面网易的时候，也没有准备，也不太想面了。
+
+
+手写 deepClone
+一个原型链继承的题
+call和apply应用题
+手写实现 call
+...
+
+
+
+
+面完网易云音乐，晚上7点坐地铁从滨江区回西湖区，地铁上接到QQ音乐 的一面电话，
+没错，是QQ音乐，主管把我简历一直锁着，系统解锁后又手动锁上。因为当时在地铁上，
+约了9点面试，结果9点没打电话过来，后面也没有了。其实校招再面QQ音乐是比较纠结的，
+万一再向实习那样，接了不去，我估计终身腾讯黑名单。所以说愧对QQ音乐主管
+
+网易游戏
+一面电话通过，二面通知 9月6号 周三线下面试，结果当时阿里实习结束，买的是 9月5号 的机票，所以也就没面了。
+微信WXG事业群 (9月7号)
+一面共享写代码，考算法，像是一个多重背包的动态规划问题。
+微信小程序团队一共有 n 名成员，决定出去秋游，在海边遇到出租摩托艇的杰克马，马先生手上有 m 辆待出租的摩托艇，价格分别是 b1 、b2 ... bm;
+由于习惯了微信支付，团队中每个人身上的现金都有限，分别是 a1 a2 ... an，对了，一起出门的老板还带有 S 元的团队经费，这个经费是每个人都可以使用的
+
+那么考虑以下两个场景
+
+场景1
+团队成员都很有爱，都愿意借钱给其他同事。
+
+function max( Array n, Array m, S) {
+    return number
+}
+
+
+场景2
+团队成员都十分小气，是不愿意借钱给别人的。
+
+// 问题一 请判断团队成员是否都能租到摩托艇
+function isAll(Array n, Array m, S){
+  return true | false
+}
+
+// 问题二 请问给出一个策略，使得团队成员租到最多的摩托艇，并且该策略在相同数量的摩托艇情况下花费最少
+
+function max( Array n, Array m, S) {
+
+    return {
+        number,
+        cost
+    }
+
+}
+
+作者：信鑫_King
+链接：https://www.jianshu.com/p/836982579a06
+来源：简书
+简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。

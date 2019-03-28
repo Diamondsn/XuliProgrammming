@@ -1,0 +1,38 @@
+1、使用取余运算符（%） + 判断对象是否是数字来判断：
+
+     注意：空字符串、字符串类型数字、布尔true、空数组对1求余，结果都是true（因为他们都是对象，），所以要先判断对象是否为数字
+
+    function isInteger(obj){
+ 
+         return typeof obj === 'number' && obj%1 === 0;      //是整数，则返回true，否则返回false
+ 
+    }
+2、使用Math.round、Math.ceil、Math.floor判断，整数取整之后还是自己
+
+ function isInteger(obj){
+ 
+       return  Math.round(obj) === obj   //是整数，则返回true，否则返回false
+ 
+  }
+注意：这种方法直接把空字符串、字符串类型数字、布尔true、空数组给屏蔽掉了
+
+3、ES6提供了Number.isInteger  但只有chrom  firefox支持
+
+    Number.isInteger(3.3)    // false
+ 
+    Number.isInteger(3)      // true
+ 
+ 
+    Number.isInteger('')      // false
+ 
+    Number.isInteger('3')    //false
+ 
+ 
+    Number.isInteger([])     // false
+ 
+    Number.isInteger(true)   //false
+--------------------- 
+作者：tangxiujiang 
+来源：CSDN 
+原文：https://blog.csdn.net/tangxiujiang/article/details/78073792 
+版权声明：本文为博主原创文章，转载请附上博文链接！
