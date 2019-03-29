@@ -1,0 +1,20 @@
+https://www.cnblogs.com/ihboy/p/6700059.html
+
+ 当加号运算符时，String和其他类型时，其他类型都会转为 String；其他情况，都转化为Number类型 ， 
+ 注： undefined 转化为Number是 为’NaN‘， 任何Number与NaN相加都为NaN。
+
+其他运算符时， 基本类型都转换为 Number，String类型的带有字符
+
+转换为 Boolean类型为 false 的有：null，0，''，undefined，NaN，false　　
+
+
+
+
+
+
+
+对象
+
+    字符串           布尔
+            
+            数字
