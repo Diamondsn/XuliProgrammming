@@ -1,0 +1,40 @@
+宏任务
+
+#	               浏览器	   Node
+setTimeout          √	√
+setInterval	          √	 √
+setImmediate	     x	√
+requestAnimationFrame	√	x
+ 
+
+微任务
+#	浏览器	Node
+process.nextTick	x	√
+MutationObserver	√	x
+Promise.then catch finally	√	√
+
+
+https://blog.csdn.net/eeewwwddd/article/details/80862682
+
+nodejs中将eventloop分成了:
+
+timers: 定时器setTimeout执行，将callback加入队列中。
+pending callbacks: 一些I/O的callback，推迟到下一次循环中执行。
+idle, prepare: 内部的一些事件。
+poll: 定时器的callback执行，setImmediate执行，微任务执行。
+check: setImmediate的callback执行。
+close callbacks: 一些callbacks的关闭，如socket。
+
+
+这个图是整个 Node.js 的运行原理，从左到右，从上到下，Node.js 被分为了四层，分别是 应用层、V8引擎层、Node API层和LIBUV层。
+
+
+应用层：即 JavaScript 交互层，常见的就是 Node.js 的模块，比如 http，fs。
+
+V8引擎层：即利用 V8 引擎来解析JavaScript 语法，进而和下层 API 交互。
+
+Node API层：为上层模块提供系统调用，一般是由 C 语言来实现，和操作系统进行交互。
+
+LIBUV层：是跨平台的底层封装，实现了 事件循环、文件操作等，是 Node.js 实现异步的核心。
+    在Node.js的内部是通过线程池来完成I/O操作的，但是LIBUV层会针对不同的操作系统平台的差异性实现了统一调用，
+Node.js的单线程指的是JavaScript运行在单线程中，并不是说Node.js是单线程的，Node.js是一个多线程的平台，但是对于JavaScript的处理是单线程的。
