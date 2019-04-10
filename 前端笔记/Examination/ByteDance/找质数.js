@@ -1,7 +1,7 @@
 var findPrimenum = function (N, M) {
     var arr = [];
     for (var i = N; i <= M; i++) {
-		var k = Math.sqrt(j)
+		var k = Math.sqrt(i)
         for (var j = 2; j <= k; j++) {
             if (i % j === 0) {
                 break;
