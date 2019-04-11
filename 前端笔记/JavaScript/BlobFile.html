@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
+    <!-- <script>
     var blob = new Blob(["Hello hanzichi"]);
 var a = document.createElement("a");
 a.href = window.URL.createObjectURL(blob);
@@ -15,6 +15,16 @@ a.download = "a.txt";
 a.textContent = "Download";
 
 document.body.appendChild(a);
+</script> -->
+
+<input type='file' multiple /><br/>
+<img />
+<script>
+document.querySelector("input").onchange = function() {
+  var files = this.files;
+  document.querySelector("img").src = window.URL.createObjectURL(files[0]);
+}
+
 </script>
 </body>
 </html>
