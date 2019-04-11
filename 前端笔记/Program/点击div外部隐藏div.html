@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #container{
+            background-color:red;
+            width:100px;
+            height:100px;
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform: translate(-50%,-50%);
+            line-height:100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">内容</div>
+    <script>
+        window.onload=function(){
+            var div=document.getElementById("container");
+            document.addEventListener("click",function(){
+                div.style.display=(div.style.display==="none")?"block":"none";
+            });
+            div.addEventListener("click",function(event){
+                event=event||window.event;
+                event.stopPropagation();
+            },true);
+            //addEventListener的第三个参数默认为false,在冒泡阶段触发，为true为在捕获阶段触发
+        }
+    </script>
+</body>
+</html>
+
+<!-- HTML页面的最外层dom节点是document；在document上绑定点击事件隐藏该div；
+由于默认是冒泡事件机制，使点击该div也会冒泡到document；因此考点在于：
+阻止点击该div所发生的冒泡行为；在事件捕获或者事件冒泡阶段阻止冒泡行为都可以！！！ -->
+
+<!-- 参考：https://www.jianshu.com/p/aafc557ced3a -->
