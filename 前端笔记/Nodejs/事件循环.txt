@@ -1,0 +1,24 @@
+timers（处理setTimeout和setInterval的回调函数）
+I/O callbacks（除了setTimeout、setInterval、setImmediate、用于关闭请求的回调函数）
+idle，prepare（libuv内部使用）
+poll（等待还未返回的I/O事件）
+check（setImmediate）
+close callbacks（执行关闭请求的回调，如socket.on('close', ...)）
+
+
+
+
+定时器阶段 timers：
+定时器阶段执行定时器任务（setTimeOut(), setInterval()）。
+
+轮询阶段 poll：
+          轮询阶段由 I/O 事件触发，例如 'connect'，'data' 等。这是比较重/重要的阶段，因为大部分程序功能就是为了 I/O 数据。
+          本阶段会处理定时器任务和 poll 队列中的任务，具体逻辑：
+处理到期的定时器任务，然后
+处理队列任务，直到队列空了或者达到上限
+如果队列任务没了：
+如果有 setImmediate()，终止轮询阶段并进入检查阶段去执行；
+如果没有 setImmediate()，那么就查看有没有到期的定时器，有的话就回到定时器阶段执行回调函数；
+
+检查阶段 check：
+          当轮询阶段空闲并且已经有 setImmediate() 的时候，会进入检查阶段并执行。
