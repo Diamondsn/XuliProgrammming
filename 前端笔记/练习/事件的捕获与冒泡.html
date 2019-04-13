@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #id2 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="id1">
+        <div id="id2"></div>
+    </div>
+    <script>
+        //该方法的第三个参数是泡沫获取，是一个布尔值：
+        //true - 事件句柄在捕获阶段执行
+        //false- 默认。事件句柄在冒泡阶段执行
+        // document.getElementById("id1").addEventListener('click', function () {
+        //     console.log("id1-false")
+        // }, false);
+        // document.getElementById("id2").addEventListener('click', function () {
+        //     console.log('id2-false')
+        // }, false);
+
+        document.getElementById("id1").addEventListener('click', function () {
+            console.log("id1-true")
+        }, true);
+        document.getElementById("id2").addEventListener('click', function () {
+            console.log('id2-true')
+        },true);
+    </script>
+</body>
+
+</html>

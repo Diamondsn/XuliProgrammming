@@ -1,0 +1,17 @@
+function addHandle(target,eventType,handle){
+     if(target.addEventListener){
+          target.addEventListener(eventType,handle,false);
+     }
+     else{
+          target.attachEvent("on"+eventType,handle);
+     }
+}
+
+function removeHandle(target,eventType,handle){
+    if(target.removeEventListener){
+           target.removeEventListener(eventType,handle,false);
+    }
+    else{
+          target.detachEvent("on"+eventType,handle);
+    }
+}
