@@ -37,7 +37,30 @@
             flex-grow: 1;
         } */
 
-        
+        /* position布局 */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            position: relative;
+        }
+
+        #left {
+            width: 200px;
+            height: 400px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #right {
+            margin-left: 200px;
+            height: 400px;
+            background-color: green;
+        }
     </style>
 </head>
 
