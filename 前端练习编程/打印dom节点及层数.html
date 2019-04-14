@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <div>
+            <span>...</span>
+            <span>...</span>
+        </div>
+        <div>
+            <div>
+                <p>
+                    <span>...</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function digui(dom){
+            var list=dom.children;
+            if(!list)return;
+            for(var i=0;i<list.length;++i){
+                var node=list[i];
+                if(node.nodeType===1){
+                    var j=0;
+                    while(node.parentNode!==container){
+                        j++;
+                        node=node.parentNode;
+                    }
+                    console.log(list[i].nodeName+j);
+                    digui(list[i]);
+                }
+            }
+        }
+        var container=document.getElementById("container");
+        digui(container);
+    </script>
+</body>
+</html>
+
+<!--https://www.jianshu.com/p/9541d50c4f14-->
+<!-- （1）children获取的是所有的元素子节点，childNodes获取的是所有的
+子节点，元素、文本注释、空格；
+因此使用childNodes时要判断节点类型！文本节点nodeType==3，元素节点nodeType==1；
+（2）js获取节点类型nodeType，节点名称nodeName，节点值nodeValue；
+验证是否有子节点hasChildNodes()；
+（3）文档树是一个树结构，要打印所有节点，需要实现深度遍历，用递归的方法实现！
+对每一个子节点再调用该方法。
+（4）需要对没有字节点的情况进行判断，并返回return； -->
