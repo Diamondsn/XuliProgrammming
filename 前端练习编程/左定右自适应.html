@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* 浮动
+       #left{
+           width:200px;
+           height:400px;
+           background-color:red;
+           float:left;
+       }
+       #right{
+           height:400px;
+           background-color:green;
+           margin-left:200px;
+       } */
+
+        /* flex布局 
+        #container {
+            display: flex;
+        }
+
+        #left {
+            flex-basis: 200px;
+            height: 400px;
+            background-color: red;
+        }
+
+        #right {
+            background-color: green;
+            height: 400px;
+            flex-grow: 1;
+        } */
+
+        /* position布局 */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            position: relative;
+        }
+
+        #left {
+            width: 200px;
+            height: 400px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        #right {
+            margin-left: 200px;
+            height: 400px;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="left">left</div>
+        <div id="right">right</div>
+    </div>
+</body>
+
+</html>

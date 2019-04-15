@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .left {
+            overflow: scroll;
+            width:300px;
+            height:300px;
+        }
+
+        .left::-webkit-scrollbar {
+            /* 滚动条样式*/
+            width: 5px;
+            height: 10px;
+        }
+
+        .left::-webkit-scrollbar-thumb {
+            /* 滑块样式*/
+            height: 10px;
+            border-radius: 5px;
+            box-shadow: inset 0 0 6px rgb(240, 240, 240, 0.618);
+            background-color:red;
+        }
+
+        /*自定义滚动条*/
+
+        /*滚动条轨道*/
+
+        .left::-webkit-scrollbar-track {
+
+            border-radius: 10px;
+
+            background: #eee;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="left">
+
+            在第二节中我们知道了EventEmitter模块的基本用法，那么根据基本的API我们可以进一步自己去实现一个EventEmitter模块。 
+            每一个EventEmitter实例都有一个包含所有事件的对象_events, 
+            事件的监听和监听事件的触发，以及监听事件的移除等都在这个对象_events的基础上实现。
+            
+            (1) emit
+            emit的方法实现的大致功能如下程序流程图所示：
+            --------------------- 
+            作者：小小小小小亮 
+            来源：CSDN 
+            原文：https://blog.csdn.net/liwusen/article/details/81202676 
+            版权声明：本文为博主原创文章，转载请附上博文链接！
+            jingyan.baidu.com 
+CSS 实现隐藏滚动条同时又可以滚动(转) - Alice.Luo - 博客园
+2019年2月1日 - CSS 实现隐藏滚动条同时又可以滚动移动端页面为了更接近原生的体验,是否可以隐藏滚动条,同时又保证页面可以滚动? 使用overflow:hidden 隐藏滚动条,但...
+https://www.cnblogs.com/alice6...  - 百度快照
+CSS 实现隐藏滚动条同时又可以滚动 - 祈澈姑娘 - 博客园
+2019年3月1日 - 祈澈姑娘 关注- 3 粉丝- 16 +加关注 0 0 « 上一篇:手机端自适应布局demo» 下一篇:前端切图:CSS实现隐藏滚动条同时又可以滚动posted...
+https://www.cnblogs.com/wangti...  - 百度快照
+纯CSS实现隐藏滚动条但仍具有滚动的效果 - huangpb的博..._CSDN博客
+2018年2月22日 - 第一种方式:在css样式中添加这个,意思是让浏览器的所有滚动条消失在webkit内核的浏览器里可以定义滚动条样式。在CSS初始处定义::-webkit-scrollbar{di...
+CSDN博客号 - 百度快照
+详解如何用div实现自制滚动条_Div+CSS教程_CSS_网页制作_脚本之家
+2018年3月21日 - 这篇文章主要介绍了详解如何用div实现自制滚动条,滚动条是浏览器中最常见的组件了。想要学习如何自制滚动条的方法,需要了解的朋友可以参考下
+脚本之家 - 百度快照
+为您推荐：css中设置滑动如何制作滚轮css流动条使用div写滚动条
+
+    </div>
+</body>
+
+</html>

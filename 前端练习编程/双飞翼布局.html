@@ -1,0 +1,48 @@
+<!-- 强烈推荐这个，这个讲的很清楚
+https://blog.csdn.net/wangchengiii/article/details/77926868 -->
+<!-- 双飞翼布局比圣杯布局多使用了1个div，少用大致4个css属性（圣杯布局container的 padding-left和padding-right这2个属性，
+加上左右两个div用相对布局position: relative及对应的right和left共4个属性，；而双飞翼布局子div里用margin-left和margin-right共2个属性，
+比圣杯布局思路更直接和简洁一点。简单说起来就是：双飞翼布局比圣杯布局多创建了一个div，但不用相对布局了。 -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+#main,#left,#right {
+    float:left;
+    height:400px;
+}
+#main{
+    background-color:red;
+    width:100%;
+}
+#left{
+    background-color: green;
+    width:200px;
+    margin-left:-100%;
+}
+#right{
+    background-color: green;
+    width:220px;
+    margin-left:-220px;
+}
+#content {
+    margin:0 220px 0 200px;
+}
+</style>
+<body>
+    <div id="container">
+        <div id="main">
+            <div id="content">main</div>
+        </div>
+        <div id="left">left</div>
+        <div id="right">right</div>
+    </div>
+</body>
+</html>

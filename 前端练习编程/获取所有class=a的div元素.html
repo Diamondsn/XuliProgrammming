@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="a c"> </div>
+    <div class="b a"></div>
+    <p class="a"></p>
+    <script>
+        // var doms=document.querySelectorAll("div.a");
+        //console.log(doms);
+
+        //另解
+        // var doms=[].slice.call(document.getElementsByClassName("a"));
+        // console.log(doms);
+        // var arr=[];
+        // doms.forEach(function(dom){
+        //     if(dom.nodeName==="DIV")
+        //     arr.push(dom);
+        // })
+        // console.log(arr);
+
+        //另解
+        var doms=[].slice.call(document.getElementsByTagName("div"));
+        console.log(doms);
+        var arr=[];
+        doms.forEach(function(dom){
+            if(dom.className.includes("a")){
+                arr.push(dom);
+            }
+        })
+        console.log(arr);
+    </script>
+</body>
+</html>

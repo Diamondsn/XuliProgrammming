@@ -1,0 +1,370 @@
+一、数组去重
+	(1)双层循环: (外层循环元素，内层循环时比较值),如果有相同的值则跳过，不相同则push进数组
+	var deD=function(arr){
+	    var res=[arr[0]];
+		for(var i=1;i<arr.length;i++){
+			var repeat=false;
+			for(var j=0;j<res.length;j++){  //和新建的数组比较不是和数组内的比较
+				if(arr[i]===res[j]){
+				    repeat=true;
+					break;
+				}
+			}
+			if(!repeat){
+				res.push(arr[i]);
+			}
+		}
+		return res;
+	}
+	(2) 双层循环，利用splice直接在原数组上删除
+	
+	var deD=function(arr){
+		for(var i=0;i<arr.length;i++){
+			for(var j=i+1;j<arr.length;j++){
+				if(arr[i]===arr[j]){
+					arr.splice(j,1);
+				}
+			}
+		return arr;
+		}
+	}
+	(3) 先排序再去重
+	var deD=function(arr){
+		arr.sort(function(a,b){
+			if(a<b){
+				return -1;
+			}else if(a>b){
+				return 1;
+			}else{
+				return 0;
+			}
+		});
+		var res=[arr[0]];
+		for(var i=1;i<arr.length;i++){
+			if(arr[i]!==res[res.length-1]){    //对数组先排序再去重的优势在于只用了一次for循环
+				res.push(arr[i])
+			}
+		}
+		return res;
+	}
+	(4) 利用对象的属性去重(hash_map)
+	var deD=function(arr){
+		var res=[];
+		var hash_map={};
+		for(var i=0;i<arr.length;i++){
+			if(!hash_map[arr[i]]){
+				res.push(arr[i]);
+				hash_map[arr[i]]=1;
+			}
+		}
+		return res;
+	}
+	引申：找出重复的数字
+		function foo(arr){
+			var len = arr.length;
+			var hash_map = {};
+			var res = [];
+			for(var i = 0;i<arr.length;i++){
+				if(hash_map[arr[i]]){
+					res.push(arr[i])
+			  
+				}else{
+					hash_map[arr[i]] = 1;
+				}
+			}
+			return res;
+		}
+	(5) 利用下标查询
+	var deD=function(arr){
+		var res=[];
+		for(var i=0;i<arr.length;i++){
+			if(res.indexOf(arr[i])==-1){
+				res.push(arr[i]);
+			}
+		}
+		return res;
+	}
+	(6)ES6 Set
+	var res=[...new Set(arr)];
+	
+	(7)filter + indexOf
+	res=arr.filter(function(element,index,self){
+			return self.indexOf(element)===index;
+	});
+
+二、数组乱序
+	arr.sort(function(){return Math.random()>0.5?-1:1;});
+	function shuffle(arr){
+		var len = a.length;
+		for(var i = 0; i<len-1;i++){
+			var index = Math.floor(Math.random()*(len-i)) //Math.random的取值范围[0,1)
+			var temp = arr[index];
+			a[index] = a[len -i -1];
+			a[len -i-1]=temp;
+		}
+		return arr;
+	}
+
+三、多维数组转一维
+	var res=[];
+	var trans=function(arr){
+		for (let i=0;i<arr.length;i++){
+			if(Array.isArray(arr[i])){
+				trans(arr[i]);
+			}else{
+				res.push(arr[i]);
+			}
+		}
+	}
+   
+四、localStorge设置过期时间的方法
+<script>
+	function set(key,value){
+		var curTime=new Date().getTime();
+		localStorage.setItem(key,JSON.stringify({data:value,time:curTime}));
+	}
+	function get(key,exp){
+		var data=localStorage.getItem(key);
+		var dataObj=JSON.parse(data);
+		if(new Date().getTime()-dataObj.time>exp){
+			console.log('信息已过期');
+			localStorage.removeItem(key);
+			return false;
+		}else{
+			return dataObj.value;
+		}
+	}
+</script>
+
+五、如何判断动态脚本加载完成，可以对加载的js对象使用onload来判断 
+	<script>
+		function loadJsAsync(url){
+			var body=document.getElementsByTagName('body')[0];
+			var jsNode=document.createElement('script');
+			jsNode.setAttribute('type','text/javascript');
+			jsNode.setAttribute('src',url);
+			body.appendChild(jsNode);
+			if(jsNode.onload){
+				jsNode.onlaod=function(){
+					return console.log("已加载完成");
+				}
+			}else{
+				jsNode.onreadystatechange=function(){
+					if(jsNode.readyState=='load'||jsNode.readyState=='complete'){
+						return console.log("已加载完成");
+					}
+				}
+			}
+		}
+	</script>
+
+六、字符串反序
+	str.split("").reverse().join("");
+
+七、夸浏览器事件处理程序
+	var EventUti={
+		addHandler: function(element,type,handler){
+			if(element.addEventListener){
+				element.addEventListener(type,handler,false);
+				}
+			}else if(element.attachEvent){
+				element.attachEvent("on"+type,handler)
+			}else {
+				element["on"+type]=handler;     //属性可以用[]表示，和"."符号相比优势在于可以使用变量
+			}
+		},
+		removeHandler: function(element,type,handler){
+			if(element,removeEventListener){
+				element.removeEventListener(type,handler,false);
+			}else if(element.detachEvent){
+				element.detachEvent('on'+type,handler);
+			}else{
+				element['on'+type]=null;
+			}
+		}
+	};
+
+八、深拷贝和浅拷贝
+	var deepCopy=function(obj){
+		var res=new Object();
+		for (var key in obj){
+			if(typeof(obj[key]) ==='object'){
+				res[key]=deepCopy(obj[key]);
+			}else{
+				res[key]=obj[key];
+			}
+		}
+		return res;
+	}
+	
+九、千分位分隔符
+	var obj=function(num){
+		var arr=num.toString().split("").reverse();
+		var index=arr.indexOf(".");
+		if(index>0){
+			var i=index+4;
+			}else {
+				i=3;
+			}
+		for(;i<arr.length;i=i+4){
+			arr.splice(i,0,",");
+		}
+		return arr.reverse().join("");
+	}
+	
+十、setTimeout输出0~9
+	var obj=function(){
+		for(let i=0;i<10;i++){      //如果用var 则会产生闭包
+			setTimeout(function(){
+				console.log(i)
+			},i*1000);
+		}
+	}
+	var obj=function(){ 
+		for(var i=0;i<10;i++){
+			(function (){
+				console.log(i);
+			})();
+		}
+	}();
+
+	var obj=function(){ 
+		var res=[];
+		for(var i=0;i<10;i++){
+			res[i]=function (){
+				return i;
+			};
+		}
+		return res;
+	}     //返回的是一个函数数组，同时由于闭包的作用 ，每次调用函数数组输出的都是10
+	
+十一 JSONP
+		var script = document.createElement("script");
+		script.setAttribute('src', 'https://www.baidu.com/?callback=callback')
+		script.setAttribute('type', 'text/javascript');
+		document.head.appendChild(script);
+		
+        function callback(res) {
+            console.log(res);
+        }
+	
+十二 AJax
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function (req, res) {
+		if (xhr.readyState == 4) {
+			if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+				var something = xhr.responseText;
+				console.log(something);
+			} else {
+				alert("Request was unsuccessful" + xhr.status);
+			}
+		}
+	}
+	xhr.open('Get',url,bool);
+	xhr.send();
+
+十三、 bind实现
+	Function.prototype.bind=function(context){
+		var self=this;
+		return function(){
+			return self.apply(context,arguments);
+		};
+	};
+十四、call实现
+	Function.prototype.call=function (context) {
+		var self = this;
+		context.fn = self;
+		var args = [];
+		for (var i = 1; i < arguments.length; i++) {
+			args.push(arguments[ i ]);
+		}
+		var star = 'context.fn(' + args + ')'
+		var res=eval('context.fn(' + args + ')');
+		delete context.fn;
+		return res;
+	}
+十五、apply实现
+	Function.prototype.apply=function (context，agrs) {
+		self = this;
+		context.fn = self;
+		var star = 'context.fn(' + args + ')'
+		var res=eval('context.fn(' + args + ')');
+		delete context.fn;
+		return res;
+	}
+十六、单例模式
+	var GetSingle=(function(){
+		var instance;
+		return function GetSingle(){
+			if(instance){
+				this.a = 'Hello World'
+				instance = this;
+			}else{
+				return instance;
+			}
+		
+		}
+	}){}
+
+十七、用js实现一个链表
+	function List(){
+		var Node = function(){
+			this.value = value;
+			this.next = null;
+		}
+		var head = null;
+		var length = 0;
+		this.append = function(){
+			var node = new Node();
+			var current;
+			if(head === null){
+				head = node;
+			}else{
+				current = head;
+				while(current.next){
+					current = current.next;
+				}
+				current.next = node;
+			}
+			length++
+		}
+	}
+十八、快速排序
+	function quickSort(arr){
+		if(arr.length<=1){
+			return arr;
+		}else{
+			var left = [],right = [],len = arr.length;
+			for(let i = 1;i<len;i++){
+				if(arr[i]<arr[0])
+					left.push(arr[i]);
+				else
+					right.push(arr[i]);
+			}
+			return [].concat(quickSort(left),arr[0],quickSort(right))
+		}
+		
+	}
+
+十九、归并排序
+	function mergeSort(arr){
+		if(arr.length<=1){
+			return arr;
+		}else{
+			var mid = Math.floor(arr.length/2);
+			var left = arr.slice(0,mid);
+			var right = arr.slice(mid);
+			return merge(mergeSort(left),mergeSort(right));
+		}
+		function merge(left,right){
+			var res=[];
+			while(left.length>0&&right.length>0){
+				if(left[0]<right[0]){
+					res.push(left.shift());
+				}else{
+					res.push(right.shift());
+				}
+			}
+			return res.concat(left,right);
+		}
+	}
