@@ -271,18 +271,17 @@
 		};
 	};
 十四、call实现
-	Function.prototype.call=function (context) {
-		var self = this;
-		context.fn = self;
-		var args = [];
-		for (var i = 1; i < arguments.length; i++) {
-			args.push(arguments[ i ]);
-		}
-		var star = 'context.fn(' + args + ')'
-		var res=eval('context.fn(' + args + ')');
-		delete context.fn;
-		return res;
-	}
+Function.prototype.call=function(context){
+    var self=this;
+    context.fn=self;
+    var args=[];
+    for(var i=1;i<arguments.length;++i){
+        args.push("arguments["+i+"]");
+    }
+    var result=eval("context.fn("+args+")");
+    delete context.fn;
+    return result;
+}
 十五、apply实现
 	Function.prototype.apply=function (context，agrs) {
 		self = this;
