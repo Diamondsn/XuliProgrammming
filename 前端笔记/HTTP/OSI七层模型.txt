@@ -11,6 +11,13 @@
 网络层 路由器
 传输层 网关
 
+应用层     HTTP FTP TFTP SMTP SNMP DNS TELNET HTTPS POP3 DHCP
+表示层     JPEG、ASCll、DECOIC、加密格式等
+会话层     建立、管理和维护会话
+传输层     TCP UDP
+网络层     ICMP IGMP IP（IPV4 IPV6） ARP RARP
+数据链路层    提供介质访问和链路管理
+物理层    物理层
 
 一、为什么有了Mac地址，还要IP地址？
 由于全世界存在着各式各样的网络，他们使用不同的硬件地址。要使这些异构网络
