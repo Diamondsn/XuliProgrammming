@@ -1,0 +1,28 @@
+三角形
+{
+ width: 0;
+    height: 0;
+    border-bottom: 140px solid red ;
+    border-right: 70px solid transparent;
+    border-left: 70px solid transparent;
+}
+
+
+圆形
+{
+        width: 0px;
+        height: 0px;
+        border:50px solid red;
+        border-radius: 50%;
+}
+
+
+
+梯形
+{
+    width: 120px;
+    height: 0px;
+    border-bottom:120px solid red ;
+    border-right: 60px solid transparent;
+    border-left: 60px solid transparent;
+}
