@@ -1,0 +1,12 @@
+不支持事件冒泡的事件
+1.UI事件 
+load
+unload
+scroll
+resize
+2.焦点事件 
+blur
+focus
+3.鼠标事件 
+mouseleave
+mouseenter
