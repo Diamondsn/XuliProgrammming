@@ -47,3 +47,20 @@ let option = {
  ]
 }
 module.exports = option
+
+
+css-loader: 能够通过类似 @import 和 url（…）的方式，在 js 文件中实现
+通过 require 或者 import 引入 css 文件。
+style-loader: 将模块的导出作为样式添加到 DOM 中，通常与 css-loader 配
+合使用。
+file-loader: 指示webpack将所需的对象作为文件发送并返回其公用URL
+url-loader: url-loader 封装了 file-loader,url-loader 提供了一个 limit 
+参数，小于 limit 字节的文件会被转为 DataURl，大于 limit 的还会使用 file-
+loader 将图片复制到指定路径。
+
+常用插件
+html-webpack-plugin
+在打包的路径下自动生成一个 html 文件，并且自动引入 bundle.js 文件和 css 文件
+
+extract-text-webpack-plugin
+抽离 css 到一个指定的 css 文件中，并打包到指定的目录下
