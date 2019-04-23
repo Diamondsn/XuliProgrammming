@@ -1,0 +1,10 @@
+前端路由目前主要有两种方法：
+
+1、利用url的hash,就是常用的锚点（#）操作，类似页面中点击某小图标，
+返回页面顶部，JS通过hashChange事件来监听url的改变，IE7及以下需要轮询
+进行实现。一般常用框架的路由机制都是用的这种方法，例如Angualrjs自带的
+ngRoute和二次开发模块ui-router，react的react-route,vue-route…
+2、利用HTML5的History模式，使url看起来类似普通网站，以”/”分割，没有”#”，
+但页面并没有跳转，不过使用这种模式需要服务器端的支持，服务器在接收到所有
+的请求后，都指向同一个html文件，通过historyAPI，监听popState事件，用pus
+hState和replaceState来实现。
