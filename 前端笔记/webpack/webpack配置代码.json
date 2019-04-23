@@ -1,0 +1,66 @@
+let option = {
+  entry: ‘.／index.js’,     // 来指定一个入口起点（或多个入口起点），是打包的开始文件
+  output: {                 // 告诉 webpack 在哪里输出它所创建的 bundles，以及如何命名这些文件。
+    path: path.resolve('./web'),  // 输出的文件路径
+    filename: 'build/js/[name].bundle.js',   // 打包后的文件名称，此时的名称是入口文件的名称
+  },
+  module: {
+    rules: [{
+        test: /\.vue$/,       //识别出应该被对应的 loader 进行转换的 vue 文件。
+        loader: 'vue-loader',  //转换 vue 文件，从而使其能够被添加到依赖图中（并且最终添加到 bundle 中）
+      },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,    // 排除 node_modules ,不转译 node_modules 文件夹
+        options: {
+          presets: ['es2015'],
+          cacheDirectory: true  //将 babel-loader 提速至少两倍。 这会将转译的结果缓存到文件系统中。loader 将使用默认的缓存目录 node_modules/.cache/babel-loader
+        }
+      }, 
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'  //链式loaders ,可将相关正则匹配到的文件资源数据在几个loader之间进行共享传递
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]?[hash]',  
+          outputPath: 'build/img/'
+        }
+      },
+      {
+        test: /\.(png|jpg|gif|svg|jpeg)$/,
+        loader: 'file-loader?name=build/img/[name].[hash:6].[ext]' // 将图片命名为 基本名称 + 哈希值 + 扩展名 格式并指定到 build/img 目录下
+      } 
+    ]
+  },
+  resolve: {   //设置模块如何被解析
+    extensions: ['.js', '.vue', '.css'],   //自动解析确定的扩展,能够使用户在引入模块时不带扩展名
+    alias: {    // 设置模块别名,便于我们更方便通过import 或 require 引用
+      'vue': 'vue/dist/vue.js'
+    }
+  },
+   plugins: [   // webpack 插件列表
+     new HtmlWebpackPlugin({template: './src/index.html'})
+ ]
+}
+module.exports = option
+
+
+css-loader: 能够通过类似 @import 和 url（…）的方式，在 js 文件中实现
+通过 require 或者 import 引入 css 文件。
+style-loader: 将模块的导出作为样式添加到 DOM 中，通常与 css-loader 配
+合使用。
+file-loader: 指示webpack将所需的对象作为文件发送并返回其公用URL
+url-loader: url-loader 封装了 file-loader,url-loader 提供了一个 limit 
+参数，小于 limit 字节的文件会被转为 DataURl，大于 limit 的还会使用 file-
+loader 将图片复制到指定路径。
+
+常用插件
+html-webpack-plugin
+在打包的路径下自动生成一个 html 文件，并且自动引入 bundle.js 文件和 css 文件
+
+extract-text-webpack-plugin
+抽离 css 到一个指定的 css 文件中，并打包到指定的目录下
