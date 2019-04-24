@@ -1,0 +1,31 @@
+https://blog.csdn.net/qq_41865159/article/details/80752606
+
+ 获取实例对象obj的原型对象，有三种方法
+        1. obj.__proto__
+         2. obj.constructor.prototype
+        3. Object.getPrototypeOf(obj)
+        上面三种方法之中，前两种都不是很可靠。最新的ES6标准规定，
+ __proto__属性只有浏览器才需要部署，其他环境可以不部署。
+ 而obj.constructor.prototype在手动改变原型对象时，可能会失效。
+
+  3、构造函数用来生成对象的过程是什么样的？
+            a、隐式创建一个对象
+            b、将构造函数的作用域指向这个对象（this）指向这个对象
+            c、执行构造函数里面的代码
+            d、返回这个对象
+
+            new Object()将会根据参数value的数据类型，返回对应类型的对象：
+
+如果value为基本数据类型String、Number、Boolean，则返回对应类型的对象。
+
+如果value本身为对象，则返回其本身。
+
+如果省略了value参数，或value为null、undefined，则返回自身无任何属性的Object对象，即返回一个空对象。
+
+例：
+
+var obj = new Object("text");
+console.log(obj instanceof Object);//true
+console.log(obj instanceof String);//true
+console.log(obj.length);//4
+console.log(obj[0]);//t
