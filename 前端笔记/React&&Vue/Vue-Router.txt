@@ -8,3 +8,10 @@ ngRoute和二次开发模块ui-router，react的react-route,vue-route…
 但页面并没有跳转，不过使用这种模式需要服务器端的支持，服务器在接收到所有
 的请求后，都指向同一个html文件，通过historyAPI，监听popState事件，用pus
 hState和replaceState来实现。
+
+
+两种模式比较
+1.pushState设置的新URL可以是与当前URL同源的任意URL；而hash只可修改#后面的部分，故只可设置与当前同文档的URL
+2.pushState设置的新URL可以与当前URL一模一样，这样也会把记录添加到栈中；而hash设置的新值必须与原来不一样才会触发记录添加到栈中
+3.pushState通过stateObject可以添加任意类型的数据到记录中；而hash只可添加短字符串
+4.pushState可额外设置title属性供后续使用
