@@ -1,0 +1,41 @@
+1.函数式编程
+2.函数curry化
+function currry(fn,arr=[]){
+    return arr.length===fn.length?fn.apply(null,arr):function(...args){
+        return curry(fn,arr.concat(args));
+    };
+}
+
+3.EventEmitter
+class EventEmitter{
+    constructor(){
+        this.eventpool={};
+    }
+
+    on(event,handle){
+        this.eventpool[event]?this.eventpool[event].push(handle):this.eventpool[event]=[handle];
+    }
+    emit(event,...args){
+        this.eventpool[event]?this.eventpool[event].forEach(cb=>cb(...args)):;
+    }
+    off(event){
+        if(ehi.eventpool[event])
+        delete this.eventpool[event];
+    }
+    once(event,handle){
+         this.on(event,function(...args){
+             handle(...args);
+             this.offf(event);
+         })
+    }
+}
+
+4.使用reduce实现map
+Array.prototype.map=funcion(callback)
+{
+    var arr=this;
+    return arr.reduce(funcion(res,cur,i){
+        res.push(callback(cur,i,arr));
+        return res;
+    },[]);
+}
