@@ -44,21 +44,49 @@ let str="AaAAAA";
 //    }
 // }
 
-function test(str){
-  let count0=0,count1=0;
-  for(let i=0;i<str.length;++i){
-      if(str.charCodeAt(i)<97){
-          count1++;
-      }else{
-          count0++;
-      }
-  }
-  if(count0<=count1){
-      return str.length+1+count0;
-  }else{
-      return str.length+1+count1;
-  }
+// function test(str){
+//   let count0=0,count1=0;
+//   for(let i=0;i<str.length;++i){
+//       if(str.charCodeAt(i)<97){
+//           count1++;
+//       }else{
+//           count0++;
+//       }
+//   }
+//   if(count0<=count1){
+//       return str.length+1+count0;
+//   }else{
+//       return str.length+1+count1;
+//   }
+// }
+
+// 动态规划
+// 参考链接https://blog.csdn.net/sumword_/article/details/52798292
+function test(n, a) {
+    let dp = [];
+    for (let i = 0; i < a.length; ++i) {
+        dp.push([0, 0]);
+    }
+    if (a[0] >= 'a') {
+        dp[0][0] = 1;
+        dp[0][1] = 2;
+    }
+    else if (a[0] <= 'Z') {
+        dp[0][0] = 2;
+        dp[0][1] = 2;
+    }
+    for (let i = 1; i < a.length; i++) {
+        if (a[i] >= 'a') {
+            dp[i][0] = Math.min(dp[i - 1][0] + 1, dp[i - 1][1] + 2);
+            dp[i][1] = Math.min(dp[i - 1][0] + 2, dp[i - 1][1] + 2);
+        }
+        if (a[i] <= 'Z') {
+            dp[i][0] = Math.min(dp[i - 1][0] + 2, dp[i - 1][1] + 2);
+            dp[i][1] = Math.min(dp[i - 1][0] + 2, dp[i - 1][1] + 1);
+        }
+    }
+    return Math.min(dp[n - 1][0], dp[n - 1][1]);
 }
-console.log(test(str));
+console.log(test(num, str));
 // console.log(str.charCodeAt(0));
 // console.log(str.charCodeAt(1));
