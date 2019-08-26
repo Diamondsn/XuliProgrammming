@@ -1,0 +1,43 @@
+前端填空题
+改变this指向 apply call bind
+盒子模型的四个属性 margin padding border content(width)
+promise的状态
+
+pending
+reject
+resolve
+
+前端问答题
+1.字符串去重
+function quchong（str）
+{
+    var obj={};
+var newstr="";
+for(var i=0;i<str.length;++i)
+{
+    if(!obj[str[i]]){
+newstr+=str[i];
+obj[str[i]]=1;
+}
+}
+return newstr;
+}
+2.浏览器从输入Url到显示页面发生了哪几个过程
+1）浏览器查找当前Url是否存在缓存，并比较缓存是否过期
+2）DNS解析URL对应的IP
+3）根据IP建立TCP连接(三次握手)
+4）HTTP发出请求
+5）服务器处理请求，浏览器接收HTTP响应
+7）渲染页面，构建DOM树
+8）关闭TCP连接
+3.重绘和回流有什么区别
+回流reflow是当元素的大小位置结构发生变化的时候，需要重新计算DOM树和CSSOM树
+重绘是当元素的某些外观进行改变的时候，只需要将新样式应用于元素上即可
+回流必定重绘，重绘不一定回流
+4.输出以下值
+console.log(100+"num")//100num
+console.log(100+"200")//100200
+console.log(100+"100")//100100
+console.log(100+true)//101
+console.log(100+undefined)//NaN
+console.log(100+null)//100
