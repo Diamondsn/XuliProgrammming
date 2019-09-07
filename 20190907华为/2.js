@@ -42,10 +42,10 @@ function test1(n, m) {
     }
     for (let i = 2; i <= n; ++i) {
         for (let j = 2; j <= m; ++j) {
-            arr[i][j] = arr[i - 1][j] + arr[i][j - 1];
+            arr[i][j] = (arr[i - 1][j] + arr[i][j - 1])% 1000000007;
         }
     }
     return arr[n][m] % 1000000007;
 }
 
-console.log(test1(3, 3));
+console.log(test1(1000, 1000));
