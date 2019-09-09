@@ -10,6 +10,12 @@ function findTree(set,map,num){
 }
 
 function test(arr1,arr2,num){
+   let myset=new Set();
+   for(let i=0;i<arr1.length;++i){
+     myset.add(arr1[i]);
+     myset.add(arr2[i]);
+   }
+
    let map={};
    for(let i=0;i<arr2.length;++i){
        if(!map[arr2[i]]){
@@ -18,7 +24,8 @@ function test(arr1,arr2,num){
         map[arr2[i]].push(arr1[i]);
        }
    }
-   if(!map[num])return 1;
+   if(!myset.has(num))return 0;
+   else if(!map[num])return 1;
    else{
     let set=new Set();
     findTree(set,map,num);
@@ -29,5 +36,5 @@ function test(arr1,arr2,num){
 
 let arr1=[3,1,5,21,10];
 let arr2=[0,3,3,1,5];
-let num=3;
+let num=10;
 console.log(test(arr1,arr2,num));
