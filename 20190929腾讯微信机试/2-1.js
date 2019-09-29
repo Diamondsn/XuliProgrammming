@@ -21,40 +21,47 @@ let stack = [];
 function next() {
     let fn = stack[index];
     index++;
-    if (typeof fn === "function") {
+    if (typeof fn === 'function') {
         fn();
     }
 }
-
 function Baby(name) {
     stack.push(function () {
-        console.log("I am " + name);
+        console.log(`I am ${name}`);
         next();
-    });
-
+    })
 }
-
-var superBaby=function superBaby(name) {
-    return new Baby(name);
+var superBaby = function (name) {
+    return new Baby(name)
 }
 Baby.prototype.sleep = function (time) {
     stack.push(function () {
         setTimeout(function () {
-            next();
-        }, time * 1000);
-    });
+            console.log(`(等待${time}秒后输出)Start eating after ${time} seconds`)
+            next()
+        }, time * 1000)
+    })
     return this;
 }
-Baby.prototype.eat = function (time) {
-    stack.push(() => { console.log("Eating " + str); next(); }, 1000 * time);
+Baby.prototype.eat = function (food) {
+    stack.push(function () {
+        console.log('Eating ' + food)
+        next();
+    })
     return this;
 }
 Baby.prototype.sleepFirst = function (time) {
     stack.unshift(function () {
         setTimeout(function () {
-            next();
-        }, time * 1000);
-    });
+            console.log(`(等待${time}秒后输出)Start eating after ${time} seconds`)
+            next()
+        }, time * 1000)
+    })
     return this;
 }
-superBaby("tom").sleepFirst(5).eat("banana");
+// superBaby("tom");
+// next();
+// superBaby("tom").sleep(1).eat("apple");
+// next();
+superBaby("tom").sleepFirst(1).eat("banana")
+next();
